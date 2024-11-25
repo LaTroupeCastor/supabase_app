@@ -1,16 +1,22 @@
-import { corsHeaders } from "../_shared/cors.ts";
+import {corsHeaders} from "../_shared/cors.ts";
 
 Deno.serve(async (req) => {
     // Gestion des OPTIONS pour CORS
     if (req.method === 'OPTIONS') {
-        return new Response(null, { ...corsHeaders , status: 204 });
+        return new Response(null, {
+            headers: new Headers(corsHeaders),
+            status: 204
+        });
     }
 
     // Vérification de la méthode
     if (req.method !== 'POST') {
         return new Response(
             JSON.stringify({ success: false, error: 'Méthode non autorisée' }),
-            { ...corsHeaders , status: 405 }
+            {
+                headers: new Headers(corsHeaders),
+                status: 405
+            }
         );
     }
 
@@ -38,7 +44,10 @@ Deno.serve(async (req) => {
                 success: res.ok,
                 data: resendData
             }),
-            { ...corsHeaders , status: res.ok ? 200 : resendData.statusCode || 500 }
+            {
+                headers: new Headers(corsHeaders),
+                status: res.ok ? 200 : resendData.statusCode || 500
+            }
         );
 
     } catch (error : any) {
@@ -47,7 +56,10 @@ Deno.serve(async (req) => {
                 success: false,
                 error: error.message
             }),
-            { ...corsHeaders , status: 500 }
+            {
+                headers: new Headers(corsHeaders),
+                status: 500
+            }
         );
     }
 });
