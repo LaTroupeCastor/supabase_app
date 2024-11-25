@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
     }
 
     try {
-        const { emailFrom, message } = await req.json();
+        const { emailFrom, message, name, subname, phone } = await req.json();
 
         // Validation des données requises
         if (!emailFrom || !message) {
@@ -35,8 +35,38 @@ Deno.serve(async (req) => {
             body: JSON.stringify({
                 from: 'contact@latroupecastor.fr',
                 to: 'contact@latroupecastor.fr',
-                subject: `Message from ${emailFrom}`,
-                html: '<strong>it works! message: </strong>' + message,
+                subject: `Message from ${name} ${subname}`,
+                html: `                                                                                                                                                                           
+     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">                                    
+         <h2 style="color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Nouveau message de contact</h2>                                                             
+                                                                                                                                                                                   
+         <div style="margin: 20px 0;">                                                                                                                                             
+             <p style="font-weight: bold; margin: 5px 0;">De :</p>                                                                                                                 
+             <p style="margin: 5px 0;">${name} ${subname}</p>                                                                                                                      
+         </div>                                                                                                                                                                    
+                                                                                                                                                                                   
+         <div style="margin: 20px 0;">                                                                                                                                             
+             <p style="font-weight: bold; margin: 5px 0;">Email :</p>                                                                                                              
+             <p style="margin: 5px 0;">${emailFrom}</p>                                                                                                                            
+         </div>                                                                                                                                                                    
+                                                                                                                                                                                   
+         ${phone ? `                                                                                                                                                               
+         <div style="margin: 20px 0;">                                                                                                                                             
+             <p style="font-weight: bold; margin: 5px 0;">Téléphone :</p>                                                                                                          
+             <p style="margin: 5px 0;">${phone}</p>                                                                                                                                
+         </div>                                                                                                                                                                    
+         ` : ''}                                                                                                                                                                   
+                                                                                                                                                                                   
+         <div style="margin: 20px 0;">                                                                                                                                             
+             <p style="font-weight: bold; margin: 5px 0;">Message :</p>                                                                                                            
+             <p style="margin: 5px 0; white-space: pre-wrap;">${message}</p>                                                                                                       
+         </div>                                                                                                                                                                    
+                                                                                                                                                                                   
+         <div style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">                                                              
+             <p>Ce message a été envoyé depuis le formulaire de contact de La Troupe Castor</p>                                                                                    
+         </div>                                                                                                                                                                    
+     </div>                                                                                                                                                                        
+ `,
             }),
         });
 
