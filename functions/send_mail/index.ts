@@ -1,27 +1,26 @@
-import {corsHeaders} from "../_shared/cors.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 
 Deno.serve(async (req) => {
-    // Gestion des OPTIONS pour CORS
+    // Gestion CORS preflight
     if (req.method === 'OPTIONS') {
-        return new Response(null, {
-            headers: new Headers(corsHeaders),
-            status: 204
-        });
+        return new Response('ok', { headers: corsHeaders });
     }
 
-    // Vérification de la méthode
+    // Vérification méthode POST uniquement
     if (req.method !== 'POST') {
         return new Response(
-            JSON.stringify({ success: false, error: 'Méthode non autorisée' }),
-            {
-                headers: new Headers(corsHeaders),
-                status: 405
-            }
+            JSON.stringify({ error: 'Méthode non autorisée' }),
+            { headers: new Headers(corsHeaders), status: 405 }
         );
     }
 
     try {
         const { emailFrom, message } = await req.json();
+
+        // Validation des données requises
+        if (!emailFrom || !message) {
+            throw new Error('Email et message sont requis');
+        }
 
         const res = await fetch('https://api.resend.com/emails', {
             method: 'POST',
@@ -52,14 +51,8 @@ Deno.serve(async (req) => {
 
     } catch (error : any) {
         return new Response(
-            JSON.stringify({
-                success: false,
-                error: error.message
-            }),
-            {
-                headers: new Headers(corsHeaders),
-                status: 500
-            }
+            JSON.stringify({ success: false, error: error.message }),
+            { headers: new Headers(corsHeaders), status: 400 }
         );
     }
 });
