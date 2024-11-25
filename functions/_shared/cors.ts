@@ -5,12 +5,13 @@ const allowedOrigins = [
 ];
 
 export const corsHeaders = (requestOrigin?: string) => {
-    const origin = requestOrigin && allowedOrigins.indexOf(requestOrigin) !== -1
-        ? requestOrigin
-        : allowedOrigins[0];
+    // Si l'origine n'est pas dans la liste, on retourne une erreur
+    if (!requestOrigin || allowedOrigins.indexOf(requestOrigin) === -1) {
+        throw new Error('Origin not allowed');
+    }
 
     return {
-        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Origin': requestOrigin,
         'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Credentials': 'true',
