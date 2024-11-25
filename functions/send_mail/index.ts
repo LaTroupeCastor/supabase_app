@@ -1,24 +1,27 @@
-import { Request, Response } from 'https://deno.land/x/oak/mod.ts'
+import { corsHeaders } from "../_shared/cors.ts";
 
-const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+Deno.serve(async (req) => {
+    // Gestion des OPTIONS pour CORS
+    if (req.method === 'OPTIONS') {
+        return new Response(null, { ...corsHeaders , status: 204 });
+    }
 
-const handler = async (request: Request): Promise<Response> => {
-    // Vérifier si c'est une requête POST
-    if (request.method !== 'POST') {
-        return new Response('Méthode non autorisée', { status: 405 });
+    // Vérification de la méthode
+    if (req.method !== 'POST') {
+        return new Response(
+            JSON.stringify({ success: false, error: 'Méthode non autorisée' }),
+            { ...corsHeaders , status: 405 }
+        );
     }
 
     try {
-        // Récupérer le body de la requête
-        const body = await request.json();
-        console.log(body);
-        const { emailFrom, message } = body;
+        const { emailFrom, message } = await req.json();
 
         const res = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${RESEND_API_KEY}`,
+                Authorization: `Bearer ${Deno.env.get('RESEND_API_KEY')}`
             },
             body: JSON.stringify({
                 from: 'contact@latroupecastor.fr',
@@ -28,35 +31,23 @@ const handler = async (request: Request): Promise<Response> => {
             }),
         });
 
-        const data = await res.json();
+        const resendData = await res.json();
 
-        // Vérifier si la réponse contient une erreur
-        if (!res.ok || data.statusCode >= 400) {
-            console.error(data);
-            return new Response(JSON.stringify({
-                error: data.message || 'Une erreur est survenue lors de l\'envoi de l\'email'
-            }), {
-                status: data.statusCode || 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        }
+        return new Response(
+            JSON.stringify({
+                success: res.ok,
+                data: resendData
+            }),
+            { ...corsHeaders , status: res.ok ? 200 : resendData.statusCode || 500 }
+        );
 
-        return new Response(JSON.stringify(data), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    } catch (error) {
-        return new Response(JSON.stringify({ error: error.message }), {
-            status: 400,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    } catch (error : any) {
+        return new Response(
+            JSON.stringify({
+                success: false,
+                error: error.message
+            }),
+            { ...corsHeaders , status: 500 }
+        );
     }
-};
-
-Deno.serve(handler)
+});
