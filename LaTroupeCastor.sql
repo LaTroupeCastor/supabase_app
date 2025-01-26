@@ -1,26 +1,22 @@
 -- Désactiver temporairement les contraintes de clés étrangères
 DO $$ 
+DECLARE
+    r RECORD;
 BEGIN
     -- Désactiver les contraintes de clés étrangères
-    EXECUTE (
-        SELECT 'ALTER TABLE "' || tablename || '" DISABLE TRIGGER ALL;'
-        FROM pg_tables
-        WHERE schemaname = 'public'
-    );
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+        EXECUTE 'ALTER TABLE "' || r.tablename || '" DISABLE TRIGGER ALL';
+    END LOOP;
 
     -- Supprimer toutes les données de toutes les tables
-    EXECUTE (
-        SELECT string_agg('TRUNCATE TABLE "' || tablename || '" CASCADE;', ' ')
-        FROM pg_tables
-        WHERE schemaname = 'public'
-    );
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+        EXECUTE 'TRUNCATE TABLE "' || r.tablename || '" CASCADE';
+    END LOOP;
 
     -- Réactiver les contraintes de clés étrangères
-    EXECUTE (
-        SELECT 'ALTER TABLE "' || tablename || '" ENABLE TRIGGER ALL;'
-        FROM pg_tables
-        WHERE schemaname = 'public'
-    );
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+        EXECUTE 'ALTER TABLE "' || r.tablename || '" ENABLE TRIGGER ALL';
+    END LOOP;
 END $$;
 
 -- Réinitialiser les séquences
