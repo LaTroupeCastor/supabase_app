@@ -1,16 +1,18 @@
-alter table "public"."aid_question_options" drop constraint "aid_question_options_question_id_fkey";
-
-alter table "public"."aid_question_options" drop constraint "aid_question_options_pkey";
-
-drop index if exists "public"."aid_question_options_pkey";
-
-drop table "public"."aid_question_options";
-
 create table "public"."aid_answers" (
     "id" uuid not null default gen_random_uuid(),
     "sub_question_id" uuid not null,
     "content" text not null,
     "image_url" character varying,
+    "created_at" timestamp with time zone not null default now(),
+    "updated_at" timestamp with time zone not null default now()
+);
+
+
+create table "public"."aid_questions" (
+    "id" uuid not null default gen_random_uuid(),
+    "step_number" integer not null,
+    "title" character varying not null,
+    "description" text,
     "created_at" timestamp with time zone not null default now(),
     "updated_at" timestamp with time zone not null default now()
 );
@@ -26,17 +28,9 @@ create table "public"."aid_sub_questions" (
 );
 
 
-alter table "public"."aid_questions" alter column "created_at" set default now();
-
-alter table "public"."aid_questions" alter column "created_at" set not null;
-
-alter table "public"."aid_questions" alter column "title" set data type character varying using "title"::character varying;
-
-alter table "public"."aid_questions" alter column "updated_at" set default now();
-
-alter table "public"."aid_questions" alter column "updated_at" set not null;
-
 CREATE UNIQUE INDEX aid_answers_pkey ON public.aid_answers USING btree (id);
+
+CREATE UNIQUE INDEX aid_questions_pkey ON public.aid_questions USING btree (id);
 
 CREATE UNIQUE INDEX aid_sub_questions_pkey ON public.aid_sub_questions USING btree (id);
 
@@ -47,6 +41,8 @@ CREATE INDEX idx_aid_questions_step_number ON public.aid_questions USING btree (
 CREATE INDEX idx_aid_sub_questions_question_id ON public.aid_sub_questions USING btree (question_id);
 
 alter table "public"."aid_answers" add constraint "aid_answers_pkey" PRIMARY KEY using index "aid_answers_pkey";
+
+alter table "public"."aid_questions" add constraint "aid_questions_pkey" PRIMARY KEY using index "aid_questions_pkey";
 
 alter table "public"."aid_sub_questions" add constraint "aid_sub_questions_pkey" PRIMARY KEY using index "aid_sub_questions_pkey";
 
@@ -70,6 +66,24 @@ AS $function$
  END;                                                                                                                                                                                   
  $function$
 ;
+
+grant select on table "public"."aid_answers" to "anon";
+
+grant select on table "public"."aid_answers" to "authenticated";
+
+grant select on table "public"."aid_answers" to "service_role";
+
+grant select on table "public"."aid_questions" to "anon";
+
+grant select on table "public"."aid_questions" to "authenticated";
+
+grant select on table "public"."aid_questions" to "service_role";
+
+grant select on table "public"."aid_sub_questions" to "anon";
+
+grant select on table "public"."aid_sub_questions" to "authenticated";
+
+grant select on table "public"."aid_sub_questions" to "service_role";
 
 CREATE TRIGGER update_aid_answers_updated_at BEFORE UPDATE ON public.aid_answers FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
