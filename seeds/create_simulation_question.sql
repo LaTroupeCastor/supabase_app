@@ -1,3 +1,8 @@
+-- Donner les droits d'accès
+GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+
 -- Insertion des questions principales (étapes)                                                                                                                                        
  INSERT INTO aid_questions (step_number, title, description) VALUES                                                                                                                     
  (1, 'Informations sur vous et votre statut', 'Parlons de votre situation actuelle'),                                                                                                   

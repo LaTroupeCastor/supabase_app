@@ -1,3 +1,8 @@
+-- Donner les droits d'accès
+GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+
 -- Insertions complètes des aides
 INSERT INTO aid_details (
     name,
