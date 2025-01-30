@@ -20,9 +20,8 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
  WITH step2 AS (SELECT id FROM aid_questions WHERE step_number = 2)                                                                                                                     
  INSERT INTO aid_sub_questions (question_id, sub_step_number, content) VALUES                                                                                                           
  ((SELECT id FROM step2), 1, 'Quel est l''âge de votre logement ?'),                                                                                                                    
- ((SELECT id FROM step2), 2, 'Quelle est la surface habitable de votre logement ?'),                                                                                                    
- ((SELECT id FROM step2), 3, 'Quelle est l''étiquette énergétique actuelle de votre logement ?'),                                                                                       
- ((SELECT id FROM step2), 4, 'Avez-vous déjà fait réaliser un diagnostic énergétique ?');                                                                                               
+ ((SELECT id FROM step2), 2, 'Quelle est l''étiquette énergétique actuelle de votre logement ?'),                                                                                       
+ ((SELECT id FROM step2), 3, 'Avez-vous déjà fait réaliser un diagnostic énergétique ?');                                                                                               
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 3                                                                                                                                         
  WITH step3 AS (SELECT id FROM aid_questions WHERE step_number = 3)                                                                                                                     
