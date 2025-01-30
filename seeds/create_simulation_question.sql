@@ -33,50 +33,50 @@
  -- Insertion des réponses pour chaque sous-question                                                                                                                                    
  -- Étape 1, Question 1 (Statut d'occupation)                                                                                                                                           
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%statut d''occupation%')                                                                                           
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Propriétaire occupant'),                                                                                                                                     
- ((SELECT id FROM sub_q), 'Propriétaire bailleur'),                                                                                                                                     
- ((SELECT id FROM sub_q), 'Locataire'),                                                                                                                                                 
- ((SELECT id FROM sub_q), 'Copropriétaire');                                                                                                                                            
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Propriétaire occupant', 'proprietaire_occupant'),                                                                                                                     
+ ((SELECT id FROM sub_q), 'Propriétaire bailleur', 'proprietaire_bailleur'),                                                                                                                     
+ ((SELECT id FROM sub_q), 'Locataire', 'locataire'),                                                                                                                                                 
+ ((SELECT id FROM sub_q), 'Copropriétaire', 'copropriete');                                                                                                                                            
                                                                                                                                                                                         
  -- Étape 1, Question 2 (Aides Anah)                                                                                                                                                    
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%Anah%')                                                                                                           
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Oui'),                                                                                                                                                       
- ((SELECT id FROM sub_q), 'Non');                                                                                                                                                       
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Oui', 'check'),                                                                                                                                                       
+ ((SELECT id FROM sub_q), 'Non', 'cross');                                                                                                                                                       
                                                                                                                                                                                         
  -- Étape 2, Question 1 (Âge logement)                                                                                                                                                  
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%âge de votre logement%')                                                                                          
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Moins de 15 ans'),                                                                                                                                           
- ((SELECT id FROM sub_q), 'Plus de 15 ans');                                                                                                                                            
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Moins de 15 ans', 'maison_recente'),                                                                                                                                           
+ ((SELECT id FROM sub_q), 'Plus de 15 ans', 'maison_ancienne');                                                                                                                                            
                                                                                                                                                                                         
  -- Étape 2, Question 3 (Étiquette énergétique)                                                                                                                                         
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%étiquette énergétique%')                                                                                          
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'A ou B'),                                                                                                                                                    
- ((SELECT id FROM sub_q), 'C ou D'),                                                                                                                                                    
- ((SELECT id FROM sub_q), 'E'),                                                                                                                                                         
- ((SELECT id FROM sub_q), 'F ou G'),                                                                                                                                                    
- ((SELECT id FROM sub_q), 'Je ne sais pas');                                                                                                                                            
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'A ou B', 'dpe_ab'),                                                                                                                                                    
+ ((SELECT id FROM sub_q), 'C ou D', 'dpe_cd'),                                                                                                                                                    
+ ((SELECT id FROM sub_q), 'E', 'dpe_e'),                                                                                                                                                         
+ ((SELECT id FROM sub_q), 'F ou G', 'dpe_fg'),                                                                                                                                                    
+ ((SELECT id FROM sub_q), 'Je ne sais pas', 'question');                                                                                                                                            
                                                                                                                                                                                         
  -- Étape 2, Question 4 (Diagnostic énergétique)                                                                                                                                        
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%diagnostic énergétique%')                                                                                         
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Oui'),                                                                                                                                                       
- ((SELECT id FROM sub_q), 'Non');                                                                                                                                                       
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Oui', 'check'),                                                                                                                                                       
+ ((SELECT id FROM sub_q), 'Non', 'cross');                                                                                                                                                       
                                                                                                                                                                                         
  -- Étape 4, Question 1 (Type de travaux)                                                                                                                                               
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%type de travaux%')                                                                                                
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Isolation (murs, combles, planchers)'),                                                                                                                      
- ((SELECT id FROM sub_q), 'Chauffage'),                                                                                                                                                 
- ((SELECT id FROM sub_q), 'Ventilation'),                                                                                                                                               
- ((SELECT id FROM sub_q), 'Fenêtres'),                                                                                                                                                  
- ((SELECT id FROM sub_q), 'Rénovation globale');                                                                                                                                        
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Isolation (murs, combles, planchers)', 'isolation'),                                                                                                                      
+ ((SELECT id FROM sub_q), 'Chauffage', 'chauffage'),                                                                                                                                                 
+ ((SELECT id FROM sub_q), 'Ventilation', 'ventilation'),                                                                                                                                               
+ ((SELECT id FROM sub_q), 'Fenêtres', 'fenetre'),                                                                                                                                                  
+ ((SELECT id FROM sub_q), 'Rénovation globale', 'renovation');                                                                                                                                        
                                                                                                                                                                                         
  -- Étape 4, Question 2 (Matériaux biosourcés)                                                                                                                                          
  WITH sub_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%biosourcés%')                                                                                                     
- INSERT INTO aid_answers (sub_question_id, content) VALUES                                                                                                                              
- ((SELECT id FROM sub_q), 'Oui'),                                                                                                                                                       
- ((SELECT id FROM sub_q), 'Non');   
+ INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
+ ((SELECT id FROM sub_q), 'Oui', 'check'),                                                                                                                                                       
+ ((SELECT id FROM sub_q), 'Non', 'cross');   
