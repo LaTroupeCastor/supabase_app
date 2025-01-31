@@ -30,12 +30,12 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
 
  -- Insertion des réponses pour l'étape 3 (Revenu fiscal)
  WITH income_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%revenu fiscal%')
- INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES
- ((SELECT id FROM income_q), 'Moins de 15 262€', 'income_1'),
- ((SELECT id FROM income_q), 'Entre 15 262€ et 19 565€', 'income_2'),
- ((SELECT id FROM income_q), 'Entre 19 565€ et 29 148€', 'income_3'),
- ((SELECT id FROM income_q), 'Entre 29 148€ et 38 184€', 'income_4'),
- ((SELECT id FROM income_q), 'Plus de 38 184€', 'income_5');
+ INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES
+ ((SELECT id FROM income_q), 'Moins de 15 262€', 'income_1', 'very_low'),
+ ((SELECT id FROM income_q), 'Entre 15 262€ et 19 565€', 'income_2', 'low'),
+ ((SELECT id FROM income_q), 'Entre 19 565€ et 29 148€', 'income_3', 'medium'),
+ ((SELECT id FROM income_q), 'Entre 29 148€ et 38 184€', 'income_4', 'high'),
+ ((SELECT id FROM income_q), 'Plus de 38 184€', 'income_5', 'very_high');
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 4                                                                                                                                         
  WITH step4 AS (SELECT id FROM aid_questions WHERE step_number = 4)                                                                                                                     
@@ -75,21 +75,21 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
                                                                                                                                                                                         
  -- Étape 2, Question 4 (Diagnostic énergétique)                                                                                                                                        
  WITH diagnostic_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%diagnostic énergétique%')                                                                                         
- INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
- ((SELECT id FROM diagnostic_q), 'Oui', 'check'),                                                                                                                                                       
- ((SELECT id FROM diagnostic_q), 'Non', 'cross');                                                                                                                                                       
+ INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES                                                                                                                              
+ ((SELECT id FROM diagnostic_q), 'Oui', 'check', 'yes'),                                                                                                                                                       
+ ((SELECT id FROM diagnostic_q), 'Non', 'cross', 'no');                                                                                                                                                       
                                                                                                                                                                                         
  -- Étape 4, Question 1 (Type de travaux)                                                                                                                                               
  WITH travaux_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%type de travaux%')                                                                                                
- INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
- ((SELECT id FROM travaux_q), 'Isolation (murs, combles, planchers)', 'isolation'),                                                                                                                      
- ((SELECT id FROM travaux_q), 'Chauffage', 'chauffage'),                                                                                                                                                 
- ((SELECT id FROM travaux_q), 'Ventilation', 'ventilation'),                                                                                                                                               
- ((SELECT id FROM travaux_q), 'Fenêtres', 'fenetre'),                                                                                                                                                  
- ((SELECT id FROM travaux_q), 'Rénovation globale', 'renovation');                                                                                                                                        
+ INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES                                                                                                                              
+ ((SELECT id FROM travaux_q), 'Isolation (murs, combles, planchers)', 'isolation', 'isolation'),                                                                                                                      
+ ((SELECT id FROM travaux_q), 'Chauffage', 'chauffage', 'heating'),                                                                                                                                                 
+ ((SELECT id FROM travaux_q), 'Ventilation', 'ventilation', 'ventilation'),                                                                                                                                               
+ ((SELECT id FROM travaux_q), 'Fenêtres', 'fenetre', 'windows'),                                                                                                                                                  
+ ((SELECT id FROM travaux_q), 'Rénovation globale', 'renovation', 'global');                                                                                                                                        
                                                                                                                                                                                         
  -- Étape 4, Question 2 (Matériaux biosourcés)                                                                                                                                          
  WITH materiaux_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%biosourcés%')                                                                                                     
- INSERT INTO aid_answers (sub_question_id, content, image_url) VALUES                                                                                                                              
- ((SELECT id FROM materiaux_q), 'Oui', 'check'),                                                                                                                                                       
- ((SELECT id FROM materiaux_q), 'Non', 'cross');   
+ INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES                                                                                                                              
+ ((SELECT id FROM materiaux_q), 'Oui', 'check', 'yes'),                                                                                                                                                       
+ ((SELECT id FROM materiaux_q), 'Non', 'cross', 'no');   
