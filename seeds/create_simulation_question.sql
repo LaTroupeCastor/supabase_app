@@ -12,21 +12,21 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 1                                                                                                                                         
  WITH step1 AS (SELECT id FROM aid_questions WHERE step_number = 1)                                                                                                                     
- INSERT INTO aid_sub_questions (question_id, sub_step_number, content) VALUES                                                                                                           
- ((SELECT id FROM step1), 1, 'Quel est votre statut d''occupation ?'),                                                                                                                  
- ((SELECT id FROM step1), 2, 'Avez-vous déjà bénéficié d''aides de l''Anah ces 5 dernières années ?');                                                                                  
+ INSERT INTO aid_sub_questions (question_id, sub_step_number, content, type_sub_questions) VALUES                                                                                           
+ ((SELECT id FROM step1), 1, 'Quel est votre statut d''occupation ?', 'occupancy_status'),                                                                                                                  
+ ((SELECT id FROM step1), 2, 'Avez-vous déjà bénéficié d''aides de l''Anah ces 5 dernières années ?', 'anah');                                                                                  
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 2                                                                                                                                         
  WITH step2 AS (SELECT id FROM aid_questions WHERE step_number = 2)                                                                                                                     
- INSERT INTO aid_sub_questions (question_id, sub_step_number, content) VALUES                                                                                                           
- ((SELECT id FROM step2), 1, 'Quel est l''âge de votre logement ?'),                                                                                                                    
- ((SELECT id FROM step2), 2, 'Quelle est l''étiquette énergétique actuelle de votre logement ?'),                                                                                       
- ((SELECT id FROM step2), 3, 'Avez-vous déjà fait réaliser un diagnostic énergétique ?');                                                                                               
+ INSERT INTO aid_sub_questions (question_id, sub_step_number, content, type_sub_questions) VALUES                                                                                           
+ ((SELECT id FROM step2), 1, 'Quel est l''âge de votre logement ?', 'building_age'),                                                                                                                    
+ ((SELECT id FROM step2), 2, 'Quelle est l''étiquette énergétique actuelle de votre logement ?', 'energy_label'),                                                                                       
+ ((SELECT id FROM step2), 3, 'Avez-vous déjà fait réaliser un diagnostic énergétique ?', 'energy_diagnostic');                                                                                               
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 3                                                                                                                                         
  WITH step3 AS (SELECT id FROM aid_questions WHERE step_number = 3)                                                                                                                     
- INSERT INTO aid_sub_questions (question_id, sub_step_number, content) VALUES                                                                                                           
- ((SELECT id FROM step3), 1, 'Quel est le revenu fiscal de référence de votre foyer ?');
+ INSERT INTO aid_sub_questions (question_id, sub_step_number, content, type_sub_questions) VALUES                                                                                           
+ ((SELECT id FROM step3), 1, 'Quel est le revenu fiscal de référence de votre foyer ?', 'fiscal_income');
 
  -- Insertion des réponses pour l'étape 3 (Revenu fiscal)
  WITH income_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%revenu fiscal%')
