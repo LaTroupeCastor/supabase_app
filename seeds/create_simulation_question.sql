@@ -39,9 +39,9 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
                                                                                                                                                                                         
  -- Insertion des sous-questions pour l'étape 4                                                                                                                                         
  WITH step4 AS (SELECT id FROM aid_questions WHERE step_number = 4)                                                                                                                     
- INSERT INTO aid_sub_questions (question_id, sub_step_number, content) VALUES                                                                                                           
- ((SELECT id FROM step4), 1, 'Quel type de travaux souhaitez-vous réaliser ?'),                                                                                                         
- ((SELECT id FROM step4), 2, 'Souhaitez-vous utiliser des matériaux biosourcés ?');                                                                                                     
+ INSERT INTO aid_sub_questions (question_id, sub_step_number, content, type_sub_questions) VALUES                                                                                           
+ ((SELECT id FROM step4), 1, 'Quel type de travaux souhaitez-vous réaliser ?', 'work_type'),                                                                                                         
+ ((SELECT id FROM step4), 2, 'Souhaitez-vous utiliser des matériaux biosourcés ?', 'biosourced');                                                                                                     
                                                                                                                                                                                         
  -- Insertion des réponses pour chaque sous-question                                                                                                                                    
  -- Étape 1, Question 1 (Statut d'occupation)                                                                                                                                           
