@@ -99,7 +99,10 @@ Deno.serve(async (req) => {
                 data: simulation
             }),
             {
-                headers: new Headers(headers),
+                headers: new Headers({
+                    ...headers,
+                    'Content-Type': 'application/json'
+                }),
                 status: 200
             }
         );
@@ -111,7 +114,10 @@ Deno.serve(async (req) => {
                 error: error.message
             }),
             {
-                headers: new Headers(headers),
+                headers: new Headers({
+                    ...headers,
+                    'Content-Type': 'application/json'
+                }),
                 status: 400
             }
         );
