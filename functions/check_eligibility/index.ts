@@ -70,16 +70,26 @@ Deno.serve(async (req) => {
             updated_at: rawSimulation.updated_at ? new Date(rawSimulation.updated_at) : undefined,
         };
 
-        if (error) {
-            throw new Error('Erreur lors de la récupération de la simulation: ' + error);
-        }
+        // Vérification des champs requis
+        const requiredFields = [
+            'anah_aid_last_5_years',
+            'biosourced_materials',
+            'building_age_over_15',
+            'energy_diagnostic_done',
+            'energy_label',
+            'fiscal_income',
+            'occupancy_status',
+            'work_type'
+        ];
 
-        if (!simulation) {
-            throw new Error('Simulation non trouvée');
-        }
+        const missingFields = requiredFields.filter(field => 
+            simulation[field as keyof Simulation] === undefined || 
+            simulation[field as keyof Simulation] === null
+        );
 
-        // Ici, vous pourrez ajouter la logique d'éligibilité
-        // Pour l'instant, on renvoie juste les données de la simulation
+        if (missingFields.length > 0) {
+            throw new Error(`Formulaire incomplet. Champs manquants : ${missingFields.join(', ')}`);
+        }
         return new Response(
             JSON.stringify({
                 success: true,
