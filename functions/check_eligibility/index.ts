@@ -79,7 +79,10 @@ Deno.serve(async (req) => {
             'energy_label',
             'fiscal_income',
             'occupancy_status',
-            'work_type'
+            'work_type',
+            'email',
+            'name',
+            'subname'
         ];
 
         const missingFields = requiredFields.filter(field => 
