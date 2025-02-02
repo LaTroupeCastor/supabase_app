@@ -1,5 +1,5 @@
 import { corsHeaders } from "../_shared/cors.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from "jsr:@supabase/supabase-js@2";
 
 Deno.serve(async (req) => {
     // Gestion CORS preflight
@@ -66,13 +66,13 @@ Deno.serve(async (req) => {
 
     } catch (error: any) {
         return new Response(
-            JSON.stringify({ 
-                success: false, 
-                error: error.message 
+            JSON.stringify({
+                success: false,
+                error: error.message
             }),
-            { 
-                headers: new Headers(headers), 
-                status: 400 
+            {
+                headers: new Headers(headers),
+                status: 400
             }
         );
     }
