@@ -47,10 +47,10 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
  -- Étape 1, Question 1 (Statut d'occupation)                                                                                                                                           
  WITH occupation_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%statut d''occupation%')                                                                                           
  INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES                                                                                                                              
- ((SELECT id FROM occupation_q), 'Propriétaire occupant', 'proprietaire_occupant', 'owner'),                                                                                                                     
- ((SELECT id FROM occupation_q), 'Propriétaire bailleur', 'proprietaire_bailleur', 'owner'),                                                                                                                     
+ ((SELECT id FROM occupation_q), 'Propriétaire occupant', 'proprietaire_occupant', 'owner_occupant'),                                                                                                                     
+ ((SELECT id FROM occupation_q), 'Propriétaire bailleur', 'proprietaire_bailleur', 'owner_lessor'),                                                                                                                     
  ((SELECT id FROM occupation_q), 'Locataire', 'locataire', 'tenant'),                                                                                                                                                 
- ((SELECT id FROM occupation_q), 'Copropriétaire', 'copropriete', 'owner');                                                                                                                                            
+ ((SELECT id FROM occupation_q), 'Copropriétaire', 'copropriete', 'co_owner');                                                                                                                                            
                                                                                                                                                                                         
  -- Étape 1, Question 2 (Aides Anah)                                                                                                                                                    
  WITH anah_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%Anah%')                                                                                                           

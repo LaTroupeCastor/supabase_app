@@ -1,3 +1,5 @@
+import { EnergyLabelType, FiscalIncomeType, OccupancyStatusType, Simulation, WorkType } from "./types.ts";
+
 interface AidDetails {
     id: string;
     name: string;
@@ -37,6 +39,8 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
         }
     };
 
+    console.log(simulation.department);
+
     const incomeBracket = getIncomeBracket(simulation.fiscal_income!);
 
     // Récupérer toutes les aides disponibles
@@ -65,11 +69,11 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
         let adjustedAmount = aid.default_amount;
 
         // Calcul des montants ajustés
-        if (aid.name === 'Aide départementale Maine-et-Loire' && 
-            simulation.department === '49' && 
+        if (aid.name === 'Aide départementale Maine-et-Loire' &&
+            simulation.department === '49' &&
             simulation.energy_label === EnergyLabelType.F) {
-            adjustedAmount = simulation.biosourced_materials ? 
-                aid.default_amount + 500 : 
+            adjustedAmount = simulation.biosourced_materials ?
+                aid.default_amount + 500 :
                 aid.default_amount;
         } else if (aid.name === 'Aide Mieux chez Moi' && simulation.department === '49') {
             adjustedAmount = aid.default_amount;

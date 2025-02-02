@@ -37,7 +37,7 @@ export interface Simulation {
     expiration_date: Date;
     created_at?: Date;
     updated_at?: Date;
-    department: string | null;
+    department: string | "49";
     email: string | null;
     anah_aid_last_5_years?: boolean;
     biosourced_materials?: boolean;
@@ -48,4 +48,6 @@ export interface Simulation {
     occupancy_status?: OccupancyStatusType;
     work_type?: WorkType;
     living_area?: number | null;
+    name: string;
+    subname: string;
 }
