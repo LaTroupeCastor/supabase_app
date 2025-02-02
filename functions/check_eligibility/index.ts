@@ -1,5 +1,6 @@
 import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { Simulation } from "./types.ts";
 
 Deno.serve(async (req) => {
     // Gestion CORS preflight
@@ -47,11 +48,27 @@ Deno.serve(async (req) => {
         );
 
         // Récupération de la simulation
-        const { data: simulation, error } = await supabaseClient
+        const { data: rawSimulation, error } = await supabaseClient
             .from('aid_simulation')
             .select('*')
             .eq('id', simulation_id)
             .single();
+
+        if (error) {
+            throw new Error('Erreur lors de la récupération de la simulation: ' + error.message);
+        }
+
+        if (!rawSimulation) {
+            throw new Error('Simulation non trouvée');
+        }
+
+        // Conversion des dates
+        const simulation: Simulation = {
+            ...rawSimulation,
+            expiration_date: new Date(rawSimulation.expiration_date),
+            created_at: rawSimulation.created_at ? new Date(rawSimulation.created_at) : undefined,
+            updated_at: rawSimulation.updated_at ? new Date(rawSimulation.updated_at) : undefined,
+        };
 
         if (error) {
             throw new Error('Erreur lors de la récupération de la simulation: ' + error.message);
