@@ -21,7 +21,7 @@ Deno.serve(async (req) => {
 
     try {
         const body = await req.json();
-        
+
         if (!body || typeof body !== 'object') {
             throw new Error('Le corps de la requête doit être un objet JSON valide');
         }
@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
         };
 
         if (error) {
-            throw new Error('Erreur lors de la récupération de la simulation: ' + error.message);
+            throw new Error('Erreur lors de la récupération de la simulation: ' + error);
         }
 
         if (!simulation) {
