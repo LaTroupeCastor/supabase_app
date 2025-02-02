@@ -19,10 +19,20 @@ Deno.serve(async (req) => {
     }
 
     try {
-        const { simulation_id } = await req.json();
+        const body = await req.json();
+        
+        if (!body || typeof body !== 'object') {
+            throw new Error('Le corps de la requête doit être un objet JSON valide');
+        }
 
-        if (!simulation_id) {
-            throw new Error('L\'ID de simulation est requis');
+        if (!body.simulation_id) {
+            throw new Error('Le paramètre simulation_id est requis');
+        }
+
+        const { simulation_id } = body;
+
+        if (typeof simulation_id !== 'string') {
+            throw new Error('Le simulation_id doit être une chaîne de caractères');
         }
 
         // Création du client Supabase
