@@ -1,0 +1,4 @@
+ -- Supprimer la colonne existante                                                                                                                                                      
+ ALTER TABLE aid_simulation DROP COLUMN fiscal_income cascade;                                                                                                                                  
+ALTER TABLE aid_simulation                                                                                                                                                             
+ ADD COLUMN fiscal_income fiscal_income_type;  
