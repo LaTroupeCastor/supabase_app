@@ -1,6 +1,7 @@
 import { corsHeaders } from "../_shared/cors.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { Simulation } from "./types.ts";
+import { checkEligibility } from "./eligibility.ts";
 
 Deno.serve(async (req) => {
     // Gestion CORS preflight
@@ -93,10 +94,17 @@ Deno.serve(async (req) => {
         if (missingFields.length > 0) {
             throw new Error(`Formulaire incomplet. Champs manquants : ${missingFields.join(', ')}`);
         }
+
+        // Vérifier l'éligibilité
+        const eligibleAids = await checkEligibility(simulation, supabaseClient);
+
         return new Response(
             JSON.stringify({
                 success: true,
-                data: simulation
+                data: {
+                    simulation,
+                    eligible_aids: eligibleAids
+                }
             }),
             {
                 headers: new Headers({
