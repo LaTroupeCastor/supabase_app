@@ -34,4 +34,41 @@ INSERT INTO public.aid_simulation (
      'Dupont' -- last_name                                                                                                                                                              
  );
 
+-- Simulation qui ne doit retourner aucune aide éligible
+INSERT INTO public.aid_simulation (
+     current_step,
+     current_sub_step,
+     session_token,
+     expiration_date,
+     department,
+     email,
+     anah_aid_last_5_years,
+     biosourced_materials,
+     building_age_over_15,
+     energy_diagnostic_done,
+     energy_label,
+     occupancy_status,
+     work_type,
+     fiscal_income,
+     first_name,
+     last_name
+ ) VALUES (
+     3,
+     2,
+     'session_test_no_aid',
+     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
+     '75', -- Département hors Maine-et-Loire
+     'test2@example.com',
+     false,
+     false,
+     false, -- Bâtiment de moins de 15 ans
+     true,
+     'A', -- Très bonne performance énergétique
+     'tenant', -- Locataire
+     'ventilation',
+     'very_high', -- Revenus très élevés
+     'Marie',
+     'Martin'
+ );
+
 -- Doit retourner le résultat suivant : MaPrimeRenov avec un montant maximum (car revenus très modestes)  + L'aide départementale du Maine-et-Loire avec le bonus matéraux biosourcés
