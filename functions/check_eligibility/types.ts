@@ -6,6 +6,7 @@ export enum EnergyLabelType {
     UNKNOWN = 'UNKNOWN'
 }
 
+//TODO: Apollo
 export enum FiscalIncomeType {
     VERY_LOW = "very_low",
     LOW = "low",

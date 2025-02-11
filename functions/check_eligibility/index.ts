@@ -82,12 +82,12 @@ Deno.serve(async (req) => {
             'occupancy_status',
             'work_type',
             'email',
-            'name',
-            'subname'
+            'first_name',
+            'last_name',
         ];
 
-        const missingFields = requiredFields.filter(field => 
-            simulation[field as keyof Simulation] === undefined || 
+        const missingFields = requiredFields.filter(field =>
+            simulation[field as keyof Simulation] === undefined ||
             simulation[field as keyof Simulation] === null
         );
 

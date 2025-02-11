@@ -34,6 +34,9 @@ INSERT INTO public.aid_simulation (
      'Dupont' -- last_name                                                                                                                                                              
  );
 
+ -- Doit retourner le résultat suivant : MaPrimeRenov avec un montant maximum (car revenus très modestes)  + L'aide départementale du Maine-et-Loire avec le bonus matéraux biosourcés
+
+
 -- Simulation qui ne doit retourner aucune aide éligible
 INSERT INTO public.aid_simulation (
      current_step,
@@ -63,12 +66,12 @@ INSERT INTO public.aid_simulation (
      false,
      false, -- Bâtiment de moins de 15 ans
      true,
-     'A', -- Très bonne performance énergétique
+     'A_B', -- Très bonne performance énergétique
      'tenant', -- Locataire
-     'ventilation',
+     'global_renovation',
      'very_high', -- Revenus très élevés
      'Marie',
      'Martin'
  );
 
--- Doit retourner le résultat suivant : MaPrimeRenov avec un montant maximum (car revenus très modestes)  + L'aide départementale du Maine-et-Loire avec le bonus matéraux biosourcés
+ -- Ne doit retourner aucune aide éligible

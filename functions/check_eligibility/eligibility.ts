@@ -39,8 +39,6 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
         }
     };
 
-    console.log(simulation.department);
-
     const incomeBracket = getIncomeBracket(simulation.fiscal_income!);
 
     // Récupérer toutes les aides disponibles
