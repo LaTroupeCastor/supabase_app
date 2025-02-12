@@ -243,7 +243,7 @@ const testClientCreation = async () => {
 const testCheckEligibility = async () => {
     const client: SupabaseClient = createClient(supabaseUrl, supabaseKey, options)
 
-    for (const category in testSimulations) {
+    for (const category of Object.keys(testSimulations) as Array<keyof TestSimulations>) {
         console.log(`\nTesting category: ${category}`)
         for (const simulation of testSimulations[category]) {
             console.log(`\nRunning test: ${simulation.id}`)
