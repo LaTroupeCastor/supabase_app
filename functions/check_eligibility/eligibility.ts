@@ -127,11 +127,11 @@ interface AidDetails {
     building_age_over_15?: boolean;
     occupancy_status_required?: OccupancyStatusType[];
     allowed_work_types?: WorkType[];
+    more_info_url?: string;
 }
 
 /**
  * Interface décrivant le résultat du calcul d'éligibilité
- * Étend AidDetails avec des montants ajustés et des options de financement additionnelles
  */
 interface EligibilityResult {
     id: string;
@@ -142,11 +142,24 @@ interface EligibilityResult {
     adjusted_amount: number;
     funding_organization: string;
     required_documents: string[];
-    additional_funding_options?: {
+}
+
+/**
+ * Interface décrivant la réponse complète du calcul d'éligibilité
+ */
+interface EligibilityResponse {
+    eligible_aids: EligibilityResult[];
+    additional_funding_options: {
         name: string;
         description: string;
         conditions: string[];
         more_info_url?: string;
+    }[];
+    available_aids_info: {
+        name: string;
+        description: string;
+        organization: string;
+        more_info_url: string;
     }[];
 }
 
@@ -156,7 +169,7 @@ interface EligibilityResult {
  * @param supabaseClient - Client Supabase pour accéder à la base de données
  * @returns Liste des aides éligibles avec leurs montants ajustés
  */
-export async function checkEligibility(simulation: Simulation, supabaseClient: any): Promise<EligibilityResult[]> {
+export async function checkEligibility(simulation: Simulation, supabaseClient: any): Promise<EligibilityResponse> {
     // Fonction interne pour déterminer la tranche de revenus selon les plafonds
     /**
      * Détermine les seuils de revenus selon la tranche fiscale
@@ -188,7 +201,7 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
     if (error) throw new Error('Failed to fetch aid details');
 
     // Filtrage des aides selon les critères d'éligibilité
-    return aids.filter((aid: AidDetails) => {
+    const eligibleAids = aids.filter((aid: AidDetails) => {
         // Vérification des critères de base (revenus, âge du bâtiment, statut d'occupation, type de travaux)
         if (aid.min_income && incomeBracket.min < aid.min_income) return false;
         if (aid.max_income && incomeBracket.max && incomeBracket.max > aid.max_income) return false;
@@ -205,16 +218,9 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
     }).map((aid: AidDetails) => {
         let adjustedAmount = aid.default_amount;
 
-        // Calcul du montant CEE si applicable
         if (aid.name === 'Certificats d\'Économies d\'Énergie') {
             adjustedAmount = calculateCEEAmount(simulation);
-        }
-        // Calcul des montants ajustés pour chaque aide selon leurs critères spécifiques
-        // Aide départementale : bonus matériaux biosourcés
-        // MaPrimeRenov : dégressif selon revenus
-        // Aides locales : plafonds spécifiques
-        // Calcul des montants pour les autres aides
-        else {
+        } else {
             adjustedAmount = calculateSpecificAidAmount(aid, simulation, incomeBracket);
         }
 
@@ -222,8 +228,16 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
             ...aid,
             adjusted_amount: Number(adjustedAmount.toFixed(2))
         };
-    }).map((result: AidDetails & { adjusted_amount: number }) => ({
-        ...result,
-        additional_funding_options: getAdditionalFundingOptions(simulation)
-    }));
+    });
+
+    return {
+        eligible_aids: eligibleAids,
+        additional_funding_options: getAdditionalFundingOptions(simulation),
+        available_aids_info: aids.map((aid: AidDetails) => ({
+            name: aid.name,
+            description: aid.description,
+            organization: aid.funding_organization,
+            more_info_url: aid.more_info_url || ""
+        }))
+    };
 }
