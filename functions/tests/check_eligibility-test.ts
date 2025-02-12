@@ -1,6 +1,12 @@
 import {assert} from 'https://deno.land/std@0.192.0/testing/asserts.ts'
-import {createClient, SupabaseClient} from '@supabase/supabase-js'
-import {FiscalIncomeType, OccupancyStatusType, Simulation, WorkType} from '../check_eligibility/types.ts'
+import {createClient, SupabaseClient} from 'jsr:@supabase/supabase-js@2'
+import {
+    EnergyLabelType,
+    FiscalIncomeType,
+    OccupancyStatusType,
+    Simulation,
+    WorkType
+} from '../check_eligibility/types.ts'
 
 // Load environment variables
 import 'https://deno.land/x/dotenv@v3.2.2/load.ts'
@@ -16,7 +22,7 @@ const options = {
     },
 }
 
-type TestCase = Pick<Simulation, 
+type TestCase = Pick<Simulation,
     | 'department'
     | 'biosourced_materials'
     | 'building_age_over_15'
@@ -48,7 +54,7 @@ const testSimulations : TestSimulations = {
             building_age_over_15: true,
             occupancy_status: OccupancyStatusType.OWNER_OCCUPANT,
             work_type: WorkType.GLOBAL_RENOVATION,
-            energy_label: "F",
+            energy_label: EnergyLabelType.F,
             living_area: 100,
             biosourced_materials: true
         },
@@ -85,7 +91,7 @@ const testSimulations : TestSimulations = {
             building_age_over_15: true,
             occupancy_status: OccupancyStatusType.OWNER_LESSOR,
             work_type: WorkType.GLOBAL_RENOVATION,
-            energy_label: EnergyLabelType.F_G,
+            energy_label: EnergyLabelType.F,
             living_area: 120,
             biosourced_materials: false
         },
@@ -133,7 +139,7 @@ const testSimulations : TestSimulations = {
             building_age_over_15: true,
             occupancy_status: OccupancyStatusType.OWNER_OCCUPANT,
             work_type: WorkType.HEATING,
-            energy_label: EnergyLabelType.F_G,
+            energy_label: EnergyLabelType.F,
             living_area: 110,
             biosourced_materials: false
         },
@@ -159,7 +165,7 @@ const testSimulations : TestSimulations = {
             building_age_over_15: true,
             occupancy_status: OccupancyStatusType.OWNER_OCCUPANT,
             work_type: WorkType.GLOBAL_RENOVATION,
-            energy_label: EnergyLabelType.F_G,
+            energy_label: EnergyLabelType.F,
             living_area: 95,
             biosourced_materials: true
         },
@@ -207,7 +213,7 @@ const testSimulations : TestSimulations = {
             building_age_over_15: true,
             occupancy_status: OccupancyStatusType.OWNER_OCCUPANT,
             work_type: WorkType.GLOBAL_RENOVATION,
-            energy_label: EnergyLabelType.F_G,
+            energy_label: EnergyLabelType.F,
             living_area: 120,
             biosourced_materials: true
         }
