@@ -1,5 +1,5 @@
 import {assert} from 'https://deno.land/std@0.192.0/testing/asserts.ts'
-import {createClient, SupabaseClient} from 'jsr:@supabase/supabase-js@2'
+import {createClient, SupabaseClient} from '@supabase/supabase-js'
 import {FiscalIncomeType, OccupancyStatusType, Simulation, WorkType} from '../check_eligibility/types.ts'
 
 // Load environment variables
@@ -16,8 +16,17 @@ const options = {
     },
 }
 
-type TestCase = Simulation & {
-    id: string; // Seule différence avec Simulation : on ajoute un id pour identifier nos tests
+type TestCase = Pick<Simulation, 
+    | 'department'
+    | 'biosourced_materials'
+    | 'building_age_over_15'
+    | 'energy_label'
+    | 'fiscal_income'
+    | 'occupancy_status'
+    | 'work_type'
+    | 'living_area'
+> & {
+    id: string;
 }
 
 type TestSimulations = {
