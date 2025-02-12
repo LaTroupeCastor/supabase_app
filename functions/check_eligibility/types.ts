@@ -1,3 +1,7 @@
+/**
+ * Étiquettes énergétiques possibles pour un logement
+ * Regroupées par paires pour simplifier (A/B, C/D, F/G)
+ */
 export enum EnergyLabelType {
     A_B = 'A_B',
     C_D = 'C_D',
@@ -6,7 +10,10 @@ export enum EnergyLabelType {
     UNKNOWN = 'UNKNOWN'
 }
 
-//TODO: Apollo
+/**
+ * Tranches de revenus fiscaux des ménages
+ * Utilisées pour déterminer l'éligibilité et les montants des aides
+ */
 export enum FiscalIncomeType {
     VERY_LOW = "very_low",
     LOW = "low",
@@ -15,6 +22,10 @@ export enum FiscalIncomeType {
     VERY_HIGH = "very_high",
 }
 
+/**
+ * Statuts d'occupation possibles
+ * Détermine les aides accessibles et les options de financement
+ */
 export enum OccupancyStatusType {
     OWNER_OCCUPANT = 'owner_occupant',
     OWNER_LESSOR = 'owner_lessor',
@@ -22,6 +33,10 @@ export enum OccupancyStatusType {
     CO_OWNER = 'co_owner',
 }
 
+/**
+ * Types de travaux de rénovation énergétique
+ * Utilisés pour le calcul des aides et l'estimation des CEE
+ */
 export enum WorkType {
     ISOLATION = 'isolation',
     HEATING = 'heating',
@@ -30,6 +45,11 @@ export enum WorkType {
     GLOBAL_RENOVATION = 'global'
 }
 
+/**
+ * Interface principale de simulation
+ * Contient toutes les informations fournies par l'utilisateur
+ * nécessaires au calcul d'éligibilité aux aides
+ */
 export interface Simulation {
     id: string;
     current_step: number;
