@@ -1,4 +1,12 @@
-import { EnergyLabelType, FiscalIncomeType, OccupancyStatusType, Simulation, WorkType } from "./types.ts";
+import {
+    EnergyLabelType,
+    FiscalIncomeType,
+    OccupancyStatusType,
+    Simulation,
+    WorkType,
+    EligibilityResponse,
+    AidDetails
+} from "./types.ts";
 
 /**
  * Retourne les options de financement additionnelles selon le statut d'occupation
@@ -112,55 +120,6 @@ function calculateSpecificAidAmount(
     }
 
     return aid.default_amount;
-}
-
-interface AidDetails {
-    id: string;
-    name: string;
-    description: string;
-    max_amount: number;
-    default_amount: number;
-    funding_organization: string;
-    required_documents: string[];
-    min_income?: number;
-    max_income?: number;
-    building_age_over_15?: boolean;
-    occupancy_status_required?: OccupancyStatusType[];
-    allowed_work_types?: WorkType[];
-    more_info_url?: string;
-}
-
-/**
- * Interface décrivant le résultat du calcul d'éligibilité
- */
-interface EligibilityResult {
-    id: string;
-    name: string;
-    description: string;
-    max_amount: number;
-    default_amount: number;
-    adjusted_amount: number;
-    funding_organization: string;
-    required_documents: string[];
-}
-
-/**
- * Interface décrivant la réponse complète du calcul d'éligibilité
- */
-interface EligibilityResponse {
-    eligible_aids: EligibilityResult[];
-    additional_funding_options: {
-        name: string;
-        description: string;
-        conditions: string[];
-        more_info_url?: string;
-    }[];
-    available_aids_info: {
-        name: string;
-        description: string;
-        organization: string;
-        more_info_url: string;
-    }[];
 }
 
 /**

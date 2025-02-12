@@ -72,3 +72,52 @@ export interface Simulation {
     name: string;
     subname: string;
 }
+
+export interface AidDetails {
+    id: string;
+    name: string;
+    description: string;
+    max_amount: number;
+    default_amount: number;
+    funding_organization: string;
+    required_documents: string[];
+    min_income?: number;
+    max_income?: number;
+    building_age_over_15?: boolean;
+    occupancy_status_required?: OccupancyStatusType[];
+    allowed_work_types?: WorkType[];
+    more_info_url?: string;
+}
+
+/**
+ * Interface décrivant le résultat du calcul d'éligibilité
+ */
+export interface EligibilityResult {
+    id: string;
+    name: string;
+    description: string;
+    max_amount: number;
+    default_amount: number;
+    adjusted_amount: number;
+    funding_organization: string;
+    required_documents: string[];
+}
+
+/**
+ * Interface décrivant la réponse complète du calcul d'éligibilité
+ */
+export interface EligibilityResponse {
+    eligible_aids: EligibilityResult[];
+    additional_funding_options: {
+        name: string;
+        description: string;
+        conditions: string[];
+        more_info_url?: string;
+    }[];
+    available_aids_info: {
+        name: string;
+        description: string;
+        organization: string;
+        more_info_url: string;
+    }[];
+}
