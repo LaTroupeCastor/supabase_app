@@ -1,9 +1,10 @@
-import { assert, assertEquals } from 'https://deno.land/std@0.192.0/testing/asserts.ts'
-import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
-import { Simulation, EligibilityResponse } from '../check_eligibility/types.ts'
+import {assert} from 'https://deno.land/std@0.192.0/testing/asserts.ts'
+import {createClient, SupabaseClient} from 'jsr:@supabase/supabase-js@2'
+import {FiscalIncomeType, OccupancyStatusType, Simulation, WorkType} from '../check_eligibility/types.ts'
 
 // Load environment variables
 import 'https://deno.land/x/dotenv@v3.2.2/load.ts'
+import {checkEligibility} from "../check_eligibility/eligibility.ts";
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
 const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY') ?? ''
@@ -15,16 +16,29 @@ const options = {
     },
 }
 
-const testSimulations = {
+type TestCase = Simulation & {
+    id: string; // Seule différence avec Simulation : on ajoute un id pour identifier nos tests
+}
+
+type TestSimulations = {
+    revenuTests: TestCase[];
+    occupancyTests: TestCase[];
+    workTypeTests: TestCase[];
+    locationTests: TestCase[];
+    specialCases: TestCase[];
+}
+
+
+const testSimulations : TestSimulations = {
     // Tests des différents profils de revenus
     revenuTests: [
         {
             id: "test-revenus-tres-modestes",
-            fiscal_income: "very_low",
+            fiscal_income: FiscalIncomeType.VERY_LOW,
             department: "49",
             building_age_over_15: true,
-            occupancy_status: "owner_occupant",
-            work_type: "global_renovation",
+            occupancy_status: OccupancyStatusType.OWNER_OCCUPANT,
+            work_type: WorkType.GLOBAL_RENOVATION,
             energy_label: "F",
             living_area: 100,
             biosourced_materials: true
@@ -202,11 +216,11 @@ const testClientCreation = async () => {
         .from('aid_details')
         .select('*')
         .limit(1)
-    
+
     if (table_error) {
         throw new Error('Invalid Supabase client: ' + table_error.message)
     }
-    
+
     assert(table_data, 'Data should be returned from the query.')
 }
 
@@ -220,7 +234,7 @@ const testCheckEligibility = async () => {
             console.log(`\nRunning test: ${simulation.id}`)
             try {
                 const result = await checkEligibility(simulation as Simulation, client)
-                
+
                 // Basic structure tests
                 assert(result, 'Result should not be null')
                 assert(Array.isArray(result.eligible_aids), 'eligible_aids should be an array')
@@ -233,17 +247,17 @@ const testCheckEligibility = async () => {
                         assert(result.eligible_aids.length > 0, 'Should have eligible aids for very low income')
                         assert(result.eligible_aids.some(aid => aid.name === 'MaPrimeRenov'), 'Should include MaPrimeRenov')
                         break;
-                    
+
                     case 'test-hors-49':
-                        assert(!result.eligible_aids.some(aid => 
-                            aid.name.includes('département') || 
-                            aid.name.includes('Saumur') || 
+                        assert(!result.eligible_aids.some(aid =>
+                            aid.name.includes('département') ||
+                            aid.name.includes('Saumur') ||
                             aid.name.includes('Angers')
                         ), 'Should not include local aids for non-49 department')
                         break;
 
                     case 'test-locataire':
-                        assert(result.eligible_aids.some(aid => aid.name === 'Certificats d\'Économies d\'Énergie'), 
+                        assert(result.eligible_aids.some(aid => aid.name === 'Certificats d\'Économies d\'Énergie'),
                             'Tenants should be eligible for CEE')
                         break;
 
