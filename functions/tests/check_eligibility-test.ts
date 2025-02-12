@@ -1,5 +1,5 @@
 import { assert, assertEquals } from 'https://deno.land/std@0.192.0/testing/asserts.ts'
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2'
 import { Simulation, EligibilityResponse } from '../check_eligibility/types.ts'
 
 // Load environment variables
