@@ -42,7 +42,10 @@ jobs:
       - name: Create Supabase directory structure                                                                                                                  
         run: |                                                                                                                                                     
           mkdir -p supabase/migrations                                                                                                                             
-          cp migrations/* supabase/migrations/
+          mkdir -p supabase/seed                                                                                                                                   
+          cp migrations/* supabase/migrations/                                                                                                                     
+          cp seeds/* supabase/seed/                                                                                                                                
+          cp config.toml supabase/config.toml
 
       # Link du projet supabase
       - name: "Link du projet supabase"
