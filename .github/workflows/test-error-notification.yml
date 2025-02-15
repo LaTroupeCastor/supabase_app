@@ -1,0 +1,63 @@
+name: Test Error Notification
+
+on:
+  workflow_dispatch:  # Permet de déclencher manuellement le workflow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Create Supabase directory structure
+        run: |
+          mkdir -p supabase/migrations
+          mkdir -p supabase/seeds
+          cp migrations/* supabase/migrations/
+          cp seeds/* supabase/seeds/
+          cp config.toml supabase/config.toml
+
+      - name: Initialize Supabase project
+        run: |
+          supabase link --password ${{ secrets.SUPABASE_DB_PASSWORD }} --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+
+      - name: Start Supabase and reset database
+        run: |
+          supabase start --workdir .
+          supabase db reset --workdir .
+
+      - name: Force test failure
+        run: |
+          echo "Forcing test failure to check email notification"
+          exit 1
+
+      - name: Send email on failure
+        if: failure()
+        uses: resend/resend-github-action@v0.2.0
+        with:
+          api_key: ${{ secrets.RESEND_API_KEY }}
+          from: "GitHub Actions <onboarding@resend.dev>"
+          to: "bastien.metais@gmail.com"
+          subject: "❌ Tests failed on LaTroupeCastor"
+          body: "Les tests ont échoué sur la branche ${{ github.ref }}. Voir les logs : ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Stop Supabase
+        if: always()
+        run: |
+          supabase stop
