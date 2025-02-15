@@ -43,6 +43,10 @@ jobs:
         run: |                                                                                                                                                     
           supabase start                                                                                                                                           
           supabase db reset
+      
+      - name: Apply migrations
+        run: |
+          supabase db push
                                                                                                                                                                   
       # Exécution des tests                                                                                                                                        
       - name: Run tests                                                                                                                                            
