@@ -1,11 +1,5 @@
 {
   "tasks": {
     "test": "deno test --allow-all"
-  },
-  "compilerOptions": {
-    "allowJs": true,
-    "lib": ["deno.window"],
-    "strict": true,
-    "nodeModulesDir": "auto"
   }
 }

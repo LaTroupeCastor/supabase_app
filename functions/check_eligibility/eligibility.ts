@@ -93,7 +93,8 @@ function calculateSpecificAidAmount(
 ): number {
     switch (aid.name) {
         case 'Aide départementale Maine-et-Loire':
-            if (simulation.department === '49' && simulation.energy_label === EnergyLabelType.F) {
+            if (simulation.department === '49' &&
+                (simulation.energy_label === EnergyLabelType.F)) {
                 return simulation.biosourced_materials ?
                     aid.default_amount + 500 :
                     aid.default_amount;
