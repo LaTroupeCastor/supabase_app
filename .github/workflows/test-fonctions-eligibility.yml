@@ -27,19 +27,18 @@ jobs:
       # Installation de Supabase CLI                                                                                                                               
       - name: Install Supabase CLI                                                                                                                                 
         run: |                                                                                                                                                     
-          wget -q -O /usr/local/bin/supabase https://github.com/supabase/cli/releases/download/v2.13.4/supabase_2.13.4_linux_arm64.deb                      
-          chmod +x /usr/local/bin/supabase                                                                                                                         
+          wget -q -O /usr/local/bin/supabase https://github.com/supabase/cli/releases/download/v2.13.4/supabase_2.13.4_linux_arm64.deb
                                                     
       # Link du projet supabase
       - name: "Link du projet supabase"
         run: |
           supabase link --password ${{ secrets.SUPABASE_DB_PASSWORD }} --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
-          
+
       # Démarrage de Supabase et reset de la base                                                                                                                  
       - name: Start Supabase and reset database                                                                                                                    
         run: |                                                                                                                                                     
-          supabase start                                                                                                                                           
-          supabase db reset                                                                                                                                        
+          supabase start                                                                                                                                          
+          supabase db reset
                                                                                                                                                                   
       # Exécution des tests                                                                                                                                        
       - name: Run tests                                                                                                                                            
