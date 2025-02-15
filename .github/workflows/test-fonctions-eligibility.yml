@@ -23,11 +23,14 @@ jobs:
       - uses: denoland/setup-deno@v1                                                                                                                               
         with:                                                                                                                                                      
           deno-version: v1.x                                                                                                                                       
-                                                                                                                                                                  
-      # Installation de Supabase CLI                                                                                                                               
-      - name: Install Supabase CLI                                                                                                                                 
-        run: |                                                                                                                                                     
-          wget -q -O /usr/local/bin/supabase https://github.com/supabase/cli/releases/download/v2.13.4/supabase_2.13.4_linux_arm64.deb
+
+      #Install Supabase CLI                                                                                                                                                            
+      - name: Install Supabase CLI
+        run: |
+          wget -q https://github.com/supabase/cli/releases/download/v2.13.4/supabase_2.13.4_linux_amd64.tar.gz
+          tar -xzf supabase_2.13.4_linux_amd64.tar.gz
+          sudo mv supabase /usr/local/bin/
+          sudo chmod +x /usr/local/bin/supabase                                                                                                                       
                                                     
       # Link du projet supabase
       - name: "Link du projet supabase"
@@ -37,7 +40,7 @@ jobs:
       # Démarrage de Supabase et reset de la base                                                                                                                  
       - name: Start Supabase and reset database                                                                                                                    
         run: |                                                                                                                                                     
-          supabase start                                                                                                                                          
+          supabase start                                                                                                                                           
           supabase db reset
                                                                                                                                                                   
       # Exécution des tests                                                                                                                                        
