@@ -38,7 +38,12 @@ jobs:
           tar -xzf supabase_linux_amd64.tar.gz
           sudo mv supabase /usr/local/bin/
           sudo chmod +x /usr/local/bin/supabase                                                                                                                       
-                                                    
+
+      - name: Create Supabase directory structure                                                                                                                  
+        run: |                                                                                                                                                     
+          mkdir -p supabase/migrations                                                                                                                             
+          cp migrations/* supabase/migrations/
+                                                              
       # Link du projet supabase
       - name: "Link du projet supabase"
         run: |
