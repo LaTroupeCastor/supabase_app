@@ -43,7 +43,7 @@ jobs:
         run: |                                                                                                                                                     
           mkdir -p supabase/migrations                                                                                                                             
           cp migrations/* supabase/migrations/
-                                                              
+
       # Link du projet supabase
       - name: "Link du projet supabase"
         run: |
@@ -52,8 +52,8 @@ jobs:
       # Démarrage de Supabase et reset de la base                                                                                                                  
       - name: Start Supabase and reset database                                                                                                                    
         run: |                                                                                                                                                     
-          supabase start                                                                                                                                           
-          supabase db reset
+          supabase start --workdir .                                                                                                                                           
+          supabase db reset --workdir .
 
       - name: Debug - List Supabase project structure                                                                                                              
         run: |                                                                                                                                                     
@@ -63,7 +63,7 @@ jobs:
       
       - name: Apply migrations
         run: |
-          supabase migration up
+          supabase migration up --workdir .
                                                                                                                                                                   
       # Exécution des tests                                                                                                                                        
       - name: Run tests                                                                                                                                            
