@@ -1,60 +1,63 @@
-name: Test                                                                                                                                                         
+name: Test Functions                                                                                                                                               
                                                                                                                                                                     
 on:                                                                                                                                                                
-  push:                                                                                                                                                            
-    branches: [ main ]                                                                                                                                             
-  pull_request:                                                                                                                                                    
-    branches: [ main ]                                                                                                                                             
-                                                                                                                                                                  
+   push:                                                                                                                                                            
+     branches: [ main ]                                                                                                                                             
+   pull_request:                                                                                                                                                    
+     branches: [ main ]                                                                                                                                             
+   workflow_dispatch:                                                                                                                                               
+                                                                                                                                                                    
 jobs:                                                                                                                                                              
-  test:                                                                                                                                                            
-    runs-on: ubuntu-latest        
-    
-    env:                                                                                                                                                           
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}                                                                                                                    
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}                                                                                                          
-      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}                                                                                                                    
-      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-    
-    steps:                                                                                                                                                         
-      - uses: actions/checkout@v3                                                                                                                                  
-                                                                                                              
-      # Installation de Deno                                                                                                                                       
-      - uses: denoland/setup-deno@v1                                                                                                                               
-        with:                                                                                                                                                      
-          deno-version: v1.x                                                                                                                                       
-
-      #Install Supabase CLI                                                                                                                                                            
-      - name: Install Supabase CLI
-        run: |
-          wget -q https://github.com/supabase/cli/releases/download/v2.13.4/supabase_linux_amd64.tar.gz
-          tar -xzf supabase_linux_amd64.tar.gz
-          sudo mv supabase /usr/local/bin/
-          sudo chmod +x /usr/local/bin/supabase                                                                                                                       
-                                                    
-      # Link du projet supabase
-      - name: "Link du projet supabase"
-        run: |
-          supabase link --password ${{ secrets.SUPABASE_DB_PASSWORD }} --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
-
-      # Démarrage de Supabase et reset de la base                                                                                                                  
-      - name: Start Supabase and reset database                                                                                                                    
-        run: |                                                                                                                                                     
-          supabase start                                                                                                                                           
-          supabase db reset
-      
-      - name: Apply migrations
-        run: |
-          supabase migration up
+ test:                                                                                                                                                            
+   runs-on: ubuntu-latest                                                                                                                                         
                                                                                                                                                                   
-      # Exécution des tests                                                                                                                                        
-      - name: Run tests                                                                                                                                            
-        run: |                                                                                                                                                     
-          deno test --allow-env --allow-read --allow-net functions/tests/check_eligibility-test.ts                                                                 
+   env:                                                                                                                                                           
+     SUPABASE_URL: ${{ secrets.SUPABASE_URL }}                                                                                                                    
+     SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}                                                                                                          
+     SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}                                                                                                    
+     SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}                                                                                                    
                                                                                                                                                                   
-      # Arrêt de Supabase                                                                                                                                          
-      - name: Stop Supabase                                                                                                                                        
-        if: always()                                                                                                                                               
-        run: |                                                                                                                                                     
-          supabase stop 
+   steps:                                                                                                                                                         
+     - uses: actions/checkout@v3                                                                                                                                  
+                                                                                                                                                                  
+     - name: Debug - List repository contents                                                                                                                     
+       run: |                                                                                                                                                     
+         pwd                                                                                                                                                      
+         ls -la                                                                                                                                                   
+         ls -la migrations/                                                                                                                                       
+                                                                                                                                                                  
+     - uses: denoland/setup-deno@v1                                                                                                                               
+       with:                                                                                                                                                      
+         deno-version: v1.x                                                                                                                                       
+                                                                                                                                                                  
+     - uses: supabase/setup-cli@v1                                                                                                                                
+       with:                                                                                                                                                      
+         version: latest                                                                                                                                          
+                                                                                                                                                                  
+     - name: Initialize Supabase project                                                                                                                          
+       run: |                                                                                                                                                     
+         supabase link --password ${{ secrets.SUPABASE_DB_PASSWORD }} --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}                                           
+                                                                                                                                                                  
+     - name: Start Supabase and reset database                                                                                                                    
+       run: |                                                                                                                                                     
+         supabase start                                                                                                                                           
+         supabase db reset                                                                                                                                        
+                                                                                                                                                                  
+     - name: Debug - List Supabase project structure                                                                                                              
+       run: |                                                                                                                                                     
+         supabase status                                                                                                                                          
+         ls -la .temp/                                                                                                                                            
+         ls -la supabase/ || echo "No supabase directory"                                                                                                         
+                                                                                                                                                                  
+     - name: Apply migrations                                                                                                                                     
+       run: |                                                                                                                                                     
+         supabase migration up                                                                                                                                    
+                                                                                                                                                                  
+     - name: Run eligibility tests                                                                                                                                
+       run: |                                                                                                                                                     
+         deno test --allow-env --allow-read --allow-net functions/tests/check_eligibility-test.ts                                                                 
+                                                                                                                                                                  
+     - name: Stop Supabase                                                                                                                                        
+       if: always()                                                                                                                                               
+       run: |                                                                                                                                                     
+         supabase stop
