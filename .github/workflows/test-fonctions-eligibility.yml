@@ -1,45 +1,53 @@
 name: Test                                                                                                                                                         
                                                                                                                                                                     
- on:                                                                                                                                                                
-   push:                                                                                                                                                            
-     branches: [ main ]                                                                                                                                             
-   pull_request:                                                                                                                                                    
-     branches: [ main ]                                                                                                                                             
-                                                                                                                                                                    
- jobs:                                                                                                                                                              
-   test:                                                                                                                                                            
-     runs-on: ubuntu-latest                                                                                                                                         
-     env:                                                                                                                                                           
-       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}                                                                                                                    
-       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}                                                                                                          
-                                                                                                                                                                    
-     steps:                                                                                                                                                         
-       - uses: actions/checkout@v3                                                                                                                                  
-                                                                                                                                                                    
-       # Installation de Deno                                                                                                                                       
-       - uses: denoland/setup-deno@v1                                                                                                                               
-         with:                                                                                                                                                      
-           deno-version: v1.x                                                                                                                                       
-                                                                                                                                                                    
-       # Installation de Supabase CLI                                                                                                                               
-       - name: Install Supabase CLI                                                                                                                                 
-         run: |                                                                                                                                                     
-           wget -q -O /usr/local/bin/supabase https://github.com/supabase/cli/releases/download/v1.127.3/supabase_1.127.3_linux_amd64.deb                           
-           chmod +x /usr/local/bin/supabase                                                                                                                         
-                                                                                                                                                                    
-       # Démarrage de Supabase et reset de la base                                                                                                                  
-       - name: Start Supabase and reset database                                                                                                                    
-         run: |                                                                                                                                                     
-           supabase start                                                                                                                                           
-           supabase db reset                                                                                                                                        
-                                                                                                                                                                    
-       # Exécution des tests                                                                                                                                        
-       - name: Run tests                                                                                                                                            
-         run: |                                                                                                                                                     
-           deno test --allow-env --allow-read --allow-net functions/tests/check_eligibility-test.ts                                                                 
-                                                                                                                                                                    
-       # Arrêt de Supabase                                                                                                                                          
-       - name: Stop Supabase                                                                                                                                        
-         if: always()                                                                                                                                               
-         run: |                                                                                                                                                     
-           supabase stop 
+on:                                                                                                                                                                
+  push:                                                                                                                                                            
+    branches: [ main ]                                                                                                                                             
+  pull_request:                                                                                                                                                    
+    branches: [ main ]                                                                                                                                             
+                                                                                                                                                                  
+jobs:                                                                                                                                                              
+  test:                                                                                                                                                            
+    runs-on: ubuntu-latest        
+    
+    env:                                                                                                                                                           
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}                                                                                                                    
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}                                                                                                          
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}                                                                                                                    
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+    
+    steps:                                                                                                                                                         
+      - uses: actions/checkout@v3                                                                                                                                  
+                                                                                                              
+      # Installation de Deno                                                                                                                                       
+      - uses: denoland/setup-deno@v1                                                                                                                               
+        with:                                                                                                                                                      
+          deno-version: v1.x                                                                                                                                       
+                                                                                                                                                                  
+      # Installation de Supabase CLI                                                                                                                               
+      - name: Install Supabase CLI                                                                                                                                 
+        run: |                                                                                                                                                     
+          wget -q -O /usr/local/bin/supabase https://github.com/supabase/cli/releases/download/v2.13.4/supabase_2.13.4_linux_arm64.deb                      
+          chmod +x /usr/local/bin/supabase                                                                                                                         
+                                                    
+      # Link du projet supabase
+      - name: "Link du projet supabase"
+        run: |
+          supabase link --password ${{ secrets.SUPABASE_DB_PASSWORD }} --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          
+      # Démarrage de Supabase et reset de la base                                                                                                                  
+      - name: Start Supabase and reset database                                                                                                                    
+        run: |                                                                                                                                                     
+          supabase start                                                                                                                                           
+          supabase db reset                                                                                                                                        
+                                                                                                                                                                  
+      # Exécution des tests                                                                                                                                        
+      - name: Run tests                                                                                                                                            
+        run: |                                                                                                                                                     
+          deno test --allow-env --allow-read --allow-net functions/tests/check_eligibility-test.ts                                                                 
+                                                                                                                                                                  
+      # Arrêt de Supabase                                                                                                                                          
+      - name: Stop Supabase                                                                                                                                        
+        if: always()                                                                                                                                               
+        run: |                                                                                                                                                     
+          supabase stop 
