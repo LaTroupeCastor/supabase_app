@@ -44,7 +44,7 @@ jobs:
           mkdir -p supabase/migrations                                                                                                                             
           mkdir -p supabase/seed                                                                                                                                   
           cp migrations/* supabase/migrations/                                                                                                                     
-          cp seeds/* supabase/seed/                                                                                                                                
+          cp seeds/* supabase/seeds/                                                                                                                                
           cp config.toml supabase/config.toml
 
       # Link du projet supabase
