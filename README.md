@@ -4,25 +4,253 @@ Ce projet implémente un système de vérification d'éligibilité aux aides pou
 
 ## Algorithme d'Éligibilité
 
-L'algorithme de vérification d'éligibilité (`functions/check_eligibility/eligibility.ts`) fonctionne en plusieurs étapes :
+L'algorithme de vérification d'éligibilité (`functions/check_eligibility/eligibility.ts`) est conçu pour déterminer les aides disponibles pour un projet de rénovation énergétique. Voici son fonctionnement détaillé :
 
-1. **Récupération des données**
-   - Informations sur la simulation (profil utilisateur, type de travaux, etc.)
-   - Liste des aides disponibles dans la base de données
+### 1. Récupération et Validation des Données
 
-2. **Filtrage des aides**
-   Pour chaque aide, vérification des critères :
-   - Revenus (minimum/maximum)
-   - Âge du bâtiment
-   - Statut d'occupation (propriétaire, locataire, etc.)
-   - Types de travaux autorisés
-   - Département (pour les aides locales)
+#### Données de Simulation
+- Profil utilisateur (revenus, statut d'occupation)
+- Caractéristiques du logement (âge, surface, étiquette énergétique)
+- Type de travaux envisagés
+- Localisation (département)
+- Options spécifiques (matériaux biosourcés)
 
-3. **Calcul des montants**
-   Pour chaque aide éligible :
-   - Calcul du montant de base
-   - Application des bonus (ex: matériaux biosourcés)
-   - Ajustements selon la surface ou autres critères
+#### Données des Aides
+- Catalogue complet des aides disponibles
+- Critères d'éligibilité pour chaque aide
+- Montants de base et bonus possibles
+
+### 2. Processus de Filtrage
+
+L'algorithme applique une série de filtres pour chaque aide :
+
+#### a. Filtres Primaires
+- **Revenus** :
+  - Vérification des seuils minimum/maximum
+  - Prise en compte des tranches de revenus (très modeste, modeste, etc.)
+  - Adaptation des montants selon la tranche
+
+- **Âge du Bâtiment** :
+  - Distinction entre bâtiments récents et anciens (seuil de 15 ans)
+  - Critères spécifiques pour certaines aides (ex: MaPrimeRenov)
+
+#### b. Filtres de Statut
+- **Statut d'Occupation** :
+  - Propriétaire occupant
+  - Propriétaire bailleur
+  - Locataire
+  - Copropriétaire
+  - Vérification des aides accessibles pour chaque statut
+
+#### c. Filtres Techniques
+- **Types de Travaux** :
+  - Isolation
+  - Chauffage
+  - Ventilation
+  - Menuiseries
+  - Rénovation globale
+  - Compatibilité avec les critères de l'aide
+
+#### d. Filtres Géographiques
+- **Département** :
+  - Aides nationales (disponibles partout)
+  - Aides locales (département 49)
+  - Aides spécifiques (communes, agglomérations)
+
+### 3. Calcul des Montants
+
+Pour chaque aide éligible, l'algorithme effectue :
+
+#### a. Calcul du Montant de Base
+- Montant forfaitaire ou pourcentage
+- Adaptation selon la tranche de revenus
+- Prise en compte des plafonds
+
+#### b. Application des Bonus
+- **Bonus Matériaux Biosourcés** :
+  - Vérification de l'utilisation
+  - Calcul du bonus (+500€ pour certaines aides)
+
+#### c. Ajustements Spécifiques
+- **Surface** :
+  - Calcul au m² si applicable
+  - Application des coefficients
+  - Respect des plafonds
+
+- **Cumul des Aides** :
+  - Vérification des règles de cumul
+  - Respect des plafonds globaux
+  - Optimisation des combinaisons
+
+### 4. Résultats et Recommandations
+
+L'algorithme retourne :
+
+#### a. Aides Éligibles
+- Liste détaillée des aides accessibles
+- Montants calculés et ajustés
+- Conditions spécifiques à respecter
+
+#### b. Options de Financement
+- Suggestions de prêts (Éco-PTZ)
+- Autres dispositifs complémentaires
+- Optimisations possibles
+
+#### c. Informations Complémentaires
+- Documents requis par aide
+- Contacts des organismes
+- Prochaines étapes recommandées
+
+### 5. Validation et Tests
+
+L'algorithme est validé par :
+- Tests unitaires couvrant chaque cas
+- Scénarios de test réels
+- Vérifications des règles de cumul
+- Tests de régression automatisés
+
+### 6. Pseudo-code des Algorithmes
+
+#### a. Vérification d'Éligibilité
+```
+Algorithme VerifierEligibilite
+    // Entrées : simulation, client
+    // Sortie : liste des aides éligibles avec montants
+
+    DÉBUT
+        // 1. Récupération des données
+        aides ← RecupererToutesLesAides(client)
+        trancheRevenu ← CalculerTrancheRevenu(simulation.revenuFiscal)
+        aidesEligibles ← liste vide
+        
+        // 2. Filtrage des aides
+        POUR CHAQUE aide DANS aides FAIRE
+            eligible ← VRAI
+            
+            // 2.a Vérification des revenus
+            SI aide.revenuMin ET trancheRevenu.min < aide.revenuMin ALORS
+                eligible ← FAUX
+            SI aide.revenuMax ET trancheRevenu.max > aide.revenuMax ALORS
+                eligible ← FAUX
+            
+            // 2.b Vérification de l'âge du bâtiment
+            SI aide.batimentPlusDe15Ans ≠ simulation.batimentPlusDe15Ans ALORS
+                eligible ← FAUX
+            
+            // 2.c Vérification du statut d'occupation
+            SI aide.statutsOccupationAutorises N'INCLUT PAS simulation.statutOccupation ALORS
+                eligible ← FAUX
+            
+            // 2.d Vérification du type de travaux
+            SI aide.typesTravauxAutorises N'INCLUT PAS simulation.typeTravaux ALORS
+                eligible ← FAUX
+            
+            // 2.e Vérification du département
+            SI aide.departement ≠ NULL ET aide.departement ≠ simulation.departement ALORS
+                eligible ← FAUX
+            
+            SI eligible ALORS
+                AJOUTER aide À aidesEligibles
+            
+        FIN POUR
+        
+        // 3. Calcul des montants
+        aidesCalculees ← liste vide
+        
+        POUR CHAQUE aide DANS aidesEligibles FAIRE
+            // 3.a Calcul du montant de base
+            montant ← aide.montantDefaut
+            
+            SELON aide.nom FAIRE
+                CAS "MaPrimeRenov":
+                    montant ← CalculerMontantMaPrimeRenov(simulation)
+                CAS "CEE":
+                    montant ← CalculerMontantCEE(simulation)
+                // etc.
+            FIN SELON
+            
+            // 3.b Application des bonus
+            SI simulation.materiauxBiosources ET aide.nom CONTIENT "départementale" ALORS
+                montant ← montant + 500
+            FIN SI
+            
+            // 3.c Ajustements finaux
+            montant ← AppliquerAjustements(montant, aide, simulation)
+            
+            AJOUTER {aide, montantAjuste: montant} À aidesCalculees
+        FIN POUR
+        
+        // 4. Préparation du résultat
+        RETOURNER {
+            aidesEligibles: aidesCalculees,
+            optionsFinancementSupp: ObtenirOptionsSupp(simulation),
+            infoAidesDisponibles: ObtenirInfoAides(aidesCalculees)
+        }
+    FIN
+```
+#### b. Calcul du Montant de MaPrimeRenov
+```
+Algorithme TesterEligibilite
+    // Entrées : client
+    // Sortie : résultats des tests
+
+    DÉBUT
+        // 1. Initialisation
+        categories ← {
+            "TestsRevenus": ["test-revenus-tres-modestes", "test-revenus-modestes", "test-revenus-eleves"],
+            "TestsOccupation": ["test-proprietaire-bailleur", "test-locataire", "test-copropriete"],
+            "TestsLocalisation": ["test-hors-49", "test-batiment-recent"],
+            "TestsSpeciaux": ["test-tous-criteres-max-ancien", "test-tous-criteres-max-recent"]
+        }
+        
+        // 2. Exécution des tests par catégorie
+        POUR CHAQUE categorie DANS categories FAIRE
+            AFFICHER "Test de la catégorie : " + categorie
+            
+            POUR CHAQUE sessionToken DANS categories[categorie] FAIRE
+                AFFICHER "Exécution du test : " + sessionToken
+                
+                // 2.a Récupération de la simulation
+                simulation ← RecupererSimulation(client, sessionToken)
+                SI simulation = NULL ALORS
+                    LEVER ERREUR "Simulation non trouvée : " + sessionToken
+                FIN SI
+                
+                // 2.b Exécution de la vérification
+                resultat ← VerifierEligibilite(simulation, client)
+                
+                // 2.c Vérifications de base
+                VERIFIER resultat ≠ NULL
+                VERIFIER resultat.aidesEligibles EST UN TABLEAU
+                
+                // 2.d Vérifications spécifiques
+                SELON sessionToken FAIRE
+                    CAS "test-revenus-tres-modestes":
+                        VERIFIER resultat.aidesEligibles.longueur > 0
+                        VERIFIER resultat.aidesEligibles CONTIENT "MaPrimeRenov"
+                        VERIFIER resultat.aidesEligibles CONTIENT AIDE DÉPARTEMENTALE AVEC BONUS
+                    
+                    CAS "test-hors-49":
+                        VERIFIER resultat.aidesEligibles NE CONTIENT PAS AIDES LOCALES
+                    
+                    CAS "test-locataire":
+                        VERIFIER resultat.aidesEligibles CONTIENT "CEE"
+                    
+                    CAS "test-tous-criteres-max-ancien":
+                        VERIFIER resultat.aidesEligibles CONTIENT "MaPrimeRenov"
+                        VERIFIER resultat.aidesEligibles CONTIENT AIDE DÉPARTEMENTALE
+                    
+                    CAS "test-tous-criteres-max-recent":
+                        VERIFIER resultat.aidesEligibles CONTIENT "CEE"
+                FIN SELON
+                
+                // 2.e Affichage des résultats
+                AFFICHER "Nombre d'aides éligibles : " + resultat.aidesEligibles.longueur
+                AFFICHER "Aides éligibles : " + resultat.aidesEligibles
+            FIN POUR
+        FIN POUR
+    FIN
+```
 
 ## Tests Automatisés
 
@@ -89,37 +317,3 @@ SMTP_PASSWORD=           # Mot de passe SMTP OVH
 La base de données doit contenir :
 - Table `aid_details` : définition des aides
 - Table `aid_simulation` : données des simulations
-
-Les migrations et seeds sont automatiquement appliqués par le workflow.
-
-## Développement Local
-
-1. Cloner le repository
-   ```bash
-   git clone [URL_DU_REPO]
-   cd [NOM_DU_REPO]
-   ```
-
-2. Configurer l'environnement
-   - Copier `.env.example` vers `.env`
-   - Remplir les variables d'environnement
-
-3. Lancer Supabase en local
-   ```bash
-   supabase start
-   supabase db reset
-   ```
-
-4. Lancer les tests
-   ```bash
-   deno test --allow-env --allow-read --allow-net functions/tests/check_eligibility-test.ts
-   ```
-
-## Contribution
-
-1. Créer une branche pour vos modifications
-2. Ajouter ou modifier les tests si nécessaire
-3. Vérifier que tous les tests passent
-4. Créer une Pull Request
-
-Les workflows GitHub s'exécuteront automatiquement sur votre PR.
