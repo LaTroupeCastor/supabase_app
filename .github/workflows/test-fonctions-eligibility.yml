@@ -69,10 +69,13 @@ jobs:
 
       - name: Send email on failure
         if: failure()
-        uses: resend/resend-github-action@v0.2.0
+        uses: dawidd6/action-send-mail@v3
         with:
-          api_key: ${{ secrets.RESEND_API_KEY }}
-          from: "GitHub Actions <onboarding@resend.dev>"
-          to: "bastien.metais@gmail.com"
+          server_address: ssl0.ovh.net
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
           subject: "❌ Tests failed on LaTroupeCastor"
           body: "Les tests ont échoué sur la branche ${{ github.ref }}. Voir les logs : ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{github.run_id }}"
+          to: bastien.metais@gmail.com
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
