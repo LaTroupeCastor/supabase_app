@@ -46,7 +46,7 @@ jobs:
       
       - name: Apply migrations
         run: |
-          supabase db push
+          supabase migration up
                                                                                                                                                                   
       # Exécution des tests                                                                                                                                        
       - name: Run tests                                                                                                                                            
