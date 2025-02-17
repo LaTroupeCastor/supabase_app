@@ -107,12 +107,7 @@ export interface EligibilityResult {
  */
 export interface EligibilityResponse {
     eligible_aids: EligibilityResult[];
-    additional_funding_options: {
-        name: string;
-        description: string;
-        conditions: string[];
-        more_info_url?: string;
-    }[];
+    additional_funding_options: AidDetails[];
     available_aids_info: {
         name: string;
         description: string;
