@@ -18,7 +18,8 @@ INSERT INTO aid_details (
     required_documents,
     occupancy_status_required,
     cumulative,
-    more_info_url
+    more_info_url,
+    is_funding_option
 ) VALUES 
 -- 1. MaPrimeRenov
 (
