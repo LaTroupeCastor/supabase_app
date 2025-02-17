@@ -9,54 +9,10 @@ import {
 } from "./types.ts";
 
 /**
- * Retourne les options de financement additionnelles selon le statut d'occupation
+ * Filtre les options de financement additionnelles depuis la base de données
  */
-function getAdditionalFundingOptions(simulation: Simulation) {
-    return [
-        {
-            name: "Eco-PTZ (Éco-Prêt à Taux Zéro)",
-            description: "Prêt sans intérêts jusqu'à 50 000€ pour financer vos travaux de rénovation énergétique",
-            conditions: [
-                "Logement construit avant 1990",
-                "Propriétaires occupants ou bailleurs",
-                "Pas de conditions de ressources",
-                "Pour isolation, chauffage, fenêtres"
-            ],
-            more_info_url: "https://www.economie.gouv.fr/particuliers/eco-pret-a-taux-zero-ptz"
-        },
-        {
-            name: "Exonération de taxe foncière",
-            description: "Exonération temporaire de taxe foncière pour les travaux d'économie d'énergie",
-            conditions: [
-                "Logement achevé avant 1989",
-                "Travaux éligibles d'économie d'énergie",
-                "Montant minimum de travaux",
-                "Délibération de la collectivité locale"
-            ],
-            more_info_url: "https://www.service-public.fr/particuliers/vosdroits/F31687"
-        },
-        ...(simulation.occupancy_status === OccupancyStatusType.OWNER_LESSOR ? [{
-            name: "Solibail",
-            description: "Dispositif permettant de louer votre bien à une association qui garantit le paiement du loyer",
-            conditions: [
-                "Location à une association agréée",
-                "Bail de 3 ans renouvelable",
-                "Garantie du paiement des loyers",
-                "Accompagnement par l'association"
-            ],
-            more_info_url: "https://www.service-public.fr/particuliers/vosdroits/F33778"
-        }] : []),
-        ...(simulation.occupancy_status === OccupancyStatusType.CO_OWNER ? [{
-            name: "Aides spécifiques copropriétés",
-            description: "Des aides collectives existent pour les copropriétés votant des travaux de rénovation énergétique",
-            conditions: [
-                "Vote des travaux en assemblée générale nécessaire",
-                "Accompagnement possible par un syndic",
-                "Cumul possible des aides individuelles et collectives"
-            ],
-            more_info_url: "https://www.anah.fr/copropriete"
-        }] : [])
-    ];
+function getAdditionalFundingOptions(aids: AidDetails[]): AidDetails[] {
+    return aids.filter((aid: AidDetails) => aid.is_funding_option);
 }
 
 /**
@@ -206,7 +162,7 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
 
     const response = {
         eligible_aids: eligibleAids,
-        additional_funding_options: getAdditionalFundingOptions(simulation),
+        additional_funding_options: getAdditionalFundingOptions(aids),
         available_aids_info: aids.map((aid: AidDetails) => ({
             name: aid.name,
             description: aid.description,
