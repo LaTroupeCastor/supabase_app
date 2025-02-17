@@ -157,9 +157,8 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
             !simulation.work_type.some(type => aid.allowed_work_types.includes(type))) return false;
 
         // Vérification des critères géographiques (département 49 - Maine et Loire)
-        if (aid.name.includes('département') && simulation.department !== '49') return false;
-        if (aid.name.includes('Saumur') && simulation.department !== '49') return false;
-        if (aid.name.includes('Angers') && simulation.department !== '49') return false;
+        if ((aid.name.includes('département') || aid.name.includes('Saumur') || aid.name.includes('Angers')) && 
+            (!simulation.department || simulation.department !== '49')) return false;
 
         return true;
     }).map((aid: AidDetails) => {
