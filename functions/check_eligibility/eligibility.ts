@@ -205,7 +205,7 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
         try {
             const totalAmount = eligibleAids.reduce((sum: number, aid: AidDetails & { adjusted_amount: number }) => sum + aid.adjusted_amount, 0);
 
-            await fetch('https://api.resend.com/emails', {
+            const emailResponse = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -244,6 +244,7 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
                     `
                 }),
             });
+            await emailResponse.text(); // Consommer le corps de la réponse
         } catch (error) {
             console.error('Erreur lors de l\'envoi de l\'email:', error);
         }
