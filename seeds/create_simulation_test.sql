@@ -22,7 +22,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-tres-modestes',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test1@example.com', false, true, true, true,
-    'F_G', 'owner_occupant', 'global', 'very_low',
+    'F_G', 'owner_occupant', 'global_renovation', 'very_low',
     'Jean', 'Dupont'
 ),
 -- Revenus modestes
@@ -66,7 +66,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-proprietaire-bailleur',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test4@example.com', false, false, true, true,
-    'F_G', 'owner_lessor', 'global', 'medium',
+    'F_G', 'owner_lessor', 'global_renovation', 'medium',
     'Sophie', 'Petit'
 ),
 -- Locataire
@@ -162,7 +162,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-batiment-recent',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test8@example.com', false, false, false, true,
-    'A_B_C_D_E', 'owner_occupant', 'global', 'medium',
+    'A_B_C_D_E', 'owner_occupant', 'global_renovation', 'medium',
     'Julie', 'Bernard'
 ),
 -- Tous critères maximaux - Bâtiment ancien (MaPrimeRenov)

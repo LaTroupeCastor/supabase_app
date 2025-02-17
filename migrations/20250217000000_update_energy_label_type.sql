@@ -4,7 +4,7 @@ DO $$ BEGIN
     CREATE TYPE energy_label_type_new AS ENUM ('A_B_C_D_E', 'F_G', 'UNKNOWN');
 
     -- Convertir les données existantes
-    ALTER TABLE simulations 
+    ALTER TABLE aid_simulation 
     ALTER COLUMN energy_label TYPE energy_label_type_new 
     USING (
         CASE energy_label::text
