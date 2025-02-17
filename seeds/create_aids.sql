@@ -35,7 +35,8 @@ INSERT INTO aid_details (
     ARRAY['Avis d''imposition', 'Devis d''artisan RGE', 'Justificatif de propriété'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.maprimerenov.gouv.fr/'
+    'https://www.maprimerenov.gouv.fr/',
+    false
 ),
 
 -- 2. Certificats d'Économies d'Énergie (CEE)
@@ -53,7 +54,8 @@ INSERT INTO aid_details (
     ARRAY['Devis d''artisan RGE', 'Factures des travaux'],
     ARRAY['owner_occupant', 'owner_lessor', 'tenant']::occupancy_status_type[],
     true,
-    'https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie'
+    'https://www.ecologie.gouv.fr/dispositif-des-certificats-deconomies-denergie',
+    false
 ),
 
 -- 3. Aide départementale - Maine-et-Loire
@@ -71,7 +73,8 @@ INSERT INTO aid_details (
     ARRAY['Avis d''imposition', 'DPE avant travaux', 'Devis d''artisan'],
     ARRAY['owner_occupant']::occupancy_status_type[],
     true,
-    'https://www.maine-et-loire.fr/aides-et-services/logement-et-habitat/ameliorer-son-logement'
+    'https://www.maine-et-loire.fr/aides-et-services/logement-et-habitat/ameliorer-son-logement',
+    false
 ),
 
 -- 4. Aide Mieux chez Moi
@@ -107,7 +110,8 @@ INSERT INTO aid_details (
     ARRAY['Devis d''artisan RGE', 'Justificatif de domicile'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.saumurvaldeloire.fr/logement'
+    'https://www.saumurvaldeloire.fr/logement',
+    false
 ),
 
 -- 6. Eco-prêt à taux zéro
@@ -163,7 +167,8 @@ INSERT INTO aid_details (
     ARRAY['Devis d''artisan RGE', 'Photo de l''ancien appareil', 'Certificat de destruction'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://agirpourlatransition.ademe.fr/particuliers/finances/aides-a-renovation/aide-fonds-air'
+    'https://agirpourlatransition.ademe.fr/particuliers/finances/aides-a-renovation/aide-fonds-air',
+    false
 ),
 
 -- 9. Habiter Mieux Sérénité
@@ -181,7 +186,8 @@ INSERT INTO aid_details (
     ARRAY['Avis d''imposition', 'Devis d''artisan RGE', 'DPE avant travaux', 'Justificatif de propriété'],
     ARRAY['owner_occupant']::occupancy_status_type[],
     true,
-    'https://www.anah.fr/proprietaires/proprietaires-occupants/etre-mieux-chauffe-avec-habiter-mieux-serenite/'
+    'https://www.anah.fr/proprietaires/proprietaires-occupants/etre-mieux-chauffe-avec-habiter-mieux-serenite/',
+    false
 ),
 
 -- 10. Aide spécifique communes
@@ -199,5 +205,6 @@ INSERT INTO aid_details (
     ARRAY['Justificatif de domicile', 'Devis d''artisan'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.service-public.fr/particuliers/vosdroits/F35083'
+    'https://www.service-public.fr/particuliers/vosdroits/F35083',
+    false
 );
