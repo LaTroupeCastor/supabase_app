@@ -24,6 +24,17 @@ function getAdditionalFundingOptions(simulation: Simulation) {
             ],
             more_info_url: "https://www.economie.gouv.fr/particuliers/eco-pret-a-taux-zero-ptz"
         },
+        {
+            name: "Exonération de taxe foncière",
+            description: "Exonération temporaire de taxe foncière pour les travaux d'économie d'énergie",
+            conditions: [
+                "Logement achevé avant 1989",
+                "Travaux éligibles d'économie d'énergie",
+                "Montant minimum de travaux",
+                "Délibération de la collectivité locale"
+            ],
+            more_info_url: "https://www.service-public.fr/particuliers/vosdroits/F31687"
+        },
         ...(simulation.occupancy_status === OccupancyStatusType.OWNER_LESSOR ? [{
             name: "Solibail",
             description: "Dispositif permettant de louer votre bien à une association qui garantit le paiement du loyer",
