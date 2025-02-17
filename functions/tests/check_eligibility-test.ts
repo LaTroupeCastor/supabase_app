@@ -80,6 +80,9 @@ const testCheckEligibility = async () => {
                     case 'test-revenus-tres-modestes':
                         assert(result.eligible_aids.length > 0, 'Should have eligible aids for very low income')
                         assert(result.eligible_aids.some(aid => aid.name === 'MaPrimeRenov'), 'Should include MaPrimeRenov')
+                        assert(result.eligible_aids.some(aid => aid.name === 'Certificats d\'Économies d\'Énergie'), 'Should include CEE')
+                        const ceeAid = result.eligible_aids.find(aid => aid.name === 'Certificats d\'Économies d\'Énergie')
+                        assert(ceeAid && ceeAid.adjusted_amount > 0, 'CEE amount should be positive')
                         assert(result.eligible_aids.some(aid =>
                             aid.name.includes('départementale') &&
                             aid.adjusted_amount > aid.default_amount

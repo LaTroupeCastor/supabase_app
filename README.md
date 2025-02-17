@@ -22,7 +22,7 @@ L'algorithme de vérification d'éligibilité (`functions/check_eligibility/elig
 
 ### 2. Processus de Filtrage
 
-L'algorithme applique une série de filtres pour chaque aide :
+L'algorithme applique une série de filtres pour chaque aide. Les travaux peuvent maintenant être multiples, permettant de cumuler les aides et les montants pour différents types de travaux :
 
 #### a. Filtres Primaires
 - **Revenus** :
@@ -44,12 +44,14 @@ L'algorithme applique une série de filtres pour chaque aide :
 
 #### c. Filtres Techniques
 - **Types de Travaux** :
-  - Isolation
-  - Chauffage
-  - Ventilation
-  - Menuiseries
-  - Rénovation globale
-  - Compatibilité avec les critères de l'aide
+  - Combinaisons possibles :
+    * Isolation + Chauffage
+    * Ventilation + Menuiseries
+    * Isolation + Chauffage + Ventilation
+    * etc.
+  - Chaque type de travaux peut générer ses propres aides
+  - Les montants CEE sont cumulables par type de travaux
+  - Vérification de la compatibilité de chaque type avec les critères de l'aide
 
 #### d. Filtres Géographiques
 - **Département** :
@@ -142,7 +144,8 @@ Algorithme VerifierEligibilite
                 eligible ← FAUX
             
             // 2.d Vérification du type de travaux
-            SI aide.typesTravauxAutorises N'INCLUT PAS simulation.typeTravaux ALORS
+            SI aide.typesTravauxAutorises ET aide.typesTravauxAutorises.longueur > 0 ET
+               PAS (simulation.typeTravaux.EXISTE(type => aide.typesTravauxAutorises.INCLUT(type))) ALORS
                 eligible ← FAUX
             
             // 2.e Vérification du département
@@ -162,10 +165,20 @@ Algorithme VerifierEligibilite
             montant ← aide.montantDefaut
             
             SELON aide.nom FAIRE
+                CAS "CEE":
+                    montant ← 0
+                    POUR CHAQUE type DANS simulation.typeTravaux FAIRE
+                        montant ← montant + BASE_CEE_AMOUNTS[type]
+                    FIN POUR
+                    
+                    SI simulation.revenuFiscal = TRES_MODESTE ALORS
+                        montant ← montant * 2
+                    SINON SI simulation.revenuFiscal = MODESTE ALORS
+                        montant ← montant * 1.5
+                    FIN SI
+                    
                 CAS "MaPrimeRenov":
                     montant ← CalculerMontantMaPrimeRenov(simulation)
-                CAS "CEE":
-                    montant ← CalculerMontantCEE(simulation)
                 // etc.
             FIN SELON
             

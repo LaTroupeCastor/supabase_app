@@ -65,7 +65,7 @@ export interface Simulation {
     energy_label?: EnergyLabelType;
     fiscal_income?: FiscalIncomeType;
     occupancy_status?: OccupancyStatusType;
-    work_type?: WorkType;
+    work_type: WorkType[];
     living_area?: number | null;
     name: string;
     subname: string;
@@ -83,7 +83,7 @@ export interface AidDetails {
     max_income?: number;
     building_age_over_15?: boolean;
     occupancy_status_required?: OccupancyStatusType[];
-    allowed_work_types?: WorkType[];
+    allowed_work_types: WorkType[];
     more_info_url?: string;
     is_funding_option?: boolean;
 }

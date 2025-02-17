@@ -31,9 +31,12 @@ function calculateCEEAmount(simulation: Simulation): number {
         [WorkType.GLOBAL_RENOVATION]: 5000,
     };
 
-    if (!simulation.work_type) return 0;
+    if (!simulation.work_type || simulation.work_type.length === 0) return 0;
 
-    let amount = BASE_CEE_AMOUNTS[simulation.work_type];
+    let amount = 0;
+    for (const workType of simulation.work_type) {
+        amount += BASE_CEE_AMOUNTS[workType];
+    }
 
     // Application des bonus
     if (simulation.fiscal_income === FiscalIncomeType.VERY_LOW) {
@@ -58,6 +61,10 @@ function calculateSpecificAidAmount(
     simulation: Simulation,
     incomeBracket: { min: number; max: number | null }
 ): number {
+    // Ne pas calculer pour les options de financement
+    if (aid.is_funding_option) {
+        return 0;
+    }
     switch (aid.name) {
         case 'Aide départementale Maine-et-Loire':
             if (simulation.department === '49' &&
@@ -66,20 +73,34 @@ function calculateSpecificAidAmount(
                     aid.default_amount + 500 :
                     aid.default_amount;
             }
-            break;
-
+            return 0;
 
         case 'Aide amélioration énergétique Saumur':
             if (simulation.department === '49') {
                 return Math.min(aid.max_amount, aid.default_amount);
             }
-            break;
+            return 0;
 
         case 'MaPrimeRenov':
-            if (incomeBracket.min < 15262) return aid.max_amount;
-            if (incomeBracket.min < 19565) return aid.max_amount * 0.75;
-            if (incomeBracket.min < 29148) return aid.max_amount * 0.50;
-            return aid.max_amount * 0.25;
+            let baseAmount = aid.max_amount;
+            if (incomeBracket.min < 15262) return baseAmount;
+            if (incomeBracket.min < 19565) return baseAmount * 0.75;
+            if (incomeBracket.min < 29148) return baseAmount * 0.50;
+            return baseAmount * 0.25;
+
+        case 'Fonds Air Bois':
+            if (simulation.work_type.some(type => type === WorkType.HEATING)) {
+                return aid.max_amount;
+            }
+            return 0;
+
+        case 'Aides spécifiques communes':
+            if (simulation.work_type.some(type =>
+                [WorkType.HEATING, WorkType.ISOLATION].includes(type))) {
+                return aid.default_amount;
+            }
+            return 0;
+
     }
 
     return aid.default_amount;
@@ -126,13 +147,14 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
     const eligibleAids = aids.filter((aid: AidDetails) => {
         // Exclure les options de financement
         if (aid.is_funding_option) return false;
-        
+
         // Vérification des critères de base (revenus, âge du bâtiment, statut d'occupation, type de travaux)
         if (aid.min_income && incomeBracket.min < aid.min_income) return false;
         if (aid.max_income && incomeBracket.max && incomeBracket.max > aid.max_income) return false;
         if (aid.building_age_over_15 !== undefined && aid.building_age_over_15 !== simulation.building_age_over_15) return false;
         if (aid.occupancy_status_required && !aid.occupancy_status_required.includes(simulation.occupancy_status!)) return false;
-        if (aid.allowed_work_types && !aid.allowed_work_types.includes(simulation.work_type!)) return false;
+        if (aid.allowed_work_types && aid.allowed_work_types.length > 0 &&
+            !simulation.work_type.some(type => aid.allowed_work_types.includes(type))) return false;
 
         // Vérification des critères géographiques (département 49 - Maine et Loire)
         if (aid.name.includes('département') && simulation.department !== '49') return false;
@@ -141,19 +163,24 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
 
         return true;
     }).map((aid: AidDetails) => {
-        let adjustedAmount = aid.default_amount;
-
-        if (aid.name === 'Certificats d\'Économies d\'Énergie') {
-            adjustedAmount = calculateCEEAmount(simulation);
-        } else {
-            adjustedAmount = calculateSpecificAidAmount(aid, simulation, incomeBracket);
-        }
-
+        const adjustedAmount = calculateSpecificAidAmount(aid, simulation, incomeBracket);
         return {
             ...aid,
             adjusted_amount: Number(adjustedAmount.toFixed(2))
         };
     });
+
+    // Récupération de l'aide CEE depuis la base de données
+    const ceeAid = aids.find((aid: AidDetails) => aid.name === 'Certificats d\'Économies d\'Énergie');
+    if (ceeAid) {
+        const ceeAmount = calculateCEEAmount(simulation);
+        eligibleAids.push({
+            ...ceeAid,
+            max_amount: ceeAmount,
+            default_amount: ceeAmount,
+            adjusted_amount: Number(ceeAmount.toFixed(2))
+        });
+    }
 
     const response = {
         eligible_aids: eligibleAids,

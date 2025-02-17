@@ -22,7 +22,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-tres-modestes',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test1@example.com', false, true, true, true,
-    'F_G', 'owner_occupant', 'global_renovation', 'very_low',
+    'F_G', 'owner_occupant', ARRAY['isolation'::work_type, 'heating'::work_type, 'ventilation'::work_type], 'very_low',
     'Jean', 'Dupont'
 ),
 -- Revenus modestes
@@ -30,7 +30,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-modestes',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test2@example.com', false, false, true, true,
-    'A_B_C_D_E', 'owner_occupant', 'isolation', 'low',
+    'A_B_C_D_E', 'owner_occupant', ARRAY['isolation'::work_type, 'windows'::work_type], 'low',
     'Marie', 'Martin'
 ),
 -- Revenus élevés
@@ -38,7 +38,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-eleves',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test3@example.com', false, false, true, true,
-    'A_B_C_D_E', 'owner_occupant', 'heating', 'very_high',
+    'A_B_C_D_E', 'owner_occupant', ARRAY['heating'::work_type, 'ventilation'::work_type], 'very_high',
     'Pierre', 'Durand'
 );
 
@@ -66,7 +66,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-proprietaire-bailleur',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test4@example.com', false, false, true, true,
-    'F_G', 'owner_lessor', 'global_renovation', 'medium',
+    'F_G', 'owner_lessor', ARRAY['isolation'::work_type, 'heating'::work_type, 'windows'::work_type], 'medium',
     'Sophie', 'Petit'
 ),
 -- Locataire
@@ -74,7 +74,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-locataire',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test5@example.com', false, false, false, true,
-    'A_B_C_D_E', 'tenant', 'ventilation', 'low',
+    'A_B_C_D_E', 'tenant', ARRAY['ventilation'::work_type, 'windows'::work_type], 'low',
     'Lucas', 'Moreau'
 ),
 -- Copropriétaire
@@ -82,7 +82,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-copropriete',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test6@example.com', false, false, true, true,
-    'A_B_C_D_E', 'co_owner', 'windows', 'medium',
+    'A_B_C_D_E', 'co_owner', ARRAY['windows'::work_type, 'isolation'::work_type], 'medium',
     'Emma', 'Leroy'
 );
 
@@ -110,7 +110,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-isolation',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test10@example.com', false, true, true, true,
-    'A_B_C_D_E', 'owner_occupant', 'isolation', 'medium',
+    'A_B_C_D_E', 'owner_occupant', ARRAY['isolation'::work_type, 'windows'::work_type, 'ventilation'::work_type], 'medium',
     'Alice', 'Robert'
 ),
 -- Test chauffage
@@ -118,7 +118,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-chauffage',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test11@example.com', false, false, true, true,
-    'F_G', 'owner_occupant', 'heating', 'medium',
+    'F_G', 'owner_occupant', ARRAY['heating'::work_type, 'isolation'::work_type], 'medium',
     'Hugo', 'Simon'
 ),
 -- Test ventilation
@@ -126,7 +126,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-ventilation',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test12@example.com', false, false, true, true,
-    'A_B_C_D_E', 'owner_occupant', 'ventilation', 'low',
+    'A_B_C_D_E', 'owner_occupant', ARRAY['ventilation'::work_type, 'heating'::work_type], 'low',
     'Laura', 'Lambert'
 );
 
@@ -154,7 +154,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-hors-49',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '44', 'test7@example.com', false, true, true, true,
-    'F_G', 'owner_occupant', 'global_renovation', 'medium',
+    'F_G', 'owner_occupant', ARRAY['isolation'::work_type, 'heating'::work_type, 'windows'::work_type, 'ventilation'::work_type], 'medium',
     'Thomas', 'Roux'
 ),
 -- Bâtiment récent
@@ -162,7 +162,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-batiment-recent',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test8@example.com', false, false, false, true,
-    'A_B_C_D_E', 'owner_occupant', 'global_renovation', 'medium',
+    'A_B_C_D_E', 'owner_occupant', ARRAY['isolation'::work_type, 'heating'::work_type], 'medium',
     'Julie', 'Bernard'
 ),
 -- Tous critères maximaux - Bâtiment ancien (MaPrimeRenov)
@@ -170,7 +170,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-tous-criteres-max-ancien',                                                                                                                                
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),                                                                                                                     
     '49', 'test9@example.com', false, true, true, true,                                                                                                           
-    'F_G', 'owner_occupant', 'heating', 'very_low',                                                                                                                
+    'F_G', 'owner_occupant', ARRAY['heating'::work_type, 'isolation'::work_type, 'ventilation'::work_type], 'very_low',                                                                                                                
     'Nicolas', 'Dubois'
 ),
 -- Tous critères maximaux - Bâtiment récent (CEE)
@@ -178,6 +178,6 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-tous-criteres-max-recent',                                                                                                                                
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),                                                                                                                     
     '49', 'test10@example.com', false, true, false, true,                                                                                                           
-    'F_G', 'owner_occupant', 'heating', 'very_low',                                                                                                                
+    'F_G', 'owner_occupant', ARRAY['heating'::work_type, 'windows'::work_type, 'ventilation'::work_type], 'very_low',                                                                                                                
     'Thomas', 'Martin'
 );
