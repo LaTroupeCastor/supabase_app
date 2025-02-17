@@ -75,7 +75,7 @@ function calculateSpecificAidAmount(
             return 0;
 
         case 'Aide amélioration énergétique Saumur':
-            return Math.min(aid.max_amount, aid.default_amount);
+            return aid.max_amount;  // Retourne toujours le montant maximum
 
         case 'MaPrimeRenov':
             let baseAmount = aid.max_amount;
