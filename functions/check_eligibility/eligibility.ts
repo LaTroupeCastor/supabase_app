@@ -67,8 +67,7 @@ function calculateSpecificAidAmount(
     }
     switch (aid.name) {
         case 'Aide départementale Maine-et-Loire':
-            if (simulation.department === '49' &&
-                (simulation.energy_label === EnergyLabelType.F_G)) {
+            if (simulation.energy_label === EnergyLabelType.F_G) {
                 return simulation.biosourced_materials ?
                     aid.default_amount + 500 :
                     aid.default_amount;
@@ -76,10 +75,7 @@ function calculateSpecificAidAmount(
             return 0;
 
         case 'Aide amélioration énergétique Saumur':
-            if (simulation.department === '49') {
-                return Math.min(aid.max_amount, aid.default_amount);
-            }
-            return 0;
+            return Math.min(aid.max_amount, aid.default_amount);
 
         case 'MaPrimeRenov':
             let baseAmount = aid.max_amount;
