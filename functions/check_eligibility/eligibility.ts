@@ -68,11 +68,6 @@ function calculateSpecificAidAmount(
             }
             break;
 
-        case 'Aide Mieux chez Moi':
-            if (simulation.department === '49') {
-                return aid.default_amount;
-            }
-            break;
 
         case 'Aide amélioration énergétique Saumur':
             if (simulation.department === '49') {
