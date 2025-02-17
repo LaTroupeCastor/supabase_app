@@ -67,11 +67,9 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
  -- Étape 2, Question 3 (Étiquette énergétique)                                                                                                                                         
  WITH dpe_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%étiquette énergétique%')                                                                                          
  INSERT INTO aid_answers (sub_question_id, content, image_url, value) VALUES                                                                                                                              
- ((SELECT id FROM dpe_q), 'A ou B', 'dpe_ab', 'A_B'),                                                                                                                                                    
- ((SELECT id FROM dpe_q), 'C ou D', 'dpe_cd', 'C_D'),                                                                                                                                                    
- ((SELECT id FROM dpe_q), 'E', 'dpe_e', 'E'),                                                                                                                                                         
+ ((SELECT id FROM dpe_q), 'A, B, C, D ou E', 'dpe_abcde', 'A_B_C_D_E'),                                                                                                                                                    
  ((SELECT id FROM dpe_q), 'F ou G', 'dpe_fg', 'F_G'),                                                                                                                                                    
- ((SELECT id FROM dpe_q), 'Je ne sais pas', 'question', 'dont_know');                                                                                                                                            
+ ((SELECT id FROM dpe_q), 'Je ne sais pas', 'question', 'UNKNOWN');                                                                                                                                            
                                                                                                                                                                                         
  -- Étape 2, Question 4 (Diagnostic énergétique)                                                                                                                                        
  WITH diagnostic_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%diagnostic énergétique%')                                                                                         

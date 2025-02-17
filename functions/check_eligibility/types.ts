@@ -1,12 +1,10 @@
 /**
  * Étiquettes énergétiques possibles pour un logement
- * Regroupées par paires pour simplifier (A/B, C/D, F/G)
+ * Regroupées en trois catégories : A à E, F/G, ou inconnue
  */
 export enum EnergyLabelType {
-    A_B = 'A_B',
-    C_D = 'C_D',
-    E = 'E',
-    F = 'F_G',
+    A_B_C_D_E = 'A_B_C_D_E',
+    F_G = 'F_G',
     UNKNOWN = 'UNKNOWN'
 }
 
