@@ -78,25 +78,6 @@ INSERT INTO aid_details (
     false
 ),
 
--- 4. Aide Mieux chez Moi
-(
-    'Aide Mieux chez Moi',
-    'Aide d''Angers Loire Métropole pour la rénovation énergétique ou l''adaptation au vieillissement.',
-    0,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    true,
-    ARRAY['isolation', 'heating', 'ventilation', 'windows', 'global_renovation']::work_type[],
-    'Angers Loire Métropole',
-    ARRAY['Justificatif de domicile', 'Devis d''artisan', 'Diagnostic énergétique'],
-    ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
-    true,
-    'https://www.angersloiremetropole.fr/mon-quotidien/logement-et-habitat/',
-    false
-),
-
 -- 5. Aide à l'amélioration énergétique Saumur
 (
     'Aide amélioration énergétique Saumur',
