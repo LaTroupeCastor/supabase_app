@@ -162,6 +162,9 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
 
     // Filtrage des aides selon les critères d'éligibilité
     const eligibleAids = aids.filter((aid: AidDetails) => {
+        // Exclure les options de financement
+        if (aid.is_funding_option) return false;
+        
         // Vérification des critères de base (revenus, âge du bâtiment, statut d'occupation, type de travaux)
         if (aid.min_income && incomeBracket.min < aid.min_income) return false;
         if (aid.max_income && incomeBracket.max && incomeBracket.max > aid.max_income) return false;

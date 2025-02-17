@@ -85,6 +85,7 @@ export interface AidDetails {
     occupancy_status_required?: OccupancyStatusType[];
     allowed_work_types?: WorkType[];
     more_info_url?: string;
+    is_funding_option?: boolean;
 }
 
 /**
