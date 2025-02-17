@@ -125,7 +125,8 @@ INSERT INTO aid_details (
     ARRAY['Plan de financement', 'Devis d''artisan RGE', 'Justificatif de propriété'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.economie.gouv.fr/particuliers/eco-pret-a-taux-zero-ptz'
+    'https://www.economie.gouv.fr/particuliers/eco-pret-a-taux-zero-ptz',
+    true
 ),
 
 -- 7. Exonération de taxe foncière
@@ -143,7 +144,8 @@ INSERT INTO aid_details (
     ARRAY['Factures des travaux', 'Formulaire H1', 'Justificatif de propriété'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.collectivites-locales.gouv.fr/finances-locales/la-fiscalite-directe-locale'
+    'https://www.collectivites-locales.gouv.fr/finances-locales/la-fiscalite-directe-locale',
+    true
 ),
 
 -- 8. Fonds Air Bois
