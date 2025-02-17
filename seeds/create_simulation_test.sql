@@ -22,7 +22,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-tres-modestes',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test1@example.com', false, true, true, true,
-    'F_G', 'owner_occupant', 'global_renovation', 'very_low',
+    'F_G', 'owner_occupant', 'global', 'very_low',
     'Jean', 'Dupont'
 ),
 -- Revenus modestes
@@ -30,7 +30,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-modestes',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test2@example.com', false, false, true, true,
-    'E', 'owner_occupant', 'isolation', 'low',
+    'A_B_C_D_E', 'owner_occupant', 'isolation', 'low',
     'Marie', 'Martin'
 ),
 -- Revenus élevés
@@ -38,7 +38,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-revenus-eleves',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test3@example.com', false, false, true, true,
-    'C_D', 'owner_occupant', 'heating', 'very_high',
+    'A_B_C_D_E', 'owner_occupant', 'heating', 'very_high',
     'Pierre', 'Durand'
 );
 
@@ -66,7 +66,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-proprietaire-bailleur',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test4@example.com', false, false, true, true,
-    'F_G', 'owner_lessor', 'global_renovation', 'medium',
+    'F_G', 'owner_lessor', 'global', 'medium',
     'Sophie', 'Petit'
 ),
 -- Locataire
@@ -74,7 +74,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-locataire',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test5@example.com', false, false, false, true,
-    'E', 'tenant', 'ventilation', 'low',
+    'A_B_C_D_E', 'tenant', 'ventilation', 'low',
     'Lucas', 'Moreau'
 ),
 -- Copropriétaire
@@ -82,7 +82,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-copropriete',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test6@example.com', false, false, true, true,
-    'C_D', 'co_owner', 'windows', 'medium',
+    'A_B_C_D_E', 'co_owner', 'windows', 'medium',
     'Emma', 'Leroy'
 );
 
@@ -110,7 +110,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-isolation',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test10@example.com', false, true, true, true,
-    'E', 'owner_occupant', 'isolation', 'medium',
+    'A_B_C_D_E', 'owner_occupant', 'isolation', 'medium',
     'Alice', 'Robert'
 ),
 -- Test chauffage
@@ -126,7 +126,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-ventilation',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test12@example.com', false, false, true, true,
-    'C_D', 'owner_occupant', 'ventilation', 'low',
+    'A_B_C_D_E', 'owner_occupant', 'ventilation', 'low',
     'Laura', 'Lambert'
 );
 
@@ -162,7 +162,7 @@ INSERT INTO public.aid_simulation (
     3, 2, 'test-batiment-recent',
     (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
     '49', 'test8@example.com', false, false, false, true,
-    'C_D', 'owner_occupant', 'global_renovation', 'medium',
+    'A_B_C_D_E', 'owner_occupant', 'global', 'medium',
     'Julie', 'Bernard'
 ),
 -- Tous critères maximaux - Bâtiment ancien (MaPrimeRenov)
