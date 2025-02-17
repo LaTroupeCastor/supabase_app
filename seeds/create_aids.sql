@@ -93,7 +93,8 @@ INSERT INTO aid_details (
     ARRAY['Justificatif de domicile', 'Devis d''artisan', 'Diagnostic énergétique'],
     ARRAY['owner_occupant', 'owner_lessor']::occupancy_status_type[],
     true,
-    'https://www.angersloiremetropole.fr/mon-quotidien/logement-et-habitat/'
+    'https://www.angersloiremetropole.fr/mon-quotidien/logement-et-habitat/',
+    false
 ),
 
 -- 5. Aide à l'amélioration énergétique Saumur
