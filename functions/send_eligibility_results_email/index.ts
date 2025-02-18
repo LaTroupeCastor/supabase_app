@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, eligibleAids, additionalFundingOptions, totalAmount } = await req.json()
+    const { email, eligibleAids, additionalFundingOptions, totalAmount, simulationId } = await req.json()
 
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -59,6 +59,22 @@ serve(async (req) => {
             <div style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
               <p>Ces résultats sont donnés à titre indicatif et ne constituent pas un engagement définitif.</p>
               <p>Pour plus d'informations, n'hésitez pas à nous contacter.</p>
+            </div>
+
+            <!-- Ajout du CTA -->
+            <div style="margin-top: 30px; text-align: center;">
+              <p style="margin-bottom: 20px; font-size: 16px;">Pour suivre l'avancement de votre projet et être accompagné par nos experts :</p>
+              <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" 
+                 style="display: inline-block; 
+                        background-color: #2ecc71; 
+                        color: white; 
+                        padding: 12px 24px; 
+                        text-decoration: none; 
+                        border-radius: 5px; 
+                        font-weight: bold;
+                        font-size: 16px;">
+                Créer mon compte
+              </a>
             </div>
           </div>
         `
