@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import {AidDetails} from "../check_eligibility/types.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,7 +35,7 @@ serve(async (req) => {
 
             <div style="margin: 20px 0;">
               <p style="font-weight: bold; margin: 5px 0;">Aides auxquelles vous pourriez être éligible :</p>
-              ${eligibleAids.map((aid) => `
+              ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `
                 <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
                   <p style="font-weight: bold; margin: 5px 0;">${aid.name}</p>
                   <p style="margin: 5px 0;">${aid.description}</p>
@@ -46,7 +47,7 @@ serve(async (req) => {
 
             <div style="margin: 20px 0;">
               <p style="font-weight: bold; margin: 5px 0;">Options de financement complémentaires :</p>
-              ${additionalFundingOptions.map((option) => `
+              ${additionalFundingOptions.map((option : AidDetails) => `
                 <div style="margin: 10px 0; padding: 10px; background-color: #f8f8f8; border-radius: 5px; border-left: 3px solid #3498db;">
                   <p style="font-weight: bold; margin: 5px 0;">${option.name}</p>
                   <p style="margin: 5px 0;">${option.description}</p>
@@ -65,13 +66,14 @@ serve(async (req) => {
     })
 
     const result = await emailResponse.text()
-    
+
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Une erreur inconnue est survenue';
+    return new Response(JSON.stringify({ error: errorMessage }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
     })
