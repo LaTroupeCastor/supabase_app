@@ -189,7 +189,7 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
         try {
             const totalAmount = eligibleAids.reduce((sum: number, aid: AidDetails & { adjusted_amount: number }) => sum + aid.adjusted_amount, 0);
 
-            await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send_eligibility_results_email`, {
+            const emailResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send_eligibility_results_email`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -199,9 +199,13 @@ export async function checkEligibility(simulation: Simulation, supabaseClient: a
                     email: simulation.email,
                     eligibleAids,
                     additionalFundingOptions: response.additional_funding_options,
-                    totalAmount
+                    totalAmount,
+                    simulationId: simulation.id
                 })
             });
+            
+            // Consommer la réponse pour éviter les avertissements dans les tests
+            await emailResponse.text();
         } catch (error: unknown) {
             console.error('Erreur lors de l\'appel à la fonction d\'envoi d\'email:',
                 error instanceof Error ? error.message : 'Une erreur inconnue est survenue'
