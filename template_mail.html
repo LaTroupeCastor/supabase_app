@@ -1,29 +1,39 @@
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">                                    
-    <h2 style="color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Nouveau message de contact</h2>                                                             
-                                                                                                                                                                            
-    <div style="margin: 20px 0;">                                                                                                                                             
-        <p style="font-weight: bold; margin: 5px 0;">De :</p>                                                                                                                 
-        <p style="margin: 5px 0;">${name} ${subname}</p>                                                                                                                      
-    </div>                                                                                                                                                                    
-                                                                                                                                                                            
-    <div style="margin: 20px 0;">                                                                                                                                             
-        <p style="font-weight: bold; margin: 5px 0;">Email :</p>                                                                                                              
-        <p style="margin: 5px 0;">${emailFrom}</p>                                                                                                                            
-    </div>                                                                                                                                                                    
-                                                                                                                                                                            
-    ${phone ? `                                                                                                                                                               
-    <div style="margin: 20px 0;">                                                                                                                                             
-        <p style="font-weight: bold; margin: 5px 0;">Téléphone :</p>                                                                                                          
-        <p style="margin: 5px 0;">${phone}</p>                                                                                                                                
-    </div>                                                                                                                                                                    
-    ` : ''}                                                                                                                                                                   
-                                                                                                                                                                            
-    <div style="margin: 20px 0;">                                                                                                                                             
-        <p style="font-weight: bold; margin: 5px 0;">Message :</p>                                                                                                            
-        <p style="margin: 5px 0; white-space: pre-wrap;">${message}</p>                                                                                                       
-    </div>                                                                                                                                                                    
-                                                                                                                                                                            
-    <div style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">                                                              
-        <p>Ce message a été envoyé depuis le formulaire de contact de La Troupe Castor</p>                                                                                    
-    </div>                                                                                                                                                                    
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://latroupecastor.fr/logo.png" alt="La Troupe Castor" style="width: 200px;">
+    </div>
+
+    <div style="background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #333; margin-bottom: 20px;">${name}, merci d'avoir utilisé notre simulateur d'aide à la rénovation.</h2>
+
+        <p style="color: #666; margin-bottom: 30px;">Selon votre simulation, vous pouvez bénéficier de plusieurs dispositifs d'aide pour votre projet!</p>
+
+        <div style="background-color: #FFA500; color: white; padding: 15px; border-radius: 5px; text-align: center; margin-bottom: 30px;">
+            <h3 style="margin: 0;">${totalAmount}€ d'aides possibles</h3>
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <h4 style="color: #333; margin-bottom: 10px;">Liste des aides potentielles :</h4>
+            ${aidsList}
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <h4 style="color: #333; margin-bottom: 10px;">Liste des options de financement complémentaires éligibles :</h4>
+            ${financingOptions}
+        </div>
+
+        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 30px;">
+            <p style="color: #666; margin: 0;">Le montant indiqué n'est qu'une estimation qui devra être confirmée par les organismes concernés lors de votre demande de subvention.</p>
+        </div>
+    </div>
+
+    <div style="background-color: #FFA500; color: white; padding: 30px; border-radius: 10px; margin-top: 30px; text-align: center;">
+        <h3 style="margin-bottom: 20px;">Nos conseillers n'attendent plus que vous pour démarrer votre projet de rénovation !</h3>
+        <p style="margin-bottom: 20px;">À très vite pour concrétiser votre projet de rénovation</p>
+        <a href="https://latroupecastor.fr/rendez-vous" style="background-color: white; color: #FFA500; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Prendre un rendez-vous de suivi avec 2 conseillers</a>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="https://latroupecastor.fr" style="color: #666; text-decoration: none;">La Troupe Castor</a>
+    </div>
 </div>
