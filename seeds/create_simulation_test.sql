@@ -149,14 +149,6 @@ INSERT INTO public.aid_simulation (
     first_name,
     last_name
 ) VALUES 
--- Hors Maine-et-Loire
-(
-    3, 2, 'test-hors-49',
-    (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
-    '44', 'test7@example.com', false, true, true, true,
-    'F_G', 'owner_occupant', ARRAY['isolation'::work_type, 'heating'::work_type, 'windows'::work_type, 'ventilation'::work_type], 'medium',
-    'Thomas', 'Roux'
-),
 -- Bâtiment récent
 (
     3, 2, 'test-batiment-recent',
