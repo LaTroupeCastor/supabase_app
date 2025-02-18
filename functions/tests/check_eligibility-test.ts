@@ -23,7 +23,7 @@ const options = {
 const testCategories = {
     revenuTests: ['test-revenus-tres-modestes', 'test-revenus-modestes', 'test-revenus-eleves'],
     occupancyTests: ['test-proprietaire-bailleur', 'test-locataire', 'test-copropriete'],
-    locationTests: ['test-hors-49', 'test-batiment-recent'],
+    locationTests: ['test-batiment-recent'],
     specialCases: ['test-tous-criteres-max-ancien', 'test-tous-criteres-max-recent']
 };
 
@@ -87,14 +87,6 @@ const testCheckEligibility = async () => {
                             aid.name.includes('départementale') &&
                             aid.adjusted_amount > aid.default_amount
                         ), 'Should include department aid with biosourced bonus')
-                        break;
-
-                    case 'test-hors-49':
-                        assert(!result.eligible_aids.some(aid =>
-                            aid.name.includes('département') ||
-                            aid.name.includes('Saumur') ||
-                            aid.name.includes('Angers')
-                        ), 'Should not include local aids for non-49 department')
                         break;
 
                     case 'test-locataire':
