@@ -1,39 +1,71 @@
-<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #FCEECF;">
-    <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://latroupecastor.fr/logo.png" alt="La Troupe Castor" style="width: 200px;">
-    </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .all-page{
+            font-family: 'Poppins', sans-serif;
+            max-width: 600px;
+            background-color: #FCEECF;
+            margin: 0 auto;
+        }
 
-    <div style="background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h2 style="color: #333; margin-bottom: 20px;">${name}, merci d'avoir utilisé notre simulateur d'aide à la rénovation.</h2>
-
-        <p style="color: #666; margin-bottom: 30px;">Selon votre simulation, vous pouvez bénéficier de plusieurs dispositifs d'aide pour votre projet!</p>
-
-        <div style="background-color: #FFA500; color: white; padding: 15px; border-radius: 5px; text-align: center; margin-bottom: 30px;">
-            <h3 style="margin: 0;">${totalAmount}€ d'aides possibles</h3>
+        .title-medium-medium{
+            font-weight: 500;
+            font-size: 20px;
+            color: #140E00;
+        }
+        .title-medium-regular{
+            font-weight: 400;
+            font-size: 20px;
+            color: #140E00;
+        }
+        .body-small-regular{
+            font-size: 12px;
+            font-weight: 400;
+            color: #140E00;
+        }
+        .head-name{
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        .title-large-sbold{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .title-large-regular{
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .body{
+            padding: 0px 10%;
+        }
+        p {                                                                                                                          
+            margin: 0;
+        }     
+    </style>
+</head>
+<body>
+    <div class="all-page">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//logo_name.png" alt="La Troupe Castor">
         </div>
 
-        <div style="margin-bottom: 30px;">
-            <h4 style="color: #333; margin-bottom: 10px;">Liste des aides potentielles :</h4>
-            ${aidsList}
+        <div class="head-name">
+            <p class="title-medium-regular" style="width:70%;"><span class="title-medium-medium">{{name}}, </span>merci d'avoir utilisé notre simulateur d'aide à la rénovation.</p> 
         </div>
-
-        <div style="margin-bottom: 30px;">
-            <h4 style="color: #333; margin-bottom: 10px;">Liste des options de financement complémentaires éligibles :</h4>
-            ${financingOptions}
+        <div class="body"  style="padding-bottom: 20px;">
+            <p class="body-small-regular" style="width: 70%;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
-
-        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 30px;">
-            <p style="color: #666; margin: 0;">Le montant indiqué n'est qu'une estimation qui devra être confirmée par les organismes concernés lors de votre demande de subvention.</p>
+        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding-top: 32px; padding-bottom: 32px;">
+            <p class="title-large-sbold body">{{totalAmount}} <span class="title-large-regular">d'aides possibles</span></p>
+            <p class="body-small-regular body" style="color:#FEFBF3;">Estimation préliminaires </p>
         </div>
     </div>
-
-    <div style="background-color: #FFA500; color: white; padding: 30px; border-radius: 10px; margin-top: 30px; text-align: center;">
-        <h3 style="margin-bottom: 20px;">Nos conseillers n'attendent plus que vous pour démarrer votre projet de rénovation !</h3>
-        <p style="margin-bottom: 20px;">À très vite pour concrétiser votre projet de rénovation</p>
-        <a href="https://latroupecastor.fr/rendez-vous" style="background-color: white; color: #FFA500; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Prendre un rendez-vous de suivi avec 2 conseillers</a>
-    </div>
-
-    <div style="text-align: center; margin-top: 30px;">
-        <a href="https://latroupecastor.fr" style="color: #666; text-decoration: none;">La Troupe Castor</a>
-    </div>
-</div>
+</body>
+</html>
