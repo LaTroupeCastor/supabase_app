@@ -42,7 +42,7 @@ serve(async (req) => {
     <title>La Troupe Castor - Résultats de simulation</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;">
-    <div style="max-width: 600px; background-color: #FCEECF; margin: 0 auto; padding: 20px;">
+    <div style="max-width: 600px; background-color: #FCEECF; margin: 0 auto;">
         <div style="text-align: center; margin-bottom: 30px;">
             <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//logo_name.png" alt="La Troupe Castor" style="max-width: 200px;">
         </div>
@@ -53,8 +53,8 @@ serve(async (req) => {
         <div style="padding: 0 10% 20px 10%;">
             <p style="font-size: 12px; font-weight: 400; color: #140E00; width: 70%; margin: 0;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
-        <div style="background-color: #F1AB0E; width: 100vw; color:#FEFBF3; padding: 32px 0; position: relative; margin-left: -20px; margin-right: -20px;">                   
-            <div style="padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding: 32px 0; position: relative;">                   
+            <div style="padding: 0 10%; display: flex; justify-content: space-between; align-items: center;">
                 <div>                                                                                                           
                     <p style="font-size: 24px; font-weight: 600; margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>             
                     <p style="font-size: 24px; font-weight: 400; margin: 0;">d'aides possibles</p>           
