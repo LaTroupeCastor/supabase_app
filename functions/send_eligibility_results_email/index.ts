@@ -39,80 +39,19 @@ serve(async (req) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .all-page{
-            font-family: 'Poppins', sans-serif;
-            max-width: 600px;
-            background-color: #FCEECF;
-            margin: 0 auto;
-        }
-
-        .title-medium-medium{
-            font-weight: 500;
-            font-size: 20px;
-            color: #140E00;
-        }
-        .title-medium-regular{
-            font-weight: 400;
-            font-size: 20px;
-            color: #140E00;
-        }
-        .body-small-regular{
-            font-size: 12px;
-            font-weight: 400;
-            color: #140E00;
-        }
-        .head-name{
-            text-align: center;
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-        .body-medium-medium{
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .title-large-sbold{
-            font-size: 24px;
-            font-weight: 600;
-        }
-        .title-large-regular{
-            font-size: 24px;
-            font-weight: 400;
-        }
-        .body-small-regular{
-            font-size: 12px;
-            font-weight: 400;
-        }
-        .body{
-            padding: 0px 10%;
-        }
-        .button{
-            background-color: #F1AB0E;
-            color: #FEFBF3;
-            padding: 12px 24px;
-            border-radius: 4px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        p {                                                                                                                          
-            margin: 0;
-        }     
-    </style>
+    <title>La Troupe Castor - Résultats de simulation</title>
 </head>
-<body>
-    <div class="all-page">
+<body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;">
+    <div style="max-width: 600px; background-color: #FCEECF; margin: 0 auto; padding: 20px;">
         <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//logo_name.png" alt="La Troupe Castor">
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//logo_name.png" alt="La Troupe Castor" style="max-width: 200px;">
         </div>
 
-        <div class="head-name" style="padding-bottom: 64px;">
-            <p class="title-medium-regular" style="width:70%;"><span class="title-medium-medium">Cher utilisateur, </span>merci d'avoir utilisé notre simulateur d'aide à la rénovation.</p> 
+        <div style="text-align: center; padding-bottom: 64px;">
+            <p style="font-size: 20px; font-weight: 400; color: #140E00; width: 70%; margin: 0 auto;"><span style="font-weight: 500;">Cher utilisateur, </span>merci d'avoir utilisé notre simulateur d'aide à la rénovation.</p> 
         </div>
-        <div class="body"  style="padding-bottom: 20px;">
-            <p class="body-small-regular" style="width: 70%;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
+        <div style="padding: 0 10% 20px 10%;">
+            <p style="font-size: 12px; font-weight: 400; color: #140E00; width: 70%; margin: 0;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
         <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding-top: 32px; padding-bottom: 32px; position: relative;">                   
             <div style="display: flex; flex-direction: column;" class="body">                                                                                                           
@@ -150,10 +89,10 @@ serve(async (req) => {
              </div>                                                                                                                                                             
              `).join('')}
         </div>
-        <div class="body">
-            <div style="display: flex;flex-direction: column; margin-top: 50px; margin-bottom: 22px; text-align: center; margin-left:1rem; margin-right: 1rem;">
-                <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" class="body-medium-medium button" style="margin-bottom: 22px;">Finalisez votre inscription et demandez vos aides</a>
-                <p class="body-small-regular" style="color: #6E6B62; text-align: left;">La troupe castor vous permet de vous accompagner pour vos demandes d'aides et de vous mettre directement en relation avec des artisans RGE pour faciliter vos projets de rénovation</p>
+        <div style="padding: 0 10%;">
+            <div style="display: flex; flex-direction: column; margin-top: 50px; margin-bottom: 22px; text-align: center;">
+                <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" style="font-size: 16px; font-weight: 500; background-color: #F1AB0E; color: #FEFBF3; padding: 12px 24px; border-radius: 4px; text-decoration: none; display: inline-block; margin-bottom: 22px;">Finalisez votre inscription et demandez vos aides</a>
+                <p style="font-size: 12px; font-weight: 400; color: #6E6B62; text-align: left; margin: 0;">La troupe castor vous permet de vous accompagner pour vos demandes d'aides et de vous mettre directement en relation avec des artisans RGE pour faciliter vos projets de rénovation</p>
             </div>
         </div>
     </div>
