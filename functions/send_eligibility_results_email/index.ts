@@ -54,13 +54,13 @@ serve(async (req) => {
             <p style="font-size: 12px; font-weight: 400; color: #140E00; width: 70%; margin: 0;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
         <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding: 32px 0; position: relative; overflow: hidden;">                   
-            <div style="padding: 0 10%; display: flex; justify-content: space-between; align-items: flex-end;">
+            <div style="padding-left: 10%; display: flex; justify-content: space-between; align-items: flex-end;">
                 <div>                                                                                                           
                     <p style="font-size: 24px; font-weight: 600; margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>             
                     <p style="font-size: 24px; font-weight: 400; margin: 0;">d'aides possibles</p>           
                     <p style="font-size: 12px; font-weight: 400; color:#F9DD9F; margin: 0;">Estimation préliminaire</p>
                 </div>
-                <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 40%; margin-bottom: -10px; margin-right: -10%;">
+                <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 40%; margin-bottom: -10px;">
             </div>                                                                            
         </div> 
 
