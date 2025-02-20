@@ -60,7 +60,7 @@ serve(async (req) => {
                     <p style="font-size: 24px; font-weight: 400; margin: 0;">d'aides possibles</p>           
                     <p style="font-size: 12px; font-weight: 400; color:#F9DD9F; margin: 0;">Estimation préliminaire</p>
                 </div>
-                <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 30%; position: absolute; right: 0; bottom: 0; transform: translateY(-20%);">
+                <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 30%; position: absolute; right: 0; bottom: 0; transform: translateY(-20%); margin-right: 0;">
             </div>                                                                            
         </div> 
 
