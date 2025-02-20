@@ -53,15 +53,15 @@ serve(async (req) => {
         <div style="padding: 0 10% 20px 10%;">
             <p style="font-size: 12px; font-weight: 400; color: #140E00; width: 70%; margin: 0;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
-        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding: 32px 0; position: relative;">                   
-            <div style="padding: 0 10%; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding: 32px 0; position: relative; overflow: hidden;">                   
+            <div style="padding: 0 10%;">
                 <div>                                                                                                           
                     <p style="font-size: 24px; font-weight: 600; margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>             
                     <p style="font-size: 24px; font-weight: 400; margin: 0;">d'aides possibles</p>           
                     <p style="font-size: 12px; font-weight: 400; color:#F9DD9F; margin: 0;">Estimation préliminaire</p>
                 </div>
-                <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 35%; position: absolute; right: 0; bottom: 0;">                                                                            
-            </div>                                                                                                                                                         
+            </div>
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="width: 40%; position: absolute; right: 0; bottom: -10px;">                                                                            
         </div> 
 
         <div style="padding: 32px 10%;">
