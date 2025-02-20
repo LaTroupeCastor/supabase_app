@@ -24,59 +24,132 @@ serve(async (req) => {
         from: 'contact@latroupecastor.fr',
         to: email,
         subject: 'Résultats de votre simulation - La Troupe Castor',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-            <h2 style="color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Résultats de votre simulation</h2>
+        html: `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .all-page{
+            font-family: 'Poppins', sans-serif;
+            max-width: 600px;
+            background-color: #FCEECF;
+            margin: 0 auto;
+        }
+
+        .title-medium-medium{
+            font-weight: 500;
+            font-size: 20px;
+            color: #140E00;
+        }
+        .title-medium-regular{
+            font-weight: 400;
+            font-size: 20px;
+            color: #140E00;
+        }
+        .body-small-regular{
+            font-size: 12px;
+            font-weight: 400;
+            color: #140E00;
+        }
+        .head-name{
+            text-align: center;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        .body-medium-medium{
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .title-large-sbold{
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .title-large-regular{
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .body-small-regular{
+            font-size: 12px;
+            font-weight: 400;
+        }
+        .body{
+            padding: 0px 10%;
+        }
+        .button{
+            background-color: #F1AB0E;
+            color: #FEFBF3;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        p {                                                                                                                          
+            margin: 0;
+        }     
+    </style>
+</head>
+<body>
+    <div class="all-page">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//logo_name.png" alt="La Troupe Castor">
+        </div>
+
+        <div class="head-name" style="padding-bottom: 64px;">
+            <p class="title-medium-regular" style="width:70%;"><span class="title-medium-medium">Cher utilisateur, </span>merci d'avoir utilisé notre simulateur d'aide à la rénovation.</p> 
+        </div>
+        <div class="body"  style="padding-bottom: 20px;">
+            <p class="body-small-regular" style="width: 70%;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
+        </div>
+        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding-top: 32px; padding-bottom: 32px; position: relative;">                   
+            <div style="display: flex; flex-direction: column;" class="body">                                                                                                           
+                <p class="title-large-sbold" style="margin: 0;">${totalAmount.toLocaleString('fr-FR')} €</p>             
+                <p class="title-large-regular">d'aides possibles</p>           
+                <p class="body-small-regular" style="color:#F9DD9F; margin: 0;">Estimation préliminaires </p>                                                         
+            </div>                                                                                                                                                         
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="position: absolute; right: 0; bottom: 0; transform: translateY(-20%);width: 35%;">                                                                            
+        </div> 
+
+        <div style="padding: 32px 10%;">
+            <p class="body-medium-medium">Liste de vos potentiels aides</p>
+            <p style="color: #F1AB0E; padding-bottom: 24px;" class="body-small-regular">Être accompagné d'un conseillé pour faire la demande</p>
             
-            <div style="margin: 20px 0;">
-              <p style="font-weight: bold; margin: 5px 0;">Montant total des aides potentielles :</p>
-              <p style="margin: 5px 0; font-size: 24px; color: #2ecc71;">${totalAmount.toLocaleString('fr-FR')} €</p>
-            </div>
-
-            <div style="margin: 20px 0;">
-              <p style="font-weight: bold; margin: 5px 0;">Aides auxquelles vous pourriez être éligible :</p>
-              ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `
-                <div style="margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
-                  <p style="font-weight: bold; margin: 5px 0;">${aid.name}</p>
-                  <p style="margin: 5px 0;">${aid.description}</p>
-                  <p style="margin: 5px 0; color: #2ecc71;">Montant estimé : ${aid.adjusted_amount.toLocaleString('fr-FR')} €</p>
-                  ${aid.more_info_url ? `<a href="${aid.more_info_url}" style="color: #3498db;">Plus d'informations</a>` : ''}
+            ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `
+            <div style="border: 1px solid #F1AB0E; border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <p class="body-medium-medium">${aid.name}</p>
+                    <span style="color: #C8C7C4;">jusqu'à ${aid.adjusted_amount.toLocaleString('fr-FR')} €</span>
                 </div>
-              `).join('')}
+                <p style="margin: 0 0 8px 0;" class="body-small-regular">${aid.description}</p>
+                ${aid.more_info_url ? `<a href="${aid.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}
             </div>
-
-            <div style="margin: 20px 0;">
-              <p style="font-weight: bold; margin: 5px 0;">Options de financement complémentaires :</p>
-              ${additionalFundingOptions.map((option : AidDetails) => `
-                <div style="margin: 10px 0; padding: 10px; background-color: #f8f8f8; border-radius: 5px; border-left: 3px solid #3498db;">
-                  <p style="font-weight: bold; margin: 5px 0;">${option.name}</p>
-                  <p style="margin: 5px 0;">${option.description}</p>
-                  ${option.more_info_url ? `<a href="${option.more_info_url}" style="color: #3498db;">Plus d'informations</a>` : ''}
+            `).join('')}
+        </div>
+        <div class="body">
+            <p class="body-medium-medium" style="padding-bottom: 24px;">Liste des options de financements complémentaires éligibles</p>
+            ${additionalFundingOptions.map((option: AidDetails) => `
+            <div style="border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <p class="body-medium-medium">${option.name}</p>
+                    <span style="color: #C8C7C4;">jusqu'à ${option.max_amount.toLocaleString('fr-FR')} €</span>
                 </div>
-              `).join('')}
+                <p style="margin: 0 0 8px 0;" class="body-small-regular">${option.description}</p>
+                ${option.more_info_url ? `<a href="${option.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}
             </div>
-
-            <div style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
-              <p>Ces résultats sont donnés à titre indicatif et ne constituent pas un engagement définitif.</p>
-              <p>Pour plus d'informations, n'hésitez pas à nous contacter.</p>
+            `).join('')}
+        </div>
+        <div class="body">
+            <div style="display: flex;flex-direction: column; margin-top: 50px; margin-bottom: 22px; text-align: center; margin-left:1rem; margin-right: 1rem;">
+                <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" class="body-medium-medium button" style="margin-bottom: 22px;">Finalisez votre inscription et demandez vos aides</a>
+                <p class="body-small-regular" style="color: #6E6B62; text-align: left;">La troupe castor vous permet de vous accompagner pour vos demandes d'aides et de vous mettre directement en relation avec des artisans RGE pour faciliter vos projets de rénovation</p>
             </div>
-
-            <!-- Ajout du CTA -->
-            <div style="margin-top: 30px; text-align: center;">
-              <p style="margin-bottom: 20px; font-size: 16px;">Pour suivre l'avancement de votre projet et être accompagné par nos experts :</p>
-              <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" 
-                 style="display: inline-block; 
-                        background-color: #2ecc71; 
-                        color: white; 
-                        padding: 12px 24px; 
-                        text-decoration: none; 
-                        border-radius: 5px; 
-                        font-weight: bold;
-                        font-size: 16px;">
-                Créer mon compte
-              </a>
-            </div>
-          </div>
+        </div>
+    </div>
+</body>
+</html>
         `
       }),
     })
