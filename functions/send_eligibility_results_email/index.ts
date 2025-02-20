@@ -53,40 +53,40 @@ serve(async (req) => {
         <div style="padding: 0 10% 20px 10%;">
             <p style="font-size: 12px; font-weight: 400; color: #140E00; width: 70%; margin: 0;">Selon votre simulation, vous pourriez bénéficier de plusieurs dispositifs d'aide pour votre projet !</p>
         </div>
-        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding-top: 32px; padding-bottom: 32px; position: relative;">                   
-            <div style="display: flex; flex-direction: column;" class="body">                                                                                                           
-                <p class="title-large-sbold" style="margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>                                                                     
-                <p class="title-large-regular">d'aides possibles</p>           
-                <p class="body-small-regular" style="color:#F9DD9F; margin: 0;">Estimation préliminaires </p>                                                         
+        <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding: 32px 0; position: relative;">                   
+            <div style="padding: 0 10%;">                                                                                                           
+                <p style="font-size: 24px; font-weight: 600; margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>             
+                <p style="font-size: 24px; font-weight: 400; margin: 0;">d'aides possibles</p>           
+                <p style="font-size: 12px; font-weight: 400; color:#F9DD9F; margin: 0;">Estimation préliminaire</p>                                                         
             </div>                                                                                                                                                         
-            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="position: absolute; right: 0; bottom: 0; transform: translateY(-20%);width: 35%;">                                                                            
+            <img src="https://vjvvhynmroaefrrawflu.supabase.co/storage/v1/object/public/images//beavy.png" style="position: absolute; right: 0; bottom: 0; transform: translateY(-20%); width: 35%;">                                                                            
         </div> 
 
         <div style="padding: 32px 10%;">
-            <p class="body-medium-medium">Liste de vos potentiels aides</p>
-            <p style="color: #F1AB0E; padding-bottom: 24px;" class="body-small-regular">Être accompagné d'un conseillé pour faire la demande</p>
-           ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `                                                                                            
-           <div style="border: 1px solid #F1AB0E; border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">                                     
-               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">                                                          
-                   <p class="body-medium-medium">${aid.name}</p>                                                                                                              
-                   <span style="color: #C8C7C4;">jusqu'à ${aid.adjusted_amount ? aid.adjusted_amount.toLocaleString('fr-FR') : 0} €</span>                                    
-               </div>                                                                                                                                                         
-               <p style="margin: 0 0 8px 0;" class="body-small-regular">${aid.description}</p>                                                                                
-               ${aid.more_info_url ? `<a href="${aid.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}                             
-           </div>                                                                                                                                                             
-           `).join('')} 
+            <p style="font-size: 16px; font-weight: 500; margin: 0;">Liste de vos aides potentielles</p>
+            <p style="font-size: 12px; font-weight: 400; color: #F1AB0E; padding-bottom: 24px; margin: 0;">Être accompagné d'un conseiller pour faire la demande</p>
+            ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `
+            <div style="border: 1px solid #F1AB0E; border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <p style="font-size: 16px; font-weight: 500; margin: 0;">${aid.name}</p>
+                    <span style="color: #C8C7C4;">jusqu'à ${aid.adjusted_amount ? aid.adjusted_amount.toLocaleString('fr-FR') : 0} €</span>
+                </div>
+                <p style="font-size: 12px; font-weight: 400; margin: 0 0 8px 0;">${aid.description}</p>
+                ${aid.more_info_url ? `<a href="${aid.more_info_url}" style="font-size: 12px; font-weight: 400; color: #F1AB0E; text-decoration: none;">En savoir plus</a>` : ''}
+            </div>
+            `).join('')}
         </div>
-        <div class="body">
-            <p class="body-medium-medium" style="padding-bottom: 24px;">Liste des options de financements complémentaires éligibles</p>
-             ${additionalFundingOptions.map((option: AidDetails) => `                                                                                                           
-             <div style="border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">                                                                
-                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">                                                          
-                     <p class="body-medium-medium">${option.name}</p>                                                                                                           
-                     <span style="color: #C8C7C4;">jusqu'à ${option.max_amount ? option.max_amount.toLocaleString('fr-FR') : 'N/A'} €</span>                                    
-                 </div>                                                                                                                                                         
-                 <p style="margin: 0 0 8px 0;" class="body-small-regular">${option.description}</p>                                                                             
-                 ${option.more_info_url ? `<a href="${option.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}                       
-             </div>                                                                                                                                                             
+        <div style="padding: 0 10%;">
+            <p style="font-size: 16px; font-weight: 500; margin: 0; padding-bottom: 24px;">Liste des options de financements complémentaires éligibles</p>
+             ${additionalFundingOptions.map((option: AidDetails) => `
+             <div style="border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                     <p style="font-size: 16px; font-weight: 500; margin: 0;">${option.name}</p>
+                     <span style="color: #C8C7C4;">jusqu'à ${option.max_amount ? option.max_amount.toLocaleString('fr-FR') : 'N/A'} €</span>
+                 </div>
+                 <p style="font-size: 12px; font-weight: 400; margin: 0 0 8px 0;">${option.description}</p>
+                 ${option.more_info_url ? `<a href="${option.more_info_url}" style="font-size: 12px; font-weight: 400; color: #F1AB0E; text-decoration: none;">En savoir plus</a>` : ''}
+             </div>
              `).join('')}
         </div>
         <div style="padding: 0 10%;">
