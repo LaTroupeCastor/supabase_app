@@ -90,8 +90,10 @@ serve(async (req) => {
              `).join('')}
         </div>
         <div style="padding: 0 10%;">
-            <div style="display: flex; flex-direction: column; margin-top: 50px; margin-bottom: 22px; text-align: center;">
-                <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" style="font-size: 16px; font-weight: 500; background-color: #F1AB0E; color: #FEFBF3; padding: 12px 24px; border-radius: 4px; text-decoration: none; display: inline-block; margin-bottom: 22px;">Finalisez votre inscription et demandez vos aides</a>
+            <div style="margin-top: 50px; margin-bottom: 22px;">
+                <div style="text-align: center;">
+                    <a href="${Deno.env.get('FRONTEND_URL')}/inscription?simulation=${simulationId}" style="font-size: 16px; font-weight: 500; background-color: #F1AB0E; color: #FEFBF3; padding: 12px 24px; border-radius: 4px; text-decoration: none; display: inline-block; margin-bottom: 22px;">Finalisez votre inscription et demandez vos aides</a>
+                </div>
                 <p style="font-size: 12px; font-weight: 400; color: #6E6B62; text-align: left; margin: 0;">La troupe castor vous permet de vous accompagner pour vos demandes d'aides et de vous mettre directement en relation avec des artisans RGE pour faciliter vos projets de rénovation</p>
             </div>
         </div>
