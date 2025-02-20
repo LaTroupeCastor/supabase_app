@@ -6,14 +6,24 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+console.log("Starting email function..."); // Log initial
+
 serve(async (req) => {
+  console.log("Received request"); // Log request reception
+
   if (req.method === 'OPTIONS') {
+    console.log("OPTIONS request received");
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
+    console.log("Parsing request body..."); // Log avant parsing
     const { email, eligibleAids, additionalFundingOptions, totalAmount, simulationId } = await req.json()
+    console.log("Request body parsed:", { email, totalAmount, simulationId }); // Log après parsing
 
+    console.log("RESEND_API_KEY present:", !!Deno.env.get('RESEND_API_KEY')); // Vérifier la clé API
+
+    console.log("Preparing to send email..."); // Log avant envoi
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -106,7 +116,7 @@ serve(async (req) => {
         </div>
         <div style="background-color: #F1AB0E; width: 100%; color:#FEFBF3; padding-top: 32px; padding-bottom: 32px; position: relative;">                   
             <div style="display: flex; flex-direction: column;" class="body">                                                                                                           
-                <p class="title-large-sbold" style="margin: 0;">${totalAmount.toLocaleString('fr-FR')} €</p>             
+                <p class="title-large-sbold" style="margin: 0;">${totalAmount ? totalAmount.toLocaleString('fr-FR') : 0} €</p>                                                                     
                 <p class="title-large-regular">d'aides possibles</p>           
                 <p class="body-small-regular" style="color:#F9DD9F; margin: 0;">Estimation préliminaires </p>                                                         
             </div>                                                                                                                                                         
@@ -116,30 +126,29 @@ serve(async (req) => {
         <div style="padding: 32px 10%;">
             <p class="body-medium-medium">Liste de vos potentiels aides</p>
             <p style="color: #F1AB0E; padding-bottom: 24px;" class="body-small-regular">Être accompagné d'un conseillé pour faire la demande</p>
-            
-            ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `
-            <div style="border: 1px solid #F1AB0E; border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <p class="body-medium-medium">${aid.name}</p>
-                    <span style="color: #C8C7C4;">jusqu'à ${aid.adjusted_amount.toLocaleString('fr-FR')} €</span>
-                </div>
-                <p style="margin: 0 0 8px 0;" class="body-small-regular">${aid.description}</p>
-                ${aid.more_info_url ? `<a href="${aid.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}
-            </div>
-            `).join('')}
+           ${eligibleAids.map((aid: AidDetails & { adjusted_amount: number }) => `                                                                                            
+           <div style="border: 1px solid #F1AB0E; border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">                                     
+               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">                                                          
+                   <p class="body-medium-medium">${aid.name}</p>                                                                                                              
+                   <span style="color: #C8C7C4;">jusqu'à ${aid.adjusted_amount ? aid.adjusted_amount.toLocaleString('fr-FR') : 0} €</span>                                    
+               </div>                                                                                                                                                         
+               <p style="margin: 0 0 8px 0;" class="body-small-regular">${aid.description}</p>                                                                                
+               ${aid.more_info_url ? `<a href="${aid.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}                             
+           </div>                                                                                                                                                             
+           `).join('')} 
         </div>
         <div class="body">
             <p class="body-medium-medium" style="padding-bottom: 24px;">Liste des options de financements complémentaires éligibles</p>
-            ${additionalFundingOptions.map((option: AidDetails) => `
-            <div style="border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <p class="body-medium-medium">${option.name}</p>
-                    <span style="color: #C8C7C4;">jusqu'à ${option.max_amount.toLocaleString('fr-FR')} €</span>
-                </div>
-                <p style="margin: 0 0 8px 0;" class="body-small-regular">${option.description}</p>
-                ${option.more_info_url ? `<a href="${option.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}
-            </div>
-            `).join('')}
+             ${additionalFundingOptions.map((option: AidDetails) => `                                                                                                           
+             <div style="border-radius: 4px; padding: 16px 12px; background-color: white; margin-bottom: 16px;">                                                                
+                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">                                                          
+                     <p class="body-medium-medium">${option.name}</p>                                                                                                           
+                     <span style="color: #C8C7C4;">jusqu'à ${option.max_amount ? option.max_amount.toLocaleString('fr-FR') : 'N/A'} €</span>                                    
+                 </div>                                                                                                                                                         
+                 <p style="margin: 0 0 8px 0;" class="body-small-regular">${option.description}</p>                                                                             
+                 ${option.more_info_url ? `<a href="${option.more_info_url}" class="body-small-regular" style="color: #F1AB0E;">En savoir plus</a>` : ''}                       
+             </div>                                                                                                                                                             
+             `).join('')}
         </div>
         <div class="body">
             <div style="display: flex;flex-direction: column; margin-top: 50px; margin-bottom: 22px; text-align: center; margin-left:1rem; margin-right: 1rem;">
@@ -154,16 +163,19 @@ serve(async (req) => {
       }),
     })
 
-    const result = await emailResponse.text()
+    console.log('Resend Response Status:', emailResponse.status);
+    const responseText = await emailResponse.text();
+    console.log('Resend Response Body:', responseText);
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
   } catch (error: unknown) {
+    console.error("Error in email function:", error); // Log des erreurs
     const errorMessage = error instanceof Error ? error.message : 'Une erreur inconnue est survenue';
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({error: errorMessage}), {
+      headers: {...corsHeaders, 'Content-Type': 'application/json'},
       status: 400,
     })
   }
