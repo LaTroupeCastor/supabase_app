@@ -1,0 +1,39 @@
+### Epic 1: Landing Page
+*(Cet epic reste tel quel dans votre spécification fonctionnelle)*
+
+### Epic 2: Navigation et Accès au Contenu
+**User Story 2.2:** En tant qu'utilisateur, je souhaite accéder aux formulaires d'artisans pour créer mon profil professionnel.
+
+### Epic 3: Gestion des Projets et Chantiers
+**User Story 3.1:** En tant qu'utilisateur, je souhaite voir un aperçu de mes chantiers sur mon tableau de bord pour suivre leur progression.
+**User Story 3.2:** En tant qu'utilisateur, je souhaite pouvoir déposer un dossier de chantier pour recevoir des aides et primes.
+**User Story 3.3:** En tant qu'utilisateur, je souhaite consulter les détails d'un chantier pour suivre son état et les travaux en cours.
+
+### Epic 4: Tableau de Bord Client
+**User Story 4.1:** En tant qu'utilisateur, je souhaite naviguer facilement sur mon tableau de bord pour accéder aux informations de mes chantiers.
+**User Story 4.2:** En tant qu'utilisateur, je souhaite contacter LaTroupeCastor via mon tableau de bord pour obtenir de l'aide ou des informations supplémentaires.
+**User Story 4.3:** En tant qu'utilisateur, je souhaite accéder à la liste et à l'aperçu de mes chantiers pour suivre leur progression.
+**User Story 4.4:** En tant qu'utilisateur, je souhaite configurer mes paramètres et notifications pour personnaliser mon expérience utilisateur.
+
+### Epic 5: Communication et Support
+**User Story 5.1:** En tant qu'utilisateur, je souhaite pouvoir contacter le support via un formulaire de contact pour obtenir de l'aide.
+**User Story 5.2:** En tant qu'utilisateur, je souhaite contacter mon médiateur pour discuter des détails de mon chantier.
+**User Story 5.3:** En tant qu'artisan, je souhaite pouvoir poster des mises à jour sur les projets pour informer les clients de l'avancement des travaux.
+**User Story 5.4:** En tant qu'utilisateur, je souhaite accéder aux news de mes chantiers pour me tenir informé des dernières mises à jour.
+
+### Epic 6: Gestion des Aides et Primes
+**User Story 6.1:** En tant qu'utilisateur, je souhaite pouvoir consulter une liste d'aides disponibles pour mon chantier.
+**User Story 6.2:** En tant qu'utilisateur, je souhaite soumettre une demande d'aide pour obtenir un financement pour mes travaux.
+**User Story 6.3:** En tant qu'utilisateur, je souhaite pouvoir modifier une aide déjà soumise.
+
+### Epic 7: Paramètres et Notifications
+**User Story 7.1:** En tant qu'utilisateur, je souhaite pouvoir modifier mon mot de passe pour sécuriser mon compte.
+**User Story 7.2:** En tant qu'utilisateur, je souhaite configurer mes notifications pour rester informé des mises à jour importantes.
+**User Story 7.3:** En tant qu'utilisateur, je souhaite pouvoir modifier mes informations personnelles pour garder mon profil à jour.
+
+### Epic 8: Tableau de Bord Artisan
+**User Story 8.1:** En tant qu'artisan, je souhaite naviguer facilement sur mon tableau de bord pour accéder aux informations de mes chantiers.
+**User Story 8.2:** En tant qu'artisan, je souhaite gérer mon profil professionnel pour présenter mes compétences et certifications.
+**User Story 8.3:** En tant qu'artisan, je souhaite configurer mes notifications pour recevoir des alertes sur les projets et les messages des médiateurs.
+**User Story 8.4:** En tant qu'artisan, je souhaite accéder à toutes les informations de mes chantiers pour suivre leur progression et informer les clients.
+**User Story 8.5:** En tant qu'artisan, je souhaite accéder à un abonnement pour mettre en avant mon profil et attirer plus de clients.
