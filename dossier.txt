@@ -1,16 +1,16 @@
-6 Conception du prototype [MBA Dev Full Stack & Big Data] Bastien | Paul                                                                                                          
+6 SPÉCIFICATION TECHNIQUE [MBA Dev Full Stack & Big Data] Bastien | Paul                                                                                                          
 Développement Technique [Grille Réalisation - /20] • "Le projet déployé est en adéquation avec les documents de conception" • "Le projet est mené à son terme.   
    Ses livrables respectent les standards du métier"
 
-Étude fonctionnelle
+Le cahier des charges fonctionnel
 Spécifications fonctionnelles développées et user stories correspondantes
 
 Dans cette partie seront détaillées les spécifications fonctionnelles qui concernent le prototype qui a été développé.
 
 Les spécification fonctionnelles étant plutôt grandes, vous pourrez les retrouver dans le dossiers “Livrables DEV” dans le document“Etudes fonctionnelles jusqu’au prototype”
 
-Étude technique
-Stack technologique et justification des choix
+LANGAGE UTILISÉ
+Choix technologiques et justifications
 
 Solution initiale, Nhost
 
@@ -39,9 +39,8 @@ l'amélioration des fonctionnalités plutôt que sur des défis d'infrastructure
 
 Depuis la migrations vers Supabase de nouvelles fonctionnalités ont été mise en place grâce au service telle que l’ajout de seed, les fonctions serverless notamment pour l’outil de simulation
 
-Organisation et architecture du repo supabase / environnement de dev / prod
-
-Spécifications techniques
+ARCHITECTURE DU CODE
+Structure et organisation
 
 Dans cette partie seront détaillées les spécifications techniques qui concernent le prototype qui a été développé.
 
@@ -148,9 +147,10 @@ Cependant, ce choix architectural est délibéré et tourné vers l'avenir. Il p
 futures fonctionnalités et à la montée en charge. Les détails de ces évolutions prévues et la façon dont cette architecture les supportera sont décrits dans la     
 section "Évolutions Futures" de la documentation. 
 
-Données et sécurité des données
+SÉCURISATION AVANCÉE DU CODE ET DES DONNÉES
 
-Modélisation des Données
+LA BASE DE DONNÉES
+Modèle Conceptuel des Données
 
 La modélisation complète de la base de données est disponible en annexe, étant donné sa complexité et le nombre important de tables. Dans cette section, nous nous  
 concentrerons sur la partie simulation, qui représente le cœur fonctionnel du prototype.                                                                            
@@ -209,7 +209,6 @@ Ce modèle met en avant plusieurs point fort :
     • Gestion des sessions utilisateur                                                                                                                              
 
 
-Sécurité avec Supabase et PostgreSQL
 Rôles et Permissions
 
  • anon : lecture des questions/réponses publiques                                                                                                                  
@@ -237,21 +236,18 @@ Cette politique signifie que :
 Ainsi, un utilisateur ne peut accéder qu'à la simulation référencée dans son profil, garantissant une isolation complète des données entre utilisateurs.         
 
 
-METTRE QU4ON PEUT FAIRE PAREIL POUR LE RESTE    
+Cette même approche est appliquée à toutes les tables contenant des données sensibles, assurant une sécurisation complète de l'application.
 
-                                                                     
-7 Réalisations du prototype
+7 PROTOTYPE
 
-7.1 Vue d'ensemble                                                                                                                                  
+Démonstration et fonctionnalités                                                                                                                                  
 
  • Interface finale
 captures d’écran finales                                                                                                                                                                                                                                                                                  
  • Version de démonstration                                                                                                                                         
 
 La version finale de démonstration est accessible sur le lien suivant : https://latroupecastor.com
-7.2 Implémentation Technique                                                                                                                                        
-                                                                                                                                         
- • Système de token  
+Système de token  
 
 
                                                                                                                                                
@@ -305,7 +301,7 @@ Ce système est particulièrement pertinent dans le contexte d'un service public
 sont essentielles pour toucher un large public.
 
 
- • Flow de création de compte 
+Flow de création de compte 
 
   
 
@@ -368,9 +364,7 @@ Cette architecture technique est spécifiquement optimisée pour minimiser les p
 augmentant ainsi significativement les taux de conversion.
                                                                                                                
 
-7.3 Intégrations Réalisées                                                                                                                                          
-
- • API et services
+API et services
 
 
 Choix de la solution
@@ -407,13 +401,13 @@ Cette configuration permet d'envoyer des emails depuis notre domaine personnalis
 améliore les taux d'ouverture des emails.
 
 
-• Dataviz et tableaux de bord 
+Dataviz et tableaux de bord 
 
- 8 Tests et qualité du prototype                                                                                                                                            
+8 MÉTHODE DE TESTING COMPLETE                                                                                                                                            
 Prototype et Tests [Grille Réalisation - /20] • "Les critères de tests ont été définis" • "Les tests ont été menés. Ils sont suffisamment exhaustifs" • "Suite à 
    la phase de tests, des propositions d'évolution sont formulées"
 
-8.1 Stratégie de Tests
+Tests unitaires et d'intégration
 
 Types de test implémentés
 Pour notre application Vue.js avec Supabase, j'ai mis en place des tests unitaires et d'intégration ciblés sur la fonctionnalité principale du prototype : la       
@@ -477,9 +471,9 @@ Les tests sont organisés par catégories pour faciliter l'analyse et le déboga
 Cette approche méthodique garantit que notre algorithme d'éligibilité fonctionne correctement pour tous les profils d'utilisateurs et toutes les combinaisons de    
 critères, assurant ainsi la fiabilité de notre fonctionnalité principale.
 
-8.2 Intégration Continue                                                                                                                                            
+ENVIRONNEMENT DE DÉVELOPPEMENT
 
-Configuration GitHub Actions                                                                    
+CI/CD et déploiement                                                                                    
 
 Pour assurer la qualité et la fiabilité de notre application, j'ai mis en place un pipeline d'intégration continue basé sur GitHub Actions :                        
 
@@ -605,9 +599,59 @@ Cette approche globale de la qualité et du monitoring nous permet de maintenir 
 et la résolution rapide des problèmes potentiels.
 
 
-9 Evolutions futures
+9 GESTION DE PROJET
 
-9.1 Fonctionnalités Prévues
+La méthode de projet
+
+Pour ce projet, nous avons adopté une approche Agile adaptée, inspirée de la méthodologie Scrum. Cette approche nous a permis de rester flexibles face aux évolutions des besoins tout en maintenant un cadre structuré pour le développement.
+
+### Organisation des sprints
+
+Le développement a été organisé en sprints de deux semaines, chacun comportant :
+- Une phase de planification pour définir les objectifs du sprint
+- Des stand-ups réguliers pour suivre l'avancement et identifier les blocages
+- Une revue de sprint pour présenter les fonctionnalités développées
+- Une rétrospective pour améliorer continuellement notre processus
+
+### Priorisation des fonctionnalités
+
+Nous avons utilisé la méthode MoSCoW (Must have, Should have, Could have, Won't have) pour prioriser les fonctionnalités :
+- **Must have** : Simulation d'éligibilité, calcul des aides, envoi des résultats par email
+- **Should have** : Création de compte, espace personnel, sauvegarde des simulations
+- **Could have** : Tableaux de bord, statistiques d'utilisation
+- **Won't have** (pour cette phase) : Intégration avec des systèmes externes de demande d'aide
+
+Cette priorisation nous a permis de nous concentrer sur les fonctionnalités essentielles tout en gardant une vision claire des évolutions futures.
+
+Les outils
+
+### Gestion des tâches et du backlog
+
+- **GitHub Projects** : Utilisé pour organiser le backlog produit et les tâches de chaque sprint
+- **GitHub Issues** : Pour le suivi détaillé des fonctionnalités, bugs et améliorations
+- **Pull Requests** : Pour la revue de code et l'assurance qualité
+
+### Communication et collaboration
+
+- **Slack** : Communication quotidienne et partage d'informations
+- **Google Meet** : Réunions d'équipe, revues de sprint et sessions de planification
+- **Notion** : Documentation partagée et centralisation des connaissances
+
+### Suivi et reporting
+
+- **GitHub Actions** : Automatisation des tests et déploiements, avec notifications sur l'état des builds
+- **Supabase Dashboard** : Monitoring de la base de données et des fonctions serverless
+- **Resend Dashboard** : Suivi des emails envoyés et de leur statut
+
+### Gestion des versions et du code
+
+- **Git Flow** : Stratégie de branchement pour organiser le développement
+- **Semantic Versioning** : Pour la gestion claire des versions du produit
+- **Conventional Commits** : Pour standardiser les messages de commit et faciliter la génération de changelogs
+
+Cette organisation nous a permis de maintenir un rythme de développement soutenu tout en assurant la qualité du code et la bonne communication au sein de l'équipe. La transparence offerte par ces outils a également facilité le suivi du projet par les parties prenantes externes.
+
+Fonctionnalitées planifiées
 
  Ce document présente les spécifications fonctionnelles envisagées pour la phase post-prototype de LaTroupeCastor. Il est important de noter que ces spécifications 
  se concentrent principalement sur les fonctionnalités des tableaux de bord client et artisan.                                                                                                              
@@ -617,13 +661,7 @@ et la résolution rapide des problèmes potentiels.
 Comme pour les spécifications du prototype actuel, les spécifications fonctionnelles pour le futur du projet sont plutôt longues et seront donc présent dans le dossier “Livrables DEV” sous le dossier “Spécifications fonctionnelle après prototype”.
 
 
-9.2 Améliorations Techniques         
-                                                                                                                              
-Notre application utilise actuellement Supabase Cloud comme solution d'hébergement pour la base de données et les fonctions serverless. Bien que cette solution soit
-fonctionnelle, plusieurs améliorations sont envisagées pour optimiser notre infrastructure.                                                                         
-
-
-Évolution de la stack 
+Évolution de la stack
 
 Nous prévoyons de migrer de Supabase Cloud vers une solution Supabase auto-hébergée (self-hosted). Cette migration nous permettra d'avoir un meilleur contrôle sur  
 notre infrastructure et potentiellement de réduire les coûts d'hébergement.                                                                                         
