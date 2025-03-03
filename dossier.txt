@@ -1,0 +1,645 @@
+6 Conception du prototype [MBA Dev Full Stack & Big Data] Bastien | Paul                                                                                                          
+Développement Technique [Grille Réalisation - /20] • "Le projet déployé est en adéquation avec les documents de conception" • "Le projet est mené à son terme.   
+   Ses livrables respectent les standards du métier"
+
+Étude fonctionnelle
+Spécifications fonctionnelles développées et user stories correspondantes
+
+Dans cette partie seront détaillées les spécifications fonctionnelles qui concernent le prototype qui a été développé.
+
+Les spécification fonctionnelles étant plutôt grandes, vous pourrez les retrouver dans le dossiers “Livrables DEV” dans le document“Etudes fonctionnelles jusqu’au prototype”
+
+Étude technique
+Stack technologique et justification des choix
+
+Solution initiale, Nhost
+
+En tant qu'unique développeur du projet, l'adoption d'une solution Backend-as-a-Service (BaaS) était stratégique pour optimiser le temps de développement. Ces      
+solutions fournissent une infrastructure backend préconfigurée, permettant de se concentrer sur la création de valeur côté front-end.
+
+Initialement et lors de la première année Nhost à été choisi comme service pour la plateforme.
+
+Nhost est un outil BaaS open-source basé sur Hasura, il met à disposition une stack PostgreSQL, GraphQL, Storage, des fonctions serverless et d’autres fonctionnalités qui ne sont pas utilises au projet.
+Ce choix a initialement été fait car il proposait une rapidité de mise en place accru en comparaison a des services avec des méthodes d’installations manuelles. 
+Il intégrait un grand panel de services et possédait une interface d’administration facile d’utilisation
+Malgré sa croissance certaine, Nhost est un outil peu connu et peu répandue ce qui a eu pour effet de beaucoup ralentir le développement de l’application sur ses premiers mois. 
+En effet avec une documentation très peu fournie et une communauté certes grandissante mais encore trop petite, trouver des réponses à mes questions était plutôt complexe.
+
+C’est pourquoi j’ai choisi de migrer la partie backend vers Supabase, un autre Baas open-source plus mature que Nhost, avec une communauté plus active, une documentation plus riche et une stabilité accrue.
+
+Migration vers supabase 
+
+Le processus de migration s'est avéré remarquablement simple. Nos scripts de migrations SQL ont pu être réutilisés quasi à l'identique, 
+préservant ainsi toute la structure de notre base de données. Seuls quelques ajustements mineurs ont été nécessaires, principalement au niveau des variables        
+d'environnement et de la prise en main de l’outil CLI.
+
+Cette transition en douceur nous a permis de maintenir notre rythme de développement tout en bénéficiant des avantages de Supabase. La compatibilité entre les deux 
+systèmes a considérablement réduit les risques techniques habituellement associés à ce type de migration, nous permettant de nous concentrer rapidement sur         
+l'amélioration des fonctionnalités plutôt que sur des défis d'infrastructure. 
+
+Depuis la migrations vers Supabase de nouvelles fonctionnalités ont été mise en place grâce au service telle que l’ajout de seed, les fonctions serverless notamment pour l’outil de simulation
+
+Organisation et architecture du repo supabase / environnement de dev / prod
+
+Spécifications techniques
+
+Dans cette partie seront détaillées les spécifications techniques qui concernent le prototype qui a été développé.
+
+Vue d’ensemble
+
+Pour développer LaTroupeCastor, nous avons choisi une stack moderne centrée sur Vue.js 3 et Tailwind CSS. Cette combinaison nous permet de créer une interface      
+utilisateur réactive et élégante, tout en maintenant un code propre et maintenable.                                                                                 
+
+
+Pages Statiques
+
+Notre site comprend plusieurs pages statiques essentielles :                                                                                                        
+
+ • Une landing page accueillante qui présente notre proposition de valeur                                                                                           
+ • Une page détaillant les aides disponibles                                                                                                                        
+ • Un formulaire de contact intuitif                                                                                                                                
+ • Une présentation de notre équipe                                                                                                                                 
+ • Une section témoignages pour renforcer la confiance                                                                                                              
+ • Une explication claire de notre fonctionnement                                                                                                                   
+
+
+Architecture Technique
+
+Nous utilisons Vite.js comme outil de build et serveur de développement. Son système de HMR (Hot Module Replacement) nous permet un développement fluide et rapide, 
+tandis que ses optimisations de production assurent des performances optimales.                                                                                     
+
+Organisation du Code
+
+Une attention particulière a été portée sur le découpage du code dans sa globalité. L’idée étant de pouvoir réutiliser les composants visuels mais aussi tout le code métier dans les futures évolutions du projet.                                                                                                                         
+                                                                                                                                                                    
+Gestion des Données
+
+Nous utilisons Supabase comme backend, avec son CLI pour le développement local. Cela nous permet de :                                                              
+
+ • Tester facilement les fonctionnalités d'authentification                                                                                                         
+ • Travailler sur les données de simulation en local                                                                                                                
+ • Développer et tester les fonctions serverless                                                                                                                
+ • Accéder à une interface de gestion de la base de donnée
+ • Accéder à une interface de requête postgresql (ou graphQL selon le choix) 
+
+Authentification et Sécurité
+
+Un système de middleware simple mais efficace gère l'accès aux zones protégées. Après l'inscription, les utilisateurs sont redirigés vers leur espace personnel (actuellement une page blanche dans le prototype).                                                                                                                  
+
+Emails et Communications
+
+Les fonctions serverless gèrent l'envoi d'emails pour :                                                                                                             
+
+ • Les confirmations de contact                                                                                                                                     
+ • Les résultats de simulation                                                                                                                                      
+ • Les communications post-inscription                        
+
+Thème de l’application                                                                                                                                         
+
+Notre système de design repose sur une configuration Tailwind soigneusement structurée pour refléter parfaitement la charte graphique de LaTroupeCastor et respecter les maquettes.            
+
+Système de Couleurs
+
+Notre palette de couleurs est organisée en trois familles principales (primary, secondary, black), chacune déclinée en variations d'intensité (de 100% à 5%). Cette 
+approche systématique permet une utilisation cohérente des couleurs à travers l'application.                                                                        
+
+Configuration type :                                                                                                                                                
+
+                                                                                                                                                             
+
+ Typographie
+
+La police Poppins est au cœur de notre système typographique. Nous avons intégré toutes ses variations (des plus fines aux plus épaisses, incluant les versions italiques) pour une flexibilité maximale. Des classes utilitaires prédéfinies permettent d'appliquer facilement des combinaisons cohérentes.                        
+
+Configuration type :                                                                                                                                                
+
+                                                                                                                                       
+                                                                                                                                                                    
+
+Cette configuration détaillée nous permet de maintenir une cohérence visuelle parfaite tout en offrant la flexibilité nécessaire pour tous les cas d'usage de       
+l'interface. Les développeurs peuvent ainsi facilement appliquer le design system sans avoir à mémoriser les valeurs exactes de la charte graphique.                
+
+État de l'Application
+
+Pinia nous aide à gérer proprement l'état de l'application, particulièrement utile pour :                                                                           
+
+ • Garder trace des données de simulation                                                                                                                           
+ • Gérer l'état de connexion                                                                                                                                        
+ • Maintenir l'état des formulaires                                                                                                                                 
+
+Points Forts de l'Architecture
+
+ • Modularité : Chaque composant a une responsabilité claire                                                                                                        
+ • Maintenabilité : TypeScript nous aide à éviter les erreurs                                                                                                       
+ • Performance : Vite.js optimise automatiquement notre build                                                                                                       
+ • Développement : Hot reload et outils modernes pour une expérience dev agréable                                                                                   
+ • Scalabilité : Architecture prête pour les futures évolutions                                                                                                     
+
+Cette architecture nous permet de développer rapidement tout en maintenant un code de qualité. Elle est particulièrement adaptée aux besoins de LaTroupeCastor,     
+permettant une expérience utilisateur fluide tout en facilitant le travail des développeurs. 
+
+
+                                                                      Note sur l'Architecture                                                                       
+
+Pour ce prototype de LaTroupeCastor, nous avons volontairement choisi une architecture qui pourrait sembler complexe pour un MVP. Une approche plus simple avec un  
+site statique basique et une gestion d'état minimale aurait pu suffire dans un premier temps.                                                                       
+
+Cependant, ce choix architectural est délibéré et tourné vers l'avenir. Il pose les fondations d'une application robuste et évolutive, capable de s'adapter aux     
+futures fonctionnalités et à la montée en charge. Les détails de ces évolutions prévues et la façon dont cette architecture les supportera sont décrits dans la     
+section "Évolutions Futures" de la documentation. 
+
+Données et sécurité des données
+
+Modélisation des Données
+
+La modélisation complète de la base de données est disponible en annexe, étant donné sa complexité et le nombre important de tables. Dans cette section, nous nous  
+concentrerons sur la partie simulation, qui représente le cœur fonctionnel du prototype.                                                                            
+
+MCD - Focus Simulation
+
+                                                                                                                                                                                                                                            
+
+Ce diagramme entité-relation regroupe toutes les tables utiles au système de simulation, parmi celles-ci on peut retrouver : 
+                                                                                                                                                                                                                                   
+aid_simulation                                                                                                                                                      
+
+ • Table centrale gérant l'état et les données d'une simulation                                                                                                     
+ • Stockage des informations essentielles (département, email, statut d'occupation)                                                                                 
+• Utilisation d'enums pour garantir l'intégrité des données (energy_label_type, occupancy_status_type, fiscal_income_type)                                         
+ • Suivi de progression avec current_step et current_sub_step                                                                                                       
+ • Gestion de session avec token et date d'expiration                                                                                                               
+
+aid_questions & aid_sub_questions                                                                                                                                   
+
+ • Structure hiérarchique des questions                                                                                                                             
+ • Questions principales (aid_questions) divisées en sous-questions                                                                                                 
+ • Typage strict des sous-questions (type_sub_question)                                                                                                             
+ • Support de réponses multiples (allow_multiple_answers)                                                                                                           
+
+aid_answers                                                                                                                                                         
+
+ • Stockage des réponses possibles                                                                                                                                  
+ • Support multimédia (image_url)                                                                                                                                   
+ • Valeurs structurées (content, value)                                                                                                                             
+
+aid_simulation_work_types                                                                                                                                           
+
+ • Association entre simulations et types de travaux                                                                                                                
+ • Utilisation d'enum work_type pour garantir la cohérence                                                                                                          
+
+Relations et Intégrité
+
+ • Liaison utilisateur-simulation (users -> aid_simulation)                                                                                                         
+ • Association réponses-simulation (aid_simulation_answers)                                                                                                         
+ • Hiérarchie questions-sous_questions-réponses                                                                                                                     
+
+Ce modèle met en avant plusieurs point fort :                                                                      
+
+ Fort Typage                                                                                                                                                      
+    • Utilisation extensive d'enums PostgreSQL                                                                                                                      
+    • Contraintes d'intégrité référentielle                                                                                                                         
+    • Types personnalisés pour les données métier                                                                                                                   
+ Flexibilité                                                                                                                                                      
+    • Support de différents types de questions                                                                                                                      
+    • Possibilité d'ajouter facilement de nouveaux types de travaux                                                                                                 
+    • Structure adaptable pour futures évolutions                                                                                                                   
+ Traçabilité                                                                                                                                                      
+    • Suivi de la progression des simulations                                                                                                                       
+    • Conservation de l'historique des réponses                                                                                                                     
+    • Gestion des sessions utilisateur                                                                                                                              
+
+
+Sécurité avec Supabase et PostgreSQL
+Rôles et Permissions
+
+ • anon : lecture des questions/réponses publiques                                                                                                                  
+ • authenticated : CRUD sur ses propres simulations                                                                                                                 
+ • service_role : calculs et mises à jour des simulations                                                                                                           
+ • admin : gestion complète du référentiel                                                                                                                          
+
+Row Level Security (RLS)
+
+La politique RLS principale concerne l'accès aux simulations. Elle s'appuie sur la structure suivante :                                                             
+
+ • Table users (schéma public) contient une colonne aid_simulation_id                                                                                               
+ • Cette colonne fait référence à l'id d'une simulation dans la table aid_simulation                                                                                
+ • L'utilisateur authentifié est identifié par auth.uid()                                                                                                                                                                                                                                                                     
+                                                                                                                                                                   
+
+
+Cette politique signifie que :                                                                                                                                      
+
+ 1 Pour chaque ligne de la table aid_simulation                                                                                                                     
+ 2 On vérifie si son id correspond à l'aid_simulation_id de l'utilisateur connecté                                                                                  
+ 3 auth.uid() est automatiquement fourni par Supabase lors de l'authentification                                                                                    
+ 4 FOR ALL applique cette règle à toutes les opérations (SELECT, INSERT, UPDATE, DELETE)                                                                            
+
+Ainsi, un utilisateur ne peut accéder qu'à la simulation référencée dans son profil, garantissant une isolation complète des données entre utilisateurs.         
+
+
+METTRE QU4ON PEUT FAIRE PAREIL POUR LE RESTE    
+
+                                                                     
+7 Réalisations du prototype
+
+7.1 Vue d'ensemble                                                                                                                                  
+
+ • Interface finale
+captures d’écran finales                                                                                                                                                                                                                                                                                  
+ • Version de démonstration                                                                                                                                         
+
+La version finale de démonstration est accessible sur le lien suivant : https://latroupecastor.com
+7.2 Implémentation Technique                                                                                                                                        
+                                                                                                                                         
+ • Système de token  
+
+
+                                                                                                                                               
+Ce diagramme de séquence illustre le processus de chargement et de gestion d'une simulation dans votre application. 
+
+Contexte et besoin :
+
+Le système de gestion de progression mis en place répond à deux besoins fondamentaux :                                                                              
+
+1. Continuité de l'expérience utilisateur                                                              
+
+Les simulations d'éligibilité aux aides pour la rénovation énergétique peuvent être complexes et nécessiter de nombreuses informations. Un utilisateur pourrait ne  
+pas avoir toutes les informations nécessaires en une seule session ou souhaiter réfléchir avant de finaliser certaines étapes.                                      
+
+En permettant aux utilisateurs de retrouver leur progression, nous offrons :                                                                                        
+
+ • La possibilité d'interrompre et de reprendre la simulation à tout moment                                                                                         
+ • Une expérience moins frustrante, évitant de devoir recommencer depuis le début                                                                                   
+• Une meilleure accessibilité pour les utilisateurs qui ont besoin de plus de temps pour soumettre leurs informations                    
+
+2. Analyse de données anonymisées
+
+Un des besoins de mon collaborateur Paul était de pouvoir récupérer des données concernant ces simulations, en conservant les données de progression en base de données (de façon anonymisée), nous pouvons donc :
+
+• Analyser les parcours utilisateurs pour identifier les points de friction                                                                                        
+• Comprendre à quelles étapes les utilisateurs abandonnent le plus souvent                                                                                         
+• Recueillir des statistiques précieuses sur les profils des demandeurs d'aides                                                                                    
+• Améliorer continuellement le processus de simulation en fonction des comportements observés                                                                      
+
+
+Fonctionnement technique
+
+Le système utilise un token unique stocké dans le localStorage du navigateur de l'utilisateur. Ce token sert d'identifiant anonyme pour retrouver la simulation     
+correspondante dans la base de données.                                                                                                                             
+
+Lorsqu'un utilisateur revient sur l'application :                                                                                                                   
+
+ 1 Le système vérifie si un token existe dans son localStorage                                                                                                      
+ 2 Si oui, il récupère l'état exact de sa simulation depuis la base de données                                                                                      
+ 3 L'utilisateur peut reprendre exactement là où il s'était arrêté                                                                                                  
+
+Pour les nouveaux utilisateurs, un nouveau token est généré et une nouvelle simulation est créée en base de données.                                                
+
+Cette approche offre un équilibre optimal entre :                                                                                                                   
+
+ • La protection de la vie privée (pas besoin de créer un compte ou de s'identifier)                                                                                
+ • La continuité de l'expérience utilisateur                                                                                                                        
+ • La collecte de données analytiques précieuses pour l'amélioration du service                                                                                     
+
+Ce système est particulièrement pertinent dans le contexte d'un service public d'aide à la rénovation énergétique, où l'accessibilité et la simplicité d'utilisation
+sont essentielles pour toucher un large public.
+
+
+ • Flow de création de compte 
+
+  
+
+
+
+                                                                     
+Contexte et besoins : 
+
+Ce système a été conçu pour répondre à un besoin fondamental : maximiser la conversion des utilisateurs qui effectuent une simulation en utilisateurs inscrits sur  
+la plateforme.                                                                                                                                                      
+
+Conversion et rétention des utilisateurs :
+
+L'outil de simulation d'éligibilité aux aides pour la rénovation énergétique constitue le principal point d'entrée de notre service. Pour éviter de perdre des      
+utilisateurs potentiels dans le processus :                                                                                                                         
+
+ • La simulation est accessible sans barrière initiale (pas d'inscription requise)                                                                                  
+ • Les résultats sont délivrés immédiatement et envoyés par email pour maintenir le contact                                                                         
+ • Le parcours de création de compte est simplifié au maximum pour réduire les abandons                                                                             
+ • Les informations déjà fournies sont réutilisées pour éviter toute saisie redondante                                                                              
+
+L'objectif est de créer un entonnoir de conversion fluide et sans friction, où chaque étape apporte une valeur claire à l'utilisateur tout en le rapprochant de la création d'un compte. Cette approche progressive permet de ne pas décourager les utilisateurs avec une demande d'engagement trop précoce, tout en maximisant les    
+chances qu'ils finalisent leur inscription pour bénéficier d'un accompagnement complet.                                                                             
+
+
+Fonctionnement technique
+
+Le système s'articule autour de plusieurs composants techniques qui interagissent de manière fluide :                                                               
+
+1. Gestion des données de simulation                                                                
+
+À la fin d'une simulation, les résultats et les informations personnelles (nom, prénom, email) sont sauvegardés dans la base de données Supabase. Ces données sont  
+initialement associées à un identifiant de simulation unique, sans nécessiter de compte utilisateur.                                                                
+
+2. Communication par email                                                                     
+
+Le système utilise le service Resend pour envoyer un email contenant :                                                                                              
+
+ • Un récapitulatif des résultats de la simulation                                                                                                                  
+ • Un lien avec un Call-To-Action (CTA) incluant l'identifiant unique de la simulation Ce lien permet de retrouver facilement les données de simulation lors de la  
+   création de compte.                                                                                                                                              
+
+3. Processus de création de compte simplifié                                                            
+
+Lorsque l'utilisateur clique sur le CTA dans l'email :                                                                                                              
+
+ • L'application extrait l'ID de simulation de l'URL                                                                                                                
+ • Le formulaire d'inscription est pré-rempli avec les informations déjà fournies                                                                                   
+ • L'utilisateur n'a plus qu'à définir son mot de passe pour créer son compte                                                                                       
+
+4. Liaison des données et authentification                                                             
+
+La création du compte déclenche plusieurs actions :                                                                                                                 
+
+ • Supabase Auth gère l'authentification de l'utilisateur                                                                                                           
+ • Un trigger de base de données associe automatiquement la simulation précédemment anonyme au nouvel utilisateur                                                   
+ • L'utilisateur est redirigé vers son espace personnel où il retrouve l'ensemble de ses données                                                                    
+
+Cette architecture technique est spécifiquement optimisée pour minimiser les points de friction et maintenir l'engagement de l'utilisateur tout au long du parcours,
+augmentant ainsi significativement les taux de conversion.
+                                                                                                               
+
+7.3 Intégrations Réalisées                                                                                                                                          
+
+ • API et services
+
+
+Choix de la solution
+
+Pour gérer l'envoi d'emails dans notre système, j'ai opté pour Resend comme service d'emails pour plusieurs raisons stratégiques :                                  
+
+Partenariat et intégration avec Supabase
+
+Resend bénéficie d'un partenariat officiel avec Supabase, ce qui en fait la solution recommandée dans l'écosystème. Cette intégration native garantit une                                                                                       
+
+Interface de débogage intuitive
+
+Resend propose une interface utilisateur intuitive qui liste tous les appels d'envoi d'emails, facilitant considérablement le débogage pendant les phases de développement et de production. Cette fonctionnalité s'est révélée particulièrement précieuse pour suivre en temps réel la délivrabilité des emails et identifier rapidement d'éventuels problèmes.                                                                                                                                   
+
+Statistiques avancées de suivi
+
+Bien que nous n'ayons pas encore exploité cette fonctionnalité, Resend offre des capacités de tracking avec des statistiques poussées. Le service permet de suivre différents états des emails comme : envoyés, ouverts, cliqués, échoués, etc. Ces métriques pourraient êtres précieuses pour optimiser nos campagnes d'emails et améliorer l'engagement des utilisateurs dans les phases ultérieures du projet.     
+
+           
+Extrait des différents types existants sur Resend                                                                                
+
+Découverte et montée en compétence
+
+N'ayant jamais utilisé Resend auparavant, ce projet représentait une opportunité d'explorer et de maîtriser un nouvel outil dans l'écosystème des services d'emails modernes. Cette démarche s'inscrit dans une volonté constante d'élargir mes compétences techniques.                                                                 
+
+Mise en œuvre technique
+
+L'intégration de Resend a nécessité plusieurs étapes techniques :                                                                                                   
+
+- Création d'un compte Resend et liaison avec notre compte Supabase                                                                                                - Configuration des paramètres SMTP en utilisant le nom de domaine spécifiquement acheté pour ce projet                                                            
+- Vérification et validation du domaine pour garantir une bonne délivrabilité des emails                                                                           - Mise en place des templates d'emails pour les différentes communications (résultats de simulation, confirmation d'inscription, etc.)                             
+
+Cette configuration permet d'envoyer des emails depuis notre domaine personnalisé, ce qui renforce la crédibilité de notre service auprès des utilisateurs et       
+améliore les taux d'ouverture des emails.
+
+
+• Dataviz et tableaux de bord 
+
+ 8 Tests et qualité du prototype                                                                                                                                            
+Prototype et Tests [Grille Réalisation - /20] • "Les critères de tests ont été définis" • "Les tests ont été menés. Ils sont suffisamment exhaustifs" • "Suite à 
+   la phase de tests, des propositions d'évolution sont formulées"
+
+8.1 Stratégie de Tests
+
+Types de test implémentés
+Pour notre application Vue.js avec Supabase, j'ai mis en place des tests unitaires et d'intégration ciblés sur la fonctionnalité principale du prototype : la       
+simulation d'aides à la rénovation énergétique. 
+
+Ces tests vérifient spécifiquement :                                                                                
+Tests unitaires de la fonction d'éligibilité
+La fonction checkEligibility est testée pour s'assurer qu'elle calcule correctement les aides disponibles selon différents profils utilisateurs.                                                                                
+
+Tests d'intégration avec la base de données 
+Les tests vérifient l'interaction entre la logique d'éligibilité et les données stockées dans Supabase, notamment les tables aid_details et aid_simulation.                                                                                                                        
+Tests de scénarios utilisateurs
+Plusieurs profils d'utilisateurs sont simulés via des jeux de données prédéfinis (revenus très modestes, modestes, élevés, propriétaires, locataires, etc.) pour valider le comportement du système dans différentes situations réelles.
+
+Couverture de code visée
+     
+La stratégie de test se concentre sur une couverture complète de la logique d'éligibilité aux aides, avec pour objectif :                                           
+ • 100% de couverture pour l'algorithme de vérification d'éligibilité                                                                                               
+ • Tests de tous les cas limites et conditions particulières, notamment :                                                                                           
+    • Différents niveaux de revenus (très modestes, modestes, élevés)                                                                                               
+    • Différents statuts d'occupation (propriétaire occupant, bailleur, locataire, copropriété)                                                                     
+    • Différentes caractéristiques de logement (âge du bâtiment, étiquette énergétique)                                                                             
+    • Différents types de travaux (isolation, chauffage, ventilation, fenêtres, rénovation globale)     
+                                                                 
+Algorithme d'éligibilité et approche de test
+            
+Notre algorithme d'éligibilité aux aides à la rénovation énergétique constitue le cœur de l'application. Sa complexité nécessite une approche de test rigoureuse :  
+
+Processus de filtrage multi-critères
+L'algorithme applique une série de filtres (revenus, âge du bâtiment, statut d'occupation, types de travaux, localisation) pour déterminer les aides accessibles. Chaque filtre est testé individuellement et en combinaison.                  
+                                             
+Calcul des montants adaptés
+
+Les tests vérifient que les montants sont correctement calculés selon :                                                            
+    • Le montant de base de chaque aide                                                                                                                             
+    • Les bonus applicables (ex: matériaux biosourcés)                                                                                                              
+    • Les ajustements spécifiques (surface, plafonds)       
+                                                                                                        
+Pseudo-code et documentation :
+L'algorithme est documenté avec deux pseudo-code détaillés qui servent de référence pour les tests. Des extrait simplifié sont présentés ci-dessous, tandis que les pseudo-code complet sont disponible en annexe :
+METTRE LE COMPLET EN ANNEXE
+                         
+                                                                                                                                                                    
+                                                                                                                                                           
+
+Ces deux algorithmes fonctionnent en tandem :                                                                                                                       
+
+• VerifierEligibilite détermine les aides disponibles pour une simulation donnée                                                                                   • TesterEligibilite vérifie systématiquement le bon fonctionnement à travers différents scénario
+
+Choix des outils de test
+ • Deno : Environnement d'exécution JavaScript/TypeScript moderne utilisé pour exécuter les tests, offrant une sécurité et des performances améliorées              
+ • Deno Standard Testing : Bibliothèque de test intégrée à Deno (assert de https://deno.land/std/testing/asserts.ts)                                                
+ • Supabase JS Client : Utilisé pour tester l'interaction avec la base de données Supabase                                                                          
+ • GitHub Actions : Pour l'automatisation de l'exécution des tests                                                                                                  
+Les tests sont organisés par catégories pour faciliter l'analyse et le débogage :                                                                                   
+ • Tests de revenus (revenuTests)                                                                                                                                   
+ • Tests de statut d'occupation (occupancyTests)                                                                                                                    
+ • Tests de localisation (locationTests)                                                                                                                            
+ • Tests de cas spéciaux (specialCases)                                                                                                                             
+
+Cette approche méthodique garantit que notre algorithme d'éligibilité fonctionne correctement pour tous les profils d'utilisateurs et toutes les combinaisons de    
+critères, assurant ainsi la fiabilité de notre fonctionnalité principale.
+
+8.2 Intégration Continue                                                                                                                                            
+
+Configuration GitHub Actions                                                                    
+
+Pour assurer la qualité et la fiabilité de notre application, j'ai mis en place un pipeline d'intégration continue basé sur GitHub Actions :                        
+
+ Workflow de test principal (test-fonctions-eligibility.yml) :                                                                                                    
+    • Déclenché automatiquement à chaque push sur la branche principale et sur les pull requests                                                                    
+    • Exécute l'ensemble des tests unitaires et d'intégration sur l'algorithme d'éligibilité                                                                        
+    • Utilise un environnement Supabase local pour garantir l'isolation des tests                                                                                   
+
+La configuration utilise des secrets GitHub pour stocker en toute sécurité les informations sensibles comme les clés d'API Supabase et les identifiants SMTP.       
+
+Diagramme du workflow de test
+
+
+Ce diagramme illustre les différentes étapes du workflow, en mettant l'accent sur les éléments clés de notre infrastructure :                            
+
+Les migrations qui définissent la structure de la base de données                                                                                                
+Les seeds qui chargent les données de test essentielles identique au développement                                                                                                         
+Les fonctions Edge qui sont utilisée dans l'environnement de test
+
+
+Automatisation des tests
+
+
+Le processus d'automatisation des tests comprend plusieurs étapes clés :                                                                                            
+
+ 1 Préparation de l'environnement :                                                                                                                                 
+
+                     
+
+2 : Installation du CLI de Supabase : 
+
+                                                                                    
+                                                                                                                                                                    
+ 2 Initialisation de la base de données de test :                                                                                                                   
+
+
+                                                                                                                                                                    
+ 3 Exécution des tests :                                                                                                                                                                                                              
+
+
+
+ 4 Notification en cas d'échec :                                                                                                                                                                                                                                       
+
+
+
+Cette automatisation garantit que chaque modification du code est systématiquement testée, réduisant ainsi les risques d'introduction de bugs dans l'application.   
+
+Déploiement continu
+
+
+Le déploiement de notre application suit une approche prudente et contrôlée :                                                                                       
+
+Déploiement manuel des fonctions Edge                                                                           
+
+Les fonctions Supabase Edge (fonction de test d’éligibilité et d’envoi de résultats par mail) sont déployées manuellement après vérification des tests. Cette approche permet un contrôle supplémentaire avant la mise en production
+
+Validation des migrations et seeds de base de données
+
+Les migrations de schéma et les seeds sont systématiquement vérifiées dans l'environnement d'intégration continue.
+En cas d'échec de l'une des migrations ou de l'un des seeds, le workflow complet est automatiquement interrompu, ce qui prévient toute mise en production de code potentiellement défectueux. 
+
+Les seeds jouent un rôle crucial dans notre processus de test, car ils initialisent les jeux de données nécessaires à la validation rigoureuse de l'algorithme d'éligibilité.
+
+
+Gestion des versions
+Nous maintenons un historique clair des migrations pour suivre l'évolution du schéma de base de données                                                      
+Chaque migration est datée et documentée pour faciliter le suivi des changements                                                                             
+
+
+Cette stratégie d'intégration continue nous permet de maintenir un équilibre entre rapidité de développement et stabilité du service, tout en garantissant que notre
+algorithme d'éligibilité reste fiable et précis à chaque évolution. 
+                                                                                                                                        
+8.3 Qualité et Monitoring
+
+Analyse de code (linting, etc.)                                                                                                                                       
+
+Pour maintenir une qualité de code optimale, j'ai mis en place plusieurs mécanismes d'analyse statique (linting et autres) :                                                            
+
+ 1 TypeScript strict mode :                                                                                                                                         
+    • Utilisation du mode strict de TypeScript pour détecter les erreurs potentielles à la compilation                                                              
+    • Définition d'interfaces précises pour les données manipulées (comme dans types.ts)                                                                            
+    • Vérification des types pour éviter les erreurs d'exécution                                                                                                    
+ 2 Deno lint :                                                                                                                                                      
+    • Analyse statique du code avec les règles intégrées de Deno                                                                                                    
+    • Détection des problèmes potentiels comme les variables non utilisées, les imports incorrects, etc.                                                            
+    • Application des bonnes pratiques de développement JavaScript/TypeScript                                                                                       
+ 3 Documentation du code :                                                                                                                                          
+    • Documentation partielle des fonctions et interfaces avec des commentaires                                                                               
+    • Description claire des paramètres, valeurs de retour et comportements attendus                                                                                
+    • Facilite la maintenance et l'évolution du code par d'autres développeurs                                                                                      
+
+Résultats des tests automatisés                                                                   
+
+Les résultats des tests automatisés sont exploités de plusieurs façons :                                                                                            
+
+ 1 Rapports de tests GitHub Actions :                                                                                                                               
+    • Visualisation directe des résultats de tests dans l'interface GitHub                                                                                          
+    • Historique des exécutions permettant de suivre l'évolution de la qualité                                                                                      
+    • Identification rapide des régressions potentielles                                                                                                            
+ 2 Logs détaillés :                                                                                                                                                 
+    • Génération de logs détaillés pendant l'exécution des tests                                                                                                    
+    • Affichage des aides éligibles pour chaque scénario de test                                                                                                    
+    • Facilite le diagnostic en cas d'échec d'un test                                                                                                               
+
+Alerting                                                                              
+
+Le système d'alerte mis en place permet une réaction rapide en cas de problème :                                                                                    
+
+ 1 Notifications par email :                                                                                                                                        
+    • Envoi automatique d'emails en cas d'échec des tests                                                                                                           
+    • Contenu détaillé incluant la branche concernée et un lien vers les logs                                                                                       
+    • Permet une intervention rapide de l'équipe de développement                                                                                                   
+ 2 Gestion des environnements :                                                                                                                                     
+    • Distinction claire entre l'environnement de développement local et l'environnement de production                                                              
+    • Les tests sont exécutés dans un environnement isolé qui reproduit fidèlement la configuration de production                                                   
+    • Cette séparation permet de détecter les problèmes spécifiques à l'environnement avant le déploiement                                                          
+ 3 Surveillance des fonctions Edge :                                                                                                                                
+    • Monitoring des performances et des erreurs des fonctions Supabase Edge                                                                                        
+    • Détection des timeouts ou des erreurs d'exécution                                                                                                             
+    • Analyse des patterns d'utilisation pour optimiser les performances                                                                                            
+
+Cette approche globale de la qualité et du monitoring nous permet de maintenir un niveau élevé de fiabilité pour notre service, tout en facilitant l'identification 
+et la résolution rapide des problèmes potentiels.
+
+
+9 Evolutions futures
+
+9.1 Fonctionnalités Prévues
+
+ Ce document présente les spécifications fonctionnelles envisagées pour la phase post-prototype de LaTroupeCastor. Il est important de noter que ces spécifications 
+ se concentrent principalement sur les fonctionnalités des tableaux de bord client et artisan.                                                                                                              
+                                                                                                                                                                    
+ Les spécifications décrites dans ce document sont des estimations et des projections du développement futur. Elles peuvent être sujettes à modification et ne représentent pas forcément ce qui pourrait être développé.                                                                                                
+                                                                                                                                                                    
+Comme pour les spécifications du prototype actuel, les spécifications fonctionnelles pour le futur du projet sont plutôt longues et seront donc présent dans le dossier “Livrables DEV” sous le dossier “Spécifications fonctionnelle après prototype”.
+
+
+9.2 Améliorations Techniques         
+                                                                                                                              
+Notre application utilise actuellement Supabase Cloud comme solution d'hébergement pour la base de données et les fonctions serverless. Bien que cette solution soit
+fonctionnelle, plusieurs améliorations sont envisagées pour optimiser notre infrastructure.                                                                         
+
+
+Évolution de la stack 
+
+Nous prévoyons de migrer de Supabase Cloud vers une solution Supabase auto-hébergée (self-hosted). Cette migration nous permettra d'avoir un meilleur contrôle sur  
+notre infrastructure et potentiellement de réduire les coûts d'hébergement.                                                                                         
+
+En parallèle, nous envisageons de remplacer Netlify par une solution auto-hébergée comme Dockploy ou Coolify pour l'hébergement de notre application front-end.     
+Cette transition s'inscrit dans notre stratégie de maîtrise des coûts et d'intégration plus fluide avec nos autres outils, notamment nos pipelines CI/CD.           
+
+
+Optimisations techniques
+
+Concernant les migrations de base de données, nous souhaitons mettre en place un système de prévention plutôt qu'un mécanisme de rollback. L'objectif est de tester 
+les migrations avant leur déploiement en production : si une migration ne passe pas les tests, elle ne sera tout simplement pas déployée, évitant ainsi les         
+problèmes potentiels en production.                                                                                                                                 
+
+De plus, le déploiement des fonctions serverless n'est pas encore automatisé, ce qui représente une opportunité d'amélioration significative pour notre workflow de 
+développement et de mise en production.                                                                                                                             
+
+Ces évolutions techniques nous permettront d'améliorer la robustesse de notre application, de réduire notre dépendance aux services cloud tiers et d'optimiser nos  
+coûts d'exploitation sur le long terme.
