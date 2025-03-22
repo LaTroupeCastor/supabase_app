@@ -84,7 +84,7 @@ GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, se
  ((SELECT id FROM travaux_q), 'Chauffage', 'chauffage', 'heating'),                                                                                                                                                 
  ((SELECT id FROM travaux_q), 'Ventilation', 'ventilation', 'ventilation'),                                                                                                                                               
  ((SELECT id FROM travaux_q), 'Fenêtres', 'fenetre', 'windows'),                                                                                                                                                  
- ((SELECT id FROM travaux_q), 'Rénovation globale', 'renovation', 'global');                                                                                                                                        
+ ((SELECT id FROM travaux_q), 'Rénovation globale', 'renovation', 'global_renovation');                                                                                                                                        
                                                                                                                                                                                         
  -- Étape 4, Question 2 (Matériaux biosourcés)                                                                                                                                          
  WITH materiaux_q AS (SELECT id FROM aid_sub_questions WHERE content LIKE '%biosourcés%')                                                                                                     
